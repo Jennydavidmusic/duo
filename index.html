@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jenny & David - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome for social media icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+  <section class="hero">
+    <!-- Menu normal (ordinateur) -->
+    <nav class="hero-nav">
+      <a href="about.html">About</a>
+      <a href="music.html">Music & Videos</a>
+      <a href="gigs.html">Gigs</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="bookings.html">Bookings</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Icône hamburger pour mobile -->
+    <div class="hamburger-menu">
+      <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+      <div class="hamburger-nav" id="hamburgerNav">
+        <a href="about.html">About</a>
+        <a href="music.html">Music & Videos</a>
+        <a href="gigs.html">Gigs</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="bookings.html">Bookings</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+
+    <!-- Next Gig déplacé ici -->
+    <div id="next-gig">
+      <h3>Next Gig</h3>
+      <div id="gig-details">Loading...</div>
+    </div>
+  </section>
+
+  <section class="main-content">
+    <h2>Welcome to Jenny & David's Official Site</h2>
+    <p>We are a musical duo based in London, performing across the city. Check out our upcoming gigs below!</p>
+    <!-- L’ancien bloc #next-gig a été retiré d’ici -->
+  </section>
+
+  <footer>
+    © 2025 Jenny & David • All rights reserved
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('hamburgerNav');
+      nav.classList.toggle('show');
+    }
+
+    // Fetching and displaying the next gig
+    fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
+      .then(response => response.json())
+      .then(data => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const parseDate = (str) => {
+          if (!str) return null;
+          const parts = str.split('/');
+          if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const year = parseInt(parts[2], 10);
+            return new Date(year, month, day);
+          }
+          return null;
+        };
+
+        const upcoming = data.filter(row => {
+          const rowDate = parseDate(row.Date);
+          return rowDate && rowDate >= today;
+        });
+
+        if (upcoming.length > 0) {
+          const nextGig = upcoming[0];
+          const venueHTML = nextGig.Link
+            ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
+            : nextGig.Venue;
+
+          // Format the time correctly
+          const formattedTime = new Date(`${nextGig.Date} ${nextGig.Time}`);
+          const formattedHour = formattedTime.getHours() % 12 || 12;
+          const formattedMinute = formattedTime.getMinutes().toString().padStart(2, '0');
+          const period = formattedTime.getHours() >= 12 ? 'PM' : 'AM';
+          const formattedTimeString = `${formattedHour}:${formattedMinute} ${period}`;
+
+          const gigDetails = `
+            <strong>${nextGig.Date}</strong><br>
+            ${venueHTML} at ${formattedTimeString}
+          `;
+          document.getElementById('gig-details').innerHTML = gigDetails;
+        } else {
+          document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching gigs:", err);
+        document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
+      });
+  </script>
+
+  <style>
+    /* Social Media Icons - Top right corner */
+    .social-icons {
+      position: fixed;
+      top: 20px;
+      right: 15px; /* Adjusted for more space to the right */
+      z-index: 1000;
+      display: flex;
+      gap: 10px; /* Space between the icons */
+    }
+
+    .social-icon {
+      font-size: 2rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .facebook-icon {
+      color: #1877F2;
+    }
+
+    .facebook-icon:hover {
+      color: #fff;
+      background-color: #1877F2;
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    .instagram-icon {
+      color: #E1306C;
+    }
+
+    .instagram-icon:hover {
+      color: #fff;
+      background-color: #E1306C;
+      padding: 10px;
+      border-radius: 50%;
+    }
+  </style>
+
+  <!-- Social Media Icons -->
+  <div class="social-icons">
+    <a href="https://www.facebook.com/jennydavidmusic" target="_blank" class="social-icon facebook-icon">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="https://www.instagram.com/jennydavidmusic/" target="_blank" class="social-icon instagram-icon">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+</body>
+</html>
