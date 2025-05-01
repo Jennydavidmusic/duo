@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenny &David Photo Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: gold;
+            font-size: 2.5rem;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 35px;
+            left: 20px;
+            background-color: black;
+            color: gold;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: 1px solid gold;
+            border-radius: 6px;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: gold;
+            color: black;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 100px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="gallery-page">
+    <a href="index.html" class="back-button">← Home</a>
+
+    <h1>Gallery</h1>
+
+    <div class="gallery">
+        <div class="gallery-item"><img src="images/photo21.jpg" alt="Gallery Image 21"></div>
+        <div class="gallery-item"><img src="images/photo20.jpg" alt="Gallery Image 20"></div>
+        <div class="gallery-item"><img src="images/photo19.jpg" alt="Gallery Image 19"></div>
+        <div class="gallery-item"><img src="images/photo18.jpg" alt="Gallery Image 18"></div>
+        <div class="gallery-item"><img src="images/photo17.jpg" alt="Gallery Image 17"></div>
+        <div class="gallery-item"><img src="images/photo16.jpg" alt="Gallery Image 16"></div>
+        <div class="gallery-item"><img src="images/photo15.jpg" alt="Gallery Image 15"></div>
+        <div class="gallery-item"><img src="images/photo14.jpg" alt="Gallery Image 14"></div>
+        <div class="gallery-item"><img src="images/photo13.jpg" alt="Gallery Image 13"></div>
+        <div class="gallery-item"><img src="images/photo12.jpg" alt="Gallery Image 12"></div>
+        <div class="gallery-item"><img src="images/photo11.jpg" alt="Gallery Image 11"></div>
+        <div class="gallery-item"><img src="images/photo10.jpg" alt="Gallery Image 10"></div>
+        <div class="gallery-item"><img src="images/photo09.jpg" alt="Gallery Image 9"></div>
+        <div class="gallery-item"><img src="images/photo08.jpg" alt="Gallery Image 8"></div>
+        <div class="gallery-item"><img src="images/photo07.jpg" alt="Gallery Image 7"></div>
+        <div class="gallery-item"><img src="images/photo06.jpg" alt="Gallery Image 6"></div>
+        <div class="gallery-item"><img src="images/photo05.jpg" alt="Gallery Image 5"></div>
+        <div class="gallery-item"><img src="images/photo04.jpg" alt="Gallery Image 4"></div>
+        <div class="gallery-item"><img src="images/photo03.jpg" alt="Gallery Image 3"></div>
+        <div class="gallery-item"><img src="images/photo02.jpg" alt="Gallery Image 2"></div>
+        <div class="gallery-item"><img src="images/photo01.jpg" alt="Gallery Image 1"></div>
+    </div>  <!-- Menu Hamburger -->
+  <div class="hamburger-menu">
+    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+    <div class="hamburger-nav" id="hamburgerNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="music.html">Music & Videos</a>
+        <a href="gigs.html">Gigs</a>
+     
+        
+        <a href="reviews.html">Reviews</a>
+        <a href="bookings.html">Bookings</a>
+        <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <!-- Script JavaScript -->
+  <script>
+    function toggleMenu() {
+      var nav = document.getElementById('hamburgerNav');
+      nav.classList.toggle('show'); // Montre ou cache le menu
+    }
+  </script>
+
+
+</body>
+</html>
