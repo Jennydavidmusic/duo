@@ -92,6 +92,7 @@
 
           // Format the time correctly
           const formattedTime = new Date(`${nextGig.Date} ${nextGig.Time}`);
+          formattedTime.setHours(formattedTime.getHours() + 1);
           const formattedHour = formattedTime.getHours() % 12 || 12;
           const formattedMinute = formattedTime.getMinutes().toString().padStart(2, '0');
           const period = formattedTime.getHours() >= 12 ? 'PM' : 'AM';
