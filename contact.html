@@ -1,12 +1,13 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact - Jenny & David</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jenny &amp; David | Contact Page</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
     body {
       background-color: #000;
       color: #D4AF37;
@@ -122,27 +123,22 @@
       }
     }
   </style>
-</head>
-
+<meta content="Discover Jenny &amp; David's contact information and performances." name="description"/><meta content="Jenny and David, acoustic duo, contact, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/></head>
 <body class="contact-page">
-  <a href="index.html" class="back-button">← Home</a>
-
-  <div class="contact-container">
-    <h1>Contact</h1>
-    <h2>Jenny & David</h2>
-    <p>For any gig request or information, feel free to contact us here!</p>
-
-    <form id="contactForm" action="https://formspree.io/f/manoqjeg" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-
-    <p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
-  </div>
-
-  <script>
+<div class="top-nav"><a href="index.html">Home</a><a href="music.html">Music</a><a href="gigs.html">Gigs</a><a href="gallery.html">Gallery</a><a href="reviews.html">Reviews</a><a href="bookings.html">Bookings</a><a href="index.html"></a></div>
+<div class="contact-container">
+<h1>Contact</h1>
+<h2>Jenny &amp; David</h2>
+<p>For any gig request or information, feel free to contact us here!</p>
+<form action="https://formspree.io/f/manoqjeg" id="contactForm" method="POST">
+<input name="name" placeholder="Your Name" required="" type="text"/>
+<input name="email" placeholder="Your Email" required="" type="email"/>
+<textarea name="message" placeholder="Your Message" required=""></textarea>
+<button type="submit">Send</button>
+</form>
+<p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
+</div>
+<script>
     document.getElementById("contactForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const form = this;
@@ -162,30 +158,25 @@
       });
     });
   </script>
-  <!-- Menu Hamburger -->
-  <div class="hamburger-menu">
-    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-    <div class="hamburger-nav" id="hamburgerNav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="music.html">Music & Videos</a>
-        <a href="gigs.html">Gigs</a>
-       
-        <a href="gallery.html">Gallery</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="bookings.html">Bookings</a>
-        
-    </div>
-  </div>
-
-  <!-- Script JavaScript -->
-  <script>
+<!-- Menu Hamburger -->
+<div class="hamburger-menu">
+<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+<div class="hamburger-nav" id="hamburgerNav">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a href="bookings.html">Bookings</a>
+</div>
+</div>
+<!-- Script JavaScript -->
+<script>
     function toggleMenu() {
       var nav = document.getElementById('hamburgerNav');
       nav.classList.toggle('show'); // Montre ou cache le menu
     }
   </script>
-
 </body>
 </html>
-
