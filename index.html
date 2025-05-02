@@ -1,60 +1,55 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Jenny & David - Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <!-- FontAwesome for social media icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
+<meta charset="utf-8"/>
+<title>Jenny &amp; David | Acoustic Music Duo for Events, Weddings, and Live Shows</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="style.css" rel="stylesheet"/>
+<!-- FontAwesome for social media icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+<meta content="Jenny &amp; David are an acoustic music duo offering live performances for weddings, private events, and public gigs. Based in the UK." name="description"/><meta content="acoustic duo, live music, weddings, Jenny and David, music duo UK, live performances" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/></head>
 <body>
-  <section class="hero">
-    <!-- Menu normal (ordinateur) -->
-    <nav class="hero-nav">
-      <a href="about.html">About</a>
-      <a href="music.html">Music & Videos</a>
-      <a href="gigs.html">Gigs</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="reviews.html">Reviews</a>
-      <a href="bookings.html">Bookings</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-
-    <!-- Icône hamburger pour mobile -->
-    <div class="hamburger-menu">
-      <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-      <div class="hamburger-nav" id="hamburgerNav">
-        <a href="about.html">About</a>
-        <a href="music.html">Music & Videos</a>
-        <a href="gigs.html">Gigs</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="bookings.html">Bookings</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-
-    <!-- Next Gig déplacé ici -->
-    <div id="next-gig">
-      <h3>Next Gig</h3>
-      <div id="gig-details">Loading...</div>
-    </div>
-  </section>
-
-  <section class="main-content">
-    <h2>Welcome to Jenny & David's Official Site</h2>
-    <p>We are a musical duo based in London, performing across the city. Check out our upcoming gigs below!</p>
-    <!-- L’ancien bloc #next-gig a été retiré d’ici -->
-  </section>
-
-  <footer>
-    © 2025 Jenny & David • All rights reserved
+<section class="hero">
+<!-- Menu normal (ordinateur) -->
+<nav class="hero-nav">
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a href="bookings.html">Bookings</a>
+<a href="contact.html">Contact</a>
+</nav>
+<!-- Icône hamburger pour mobile -->
+<div class="hamburger-menu">
+<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+<div class="hamburger-nav" id="hamburgerNav">
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a href="bookings.html">Bookings</a>
+<a href="contact.html">Contact</a>
+</div>
+</div>
+<!-- Next Gig déplacé ici -->
+<div id="next-gig">
+<h3>Next Gig</h3>
+<div id="gig-details">Loading...</div>
+</div>
+</section>
+<section class="main-content">
+<h2>Welcome to Jenny &amp; David's Official Site</h2>
+<p>We are a musical duo based in London, performing across the city. Check out our upcoming gigs below!</p>
+<!-- L’ancien bloc #next-gig a été retiré d’ici -->
+</section>
+<footer>
+    © 2025 Jenny &amp; David • All rights reserved
   </footer>
-
-  <!-- Scripts -->
-  <script>
+<!-- Scripts -->
+<script>
     function toggleMenu() {
       const nav = document.getElementById('hamburgerNav');
       nav.classList.toggle('show');
@@ -112,8 +107,7 @@
         document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
       });
   </script>
-
-  <style>
+<style>
     /* Social Media Icons - Top right corner */
     .social-icons {
       position: fixed;
@@ -152,15 +146,14 @@
       border-radius: 50%;
     }
   </style>
-
-  <!-- Social Media Icons -->
-  <div class="social-icons">
-    <a href="https://www.facebook.com/jennydavidmusic" target="_blank" class="social-icon facebook-icon">
-      <i class="fab fa-facebook"></i>
-    </a>
-    <a href="https://www.instagram.com/jennydavidmusic/" target="_blank" class="social-icon instagram-icon">
-      <i class="fab fa-instagram"></i>
-    </a>
-  </div>
+<!-- Social Media Icons -->
+<div class="social-icons">
+<a class="social-icon facebook-icon" href="https://www.facebook.com/jennydavidmusic" target="_blank">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-icon instagram-icon" href="https://www.instagram.com/jennydavidmusic/" target="_blank">
+<i class="fab fa-instagram"></i>
+</a>
+</div>
 </body>
 </html>
