@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Jenny &amp; David | Music Page</title>
-<link href="style.css" rel="stylesheet"/>
-<style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jenny & David | Music Page</title>
+  <link href="style.css" rel="stylesheet"/>
+  <style>
     body {
       background-color: #000;
       color: #D4AF37;
@@ -55,7 +54,6 @@
       margin-top: 20px;
     }
 
-    /* Hamburger menu */
     .hamburger-menu {
       display: none;
       position: fixed;
@@ -101,44 +99,21 @@
       display: flex;
     }
 
-    /* Home button on desktop */
-    .home-button {
-      display: none;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: black;
-      color: gold;
-      border: 1px solid gold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      z-index: 999;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .home-button:hover {
-      background-color: gold;
-      color: black;
-      transform: scale(1.1);
-    }
-
     @media (max-width: 768px) {
       .hamburger-menu {
         display: block;
       }
-      .home-button {
-        display: none;
-      }
+
       .video-wrapper.instagram {
         padding-bottom: 160%;
         margin-bottom: 1%;
       }
+
       .video-wrapper.instagram iframe {
         height: 85%;
         top: -10%;
       }
+
       .video-wrapper.instagram.mobile-only {
         margin-top: -5%;
         margin-bottom: 0;
@@ -149,57 +124,64 @@
       .mobile-only {
         display: none;
       }
-      .home-button {
-        display: block;
-      }
     }
   </style>
-<meta content="Discover Jenny &amp; David's music information and performances." name="description"/><meta content="Jenny and David, acoustic duo, music, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/></head>
+  <meta name="description" content="Discover Jenny &amp; David's music information and performances."/>
+  <meta name="keywords" content="Jenny and David, acoustic duo, music, live music"/>
+  <meta name="author" content="Jenny &amp; David Music"/>
+</head>
 <body>
-<div class="top-nav"><a href="index.html">Home</a><a href="index.html"></a><a href="gigs.html">Gigs</a><a href="gallery.html">Gallery</a><a href="reviews.html">Reviews</a><a href="bookings.html">Bookings</a><a href="contact.html">Contact</a></div>
-<!-- Home button for desktop -->
-<a class="home-button" href="index.html">Home</a>
-<!-- Hamburger Menu for mobile -->
-<div class="hamburger-menu">
-<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-<div class="hamburger-nav" id="hamburgerNav">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="gigs.html">Gigs</a>
-<a href="gallery.html">Gallery</a>
-<a href="reviews.html">Reviews</a>
-<a href="bookings.html">Bookings</a>
-<a href="contact.html">Contact</a>
-</div>
-</div>
-<div class="music-section">
-<h2> Music &amp; Videos</h2>
-<!-- Video YouTube 1 -->
-<div class="video-wrapper">
-<iframe allowfullscreen="" src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
-</div>
-<!-- Video YouTube 2 -->
-<div class="video-wrapper">
-<iframe allowfullscreen="" src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
-</div>
-<!-- Video Instagram 1 -->
-<div class="video-wrapper instagram">
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Cuo7L_0q3SK/embed"></iframe>
-</div>
-<!-- Video Instagram 2 – visible uniquement sur mobile -->
-<div class="video-wrapper instagram mobile-only">
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
-</div>
-<!-- Audio -->
-<div class="audio-container">
-<h3>Memories by Maroon 5</h3>
-<audio controls="">
-<source src="audio/Memories-Maroon%205.mp3" type="audio/mp3"/>
+  <div class="top-nav">
+    <a href="index.html">Home</a>
+    <a href="gigs.html">Gigs</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="bookings.html">Bookings</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="hamburger-menu">
+    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+    <div class="hamburger-nav" id="hamburgerNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gigs.html">Gigs</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="bookings.html">Bookings</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <div class="music-section">
+    <h2> Music &amp; Videos</h2>
+
+    <div class="video-wrapper">
+      <iframe allowfullscreen src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
+    </div>
+
+    <div class="video-wrapper">
+      <iframe allowfullscreen src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
+    </div>
+
+    <div class="video-wrapper instagram">
+      <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Cuo7L_0q3SK/embed"></iframe>
+    </div>
+
+    <div class="video-wrapper instagram mobile-only">
+      <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
+    </div>
+
+    <div class="audio-container">
+      <h3>Memories by Maroon 5</h3>
+      <audio controls>
+        <source src="audio/Memories-Maroon%205.mp3" type="audio/mp3"/>
         Your browser does not support the audio element.
       </audio>
-</div>
-</div>
-<script>
+    </div>
+  </div>
+
+  <script>
     function toggleMenu() {
       const nav = document.getElementById('hamburgerNav');
       nav.classList.toggle('show');
