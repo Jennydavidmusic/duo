@@ -1,12 +1,13 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jenny & David - Booking Calendar</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jenny &amp; David | Bookings Page</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
     body {
       background-color: #111;
       color: gold;
@@ -162,61 +163,51 @@
       }
     }
   </style>
-</head>
+<meta content="Discover Jenny &amp; David's bookings information and performances." name="description"/><meta content="Jenny and David, acoustic duo, bookings, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/></head>
 <body>
-
-  <!-- Bouton Retour -->
-  <a href="index.html" class="back-button">Home</a>
-
-  <h1>Booking</h1>
-
-  <div class="calendar-controls">
-    <button onclick="changeMonth(-1)">&#8592; Previous</button>
-    <h2 id="monthYear"></h2>
-    <button onclick="changeMonth(1)">Next &#8594;</button>
-  </div>
-
-  <div class="day-names">
-    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-  </div>
-
-  <div id="calendar" class="calendar"></div>
-
-  <div class="legend">
-    <p><span style="background-color:#8B0000; padding: 5px 10px; border-radius: 5px;">Booked</span> = Already Reserved</p>
-  </div>
-
-  <!-- Texte ajouté entre le calendrier et le formulaire -->
-  <div class="booking-info">
-    <p>Planning a wedding, birthday, or private/corporate event? Request a quote today!</p>
-    <p>We specialize in creating unforgettable experiences for any occasion. Don't hesitate to get in touch!</p>
-  </div>
-
-  <form id="bookingForm" action="https://formspree.io/f/manoqjeg" method="POST">
-    <h2>Contact Us for Booking</h2>
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-    <input type="submit" value="Send">
-    <p class="confirmation" id="confirmationMessage">Message sent! Thank you.</p>
-  </form>
-
-  <!-- Menu Hamburger -->
-  <div class="hamburger-menu">
-    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-    <div class="hamburger-nav" id="hamburgerNav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="music.html">Music & Videos</a>
-        <a href="gigs.html">Gigs</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="contact.html">Contact</a>
-    </div>
-  </div>
-
-  <!-- Script JavaScript -->
-  <script>
+<div class="top-nav"><a href="index.html">Home</a><a href="music.html">Music</a><a href="gigs.html">Gigs</a><a href="gallery.html">Gallery</a><a href="reviews.html">Reviews</a><a href="index.html"></a><a href="contact.html">Contact</a></div>
+<!-- Bouton Retour -->
+<h1>Booking</h1>
+<div class="calendar-controls">
+<button onclick="changeMonth(-1)">← Previous</button>
+<h2 id="monthYear"></h2>
+<button onclick="changeMonth(1)">Next →</button>
+</div>
+<div class="day-names">
+<div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+</div>
+<div class="calendar" id="calendar"></div>
+<div class="legend">
+<p><span style="background-color:#8B0000; padding: 5px 10px; border-radius: 5px;">Booked</span> = Already Reserved</p>
+</div>
+<!-- Texte ajouté entre le calendrier et le formulaire -->
+<div class="booking-info">
+<p>Planning a wedding, birthday, or private/corporate event? Request a quote today!</p>
+<p>We specialize in creating unforgettable experiences for any occasion. Don't hesitate to get in touch!</p>
+</div>
+<form action="https://formspree.io/f/manoqjeg" id="bookingForm" method="POST">
+<h2>Contact Us for Booking</h2>
+<input name="name" placeholder="Your Name" required="" type="text"/>
+<input name="email" placeholder="Your Email" required="" type="email"/>
+<textarea name="message" placeholder="Your Message" required="" rows="5"></textarea>
+<input type="submit" value="Send"/>
+<p class="confirmation" id="confirmationMessage">Message sent! Thank you.</p>
+</form>
+<!-- Menu Hamburger -->
+<div class="hamburger-menu">
+<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+<div class="hamburger-nav" id="hamburgerNav">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a href="contact.html">Contact</a>
+</div>
+</div>
+<!-- Script JavaScript -->
+<script>
     // Toggle menu hamburger
     function toggleMenu() {
       var nav = document.getElementById('hamburgerNav');
@@ -297,6 +288,5 @@
 
     fetchBookedDates();
   </script>
-
 </body>
 </html>
