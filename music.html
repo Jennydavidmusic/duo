@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jenny & David - Music & Videos </title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jenny &amp; David | Music Page</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
     body {
       background-color: #000;
       color: #D4AF37;
@@ -153,61 +154,52 @@
       }
     }
   </style>
-</head>
+<meta content="Discover Jenny &amp; David's music information and performances." name="description"/><meta content="Jenny and David, acoustic duo, music, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/></head>
 <body>
-
-  <!-- Home button for desktop -->
-  <a href="index.html" class="home-button">Home</a>
-
-  <!-- Hamburger Menu for mobile -->
-  <div class="hamburger-menu">
-    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-    <div class="hamburger-nav" id="hamburgerNav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    
-      <a href="gigs.html">Gigs</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="reviews.html">Reviews</a>
-      <a href="bookings.html">Bookings</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </div>
-
-  <div class="music-section">
-    <h2> Music & Videos</h2>
-
-    <!-- Video YouTube 1 -->
-    <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/rgNG6-iYWKo" allowfullscreen></iframe>
-    </div>
-
-    <!-- Video YouTube 2 -->
-    <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/QPFZwry92j0" allowfullscreen></iframe>
-    </div>
-
-    <!-- Video Instagram 1 -->
-    <div class="video-wrapper instagram">
-      <iframe src="https://www.instagram.com/p/Cuo7L_0q3SK/embed" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
-    </div>
-
-    <!-- Video Instagram 2 – visible uniquement sur mobile -->
-    <div class="video-wrapper instagram mobile-only">
-      <iframe src="https://www.instagram.com/p/Ck0t48hKELF/embed" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
-    </div>
-
-    <!-- Audio -->
-    <div class="audio-container">
-      <h3>Memories by Maroon 5</h3>
-      <audio controls>
-        <source src="audio/Memories-Maroon%205.mp3" type="audio/mp3">
+<div class="top-nav"><a href="index.html">Home</a><a href="index.html"></a><a href="gigs.html">Gigs</a><a href="gallery.html">Gallery</a><a href="reviews.html">Reviews</a><a href="bookings.html">Bookings</a><a href="contact.html">Contact</a></div>
+<!-- Home button for desktop -->
+<a class="home-button" href="index.html">Home</a>
+<!-- Hamburger Menu for mobile -->
+<div class="hamburger-menu">
+<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+<div class="hamburger-nav" id="hamburgerNav">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a href="bookings.html">Bookings</a>
+<a href="contact.html">Contact</a>
+</div>
+</div>
+<div class="music-section">
+<h2> Music &amp; Videos</h2>
+<!-- Video YouTube 1 -->
+<div class="video-wrapper">
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
+</div>
+<!-- Video YouTube 2 -->
+<div class="video-wrapper">
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
+</div>
+<!-- Video Instagram 1 -->
+<div class="video-wrapper instagram">
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Cuo7L_0q3SK/embed"></iframe>
+</div>
+<!-- Video Instagram 2 – visible uniquement sur mobile -->
+<div class="video-wrapper instagram mobile-only">
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
+</div>
+<!-- Audio -->
+<div class="audio-container">
+<h3>Memories by Maroon 5</h3>
+<audio controls="">
+<source src="audio/Memories-Maroon%205.mp3" type="audio/mp3"/>
         Your browser does not support the audio element.
       </audio>
-    </div>
-  </div>
-
-  <script>
+</div>
+</div>
+<script>
     function toggleMenu() {
       const nav = document.getElementById('hamburgerNav');
       nav.classList.toggle('show');
