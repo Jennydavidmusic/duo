@@ -399,3 +399,29 @@ body.gallery-page .back-button {
     display: inline;
   }
 }
+
+/* Top navigation visible only on desktop except index */
+.top-nav {
+  display: none;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #D4AF37;
+  background-color: #000;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.top-nav a {
+  color: #D4AF37;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@media (min-width: 769px) {
+  body:not(.index-page) .top-nav {
+    display: flex;
+  }
+}
