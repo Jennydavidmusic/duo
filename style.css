@@ -768,4 +768,20 @@ h1 {
     display: none !important;
   }
 }
+/* Forcer l’affichage du titre ET des vraies icônes sociales sur iPad Mini portrait */
+@media screen and (device-width: 768px) and (orientation: portrait) {
+  .hero-bottom-title {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social-icons {
+    display: flex !important;
+  }
+
+  .new-social-icons {
+    display: none !important;
+  }
+}
 
