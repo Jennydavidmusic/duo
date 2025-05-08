@@ -784,4 +784,26 @@ h1 {
     display: none !important;
   }
 }
+/* ✅ Centrage des gigs sur iPad Mini portrait */
+@media screen and (device-width: 768px) and (orientation: portrait) {
+  .gig-table {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    margin: 140px auto 0 auto !important;
+    width: 95% !important;
+    font-size: 1.5rem !important;
+    padding: 30px !important;
+  }
+
+  .gig-table table {
+    width: 100% !important;
+  }
+
+  .gig-table td, .gig-table th {
+    text-align: center !important;
+  }
+}
 
