@@ -57,7 +57,35 @@
       margin-left: 110px;
     }
   }
+
+
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  "name": "Jenny & David Live Gigs",
+  "startDate": "2024-05-18T19:30",
+  "location": {
+    "@type": "Place",
+    "name": "The Green Pub, Camden",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Camden",
+      "addressRegion": "London",
+      "addressCountry": "UK"
+    }
+  },
+  "performer": {
+    "@type": "MusicGroup",
+    "name": "Jenny & David"
+  },
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+}
+</script>
+
 </head>
 <body class="gigs-page">
 
@@ -81,6 +109,15 @@
 
 <section class="main-content">
 <div id="gig-table" class="gig-table">Loading gigs...</div>
+
+<noscript>
+  <div class="gig-fallback" style="text-align: center; margin-top: 2rem;">
+    <p><strong>Upcoming Gigs:</strong></p>
+    <p>Saturday 18 May – <a href="https://maps.google.com?q=The+Green+Pub,+Camden" target="_blank">The Green Pub, Camden</a> at 7:30 PM</p>
+    <p>Friday 24 May – <a href="https://maps.google.com?q=The+Crown,+Soho" target="_blank">The Crown, Soho</a> at 8:00 PM</p>
+  </div>
+</noscript>
+
 </section>
 
 <script>
