@@ -806,3 +806,21 @@ nav.hero-nav a.active {
   color: black;
   border-radius: 4px;
 }
+@media only screen and (min-width: 768px) and (max-width: 820px) and (orientation: portrait) {
+  nav.hero-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    gap: 8px;
+  }
+
+  nav.hero-nav a {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.6rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
