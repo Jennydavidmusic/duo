@@ -577,13 +577,7 @@ nav.hero-nav a:hover {
   }
 }
 
-/* Légèrement décalé uniquement sur très grands écrans */
-@media (min-width: 1200px) {
-  nav.hero-nav {
-    justify-content: flex-start;
-    padding-left: 14rem;
-  }
-}
+
 
 /* Mobile : position fixe en haut à droite */
 @media (max-width: 767px) {
