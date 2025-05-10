@@ -824,3 +824,7 @@ nav.hero-nav a.active {
     padding: 0.4rem 0.8rem;
   }
 }
+nav.hero-nav a.active,
+.hamburger-nav a.active {
+  text-decoration: underline;
+}
