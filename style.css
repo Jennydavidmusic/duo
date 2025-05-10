@@ -801,3 +801,8 @@ h1 {
   }
 }
 
+nav.hero-nav a.active {
+  background-color: gold;
+  color: black;
+  border-radius: 4px;
+}
