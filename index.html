@@ -390,12 +390,14 @@
             ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
             : nextGig.Venue;
 
-          const formattedTime = new Date(`${nextGig.Date} ${nextGig.Time}`);
-          formattedTime.setHours(formattedTime.getHours() + 1);
-          const formattedHour = formattedTime.getHours() % 12 || 12;
-          const formattedMinute = formattedTime.getMinutes().toString().padStart(2, '0');
-          const period = formattedTime.getHours() >= 12 ? 'PM' : 'AM';
-          const formattedTimeString = `${formattedHour}:${formattedMinute} ${period}`;
+const [day, month, year] = nextGig.Date.split('/').map(Number);
+const [hour, minute] = nextGig.Time.split(':').map(Number);
+const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h
+
+const hour12 = dateObj.getHours() % 12 || 12;
+const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
+const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
+const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
 
           const gigDetails = `
             <strong>${nextGig.Date}</strong><br>
