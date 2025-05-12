@@ -6,62 +6,103 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Jenny & David - Explore Our Photo Gallery</title>
-<link rel="canonical" href="https://jennydavidmusic.com/gallery.html" />
-      
 <link href="style.css" rel="stylesheet"/>
+
 <style>
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+  body {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: white;
-            font-size: 2.5rem;
-        }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 2.5rem;
+  }
 
-        .back-button {
-            position: fixed;
-            top: 35px;
-            left: 20px;
-            background-color: black;
-            color: gold;
-            padding: 8px 12px;
-            text-decoration: none;
-            border: 1px solid gold;
-            border-radius: 6px;
-            font-weight: bold;
-            z-index: 1000;
-            transition: background 0.3s, color 0.3s;
-        }
+  .back-button {
+    position: fixed;
+    top: 35px;
+    left: 20px;
+    background-color: black;
+    color: gold;
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid gold;
+    border-radius: 6px;
+    font-weight: bold;
+    z-index: 1000;
+    transition: background 0.3s, color 0.3s;
+  }
 
-        .back-button:hover {
-            background-color: gold;
-            color: black;
-        }
+  .back-button:hover {
+    background-color: gold;
+    color: black;
+  }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 100px;
-        }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 100px;
+  }
 
-        .gallery img {
-            width: 100%;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
+  .gallery-item {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
 
-        .gallery img:hover {
-            transform: scale(1.2);
-        }
-    </style>
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  #fullscreen-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #fullscreen-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+  }
+
+  #fullscreen-overlay.active {
+    display: flex;
+  }
+
+  #fullscreen-overlay:after {
+    content: '×';
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+</style>
+
 <meta content="Discover Jenny &amp; David's gallery information and performances." name="description"/><meta content="Jenny and David, acoustic duo, gallery, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/>
 <script type="application/ld+json">
 {
@@ -92,7 +133,6 @@
   <a href="music.html">Music & Videos</a>
   <a href="gigs.html">Gigs</a>
   <a href="gallery.html" class="active">Gallery</a>
-
   <a href="reviews.html">Reviews</a>
   <a href="bookings.html">Bookings</a>
   <a href="contact.html">Contact</a>
@@ -143,5 +183,27 @@
       nav.classList.toggle('show'); // Montre ou cache le menu
     }
   </script>
+
+<div id="fullscreen-overlay" onclick="closeFullscreen()">
+  <img id="fullscreen-image" src="" alt="Fullscreen Image" />
+</div>
+<script>
+  const galleryImages = document.querySelectorAll('.gallery img');
+  const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+  const fullscreenImage = document.getElementById('fullscreen-image');
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      fullscreenImage.src = img.src;
+      fullscreenOverlay.classList.add('active');
+    });
+  });
+
+  function closeFullscreen() {
+    fullscreenOverlay.classList.remove('active');
+    fullscreenImage.src = '';
+  }
+</script>
 </body>
+
 </html>
