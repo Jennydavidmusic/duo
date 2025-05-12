@@ -10,8 +10,6 @@
   <meta name="description" content="Discover Jenny & David's index information and performances.">
   <meta name="keywords" content="Jenny and David, acoustic duo, index, live music">
   <meta name="author" content="Jenny & David Music">
-  <link rel="canonical" href="https://jennydavidmusic.com/" />
-
   <style>
     html, body {
       margin: 0;
@@ -286,7 +284,6 @@
 <body class="index-page">
 
   <nav class="hero-nav">
-    
     <a href="about.html">About</a>
     <a href="music.html">Music & Videos</a>
     <a href="gigs.html">Gigs</a>
@@ -387,7 +384,7 @@
         if (upcoming.length > 0) {
           const nextGig = upcoming[0];
           const venueHTML = nextGig.Link
-            ? <a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>
+            ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
             : nextGig.Venue;
 
 const [day, month, year] = nextGig.Date.split('/').map(Number);
@@ -397,12 +394,13 @@ const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h
 const hour12 = dateObj.getHours() % 12 || 12;
 const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
 const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
-const formattedTimeString = ${hour12}:${minuteStr} ${ampm};
+const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
 
-          const gigDetails = 
+
+          const gigDetails = `
             <strong>${nextGig.Date}</strong><br>
             ${venueHTML} at ${formattedTimeString}
-          ;
+          `;
           document.getElementById('gig-details').innerHTML = gigDetails;
         } else {
           document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
@@ -416,3 +414,4 @@ const formattedTimeString = ${hour12}:${minuteStr} ${ampm};
 
 </body>
 </html>
+
