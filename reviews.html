@@ -189,6 +189,43 @@
     </div>
   </div>
 
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+  let selectedRating = 0;
+
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+      resetStars();
+      highlightStars(star.dataset.value);
+    });
+
+    star.addEventListener('mouseout', () => {
+      resetStars();
+      if (selectedRating) {
+        highlightStars(selectedRating);
+      }
+    });
+
+    star.addEventListener('click', () => {
+      selectedRating = star.dataset.value;
+      ratingInput.value = selectedRating;
+      highlightStars(selectedRating);
+    });
+  });
+
+  function resetStars() {
+    stars.forEach(star => star.classList.remove('hovered', 'selected'));
+  }
+
+  function highlightStars(count) {
+    stars.forEach(star => {
+      if (star.dataset.value <= count) {
+        star.classList.add('hovered');
+      }
+    });
+  }
+</script>
 
   <div class="hamburger-menu">
     <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
