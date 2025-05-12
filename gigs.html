@@ -184,7 +184,8 @@
         const venue = row.Link
           ? `<a href="${row.Link}" target="_blank" style="color: gold; text-decoration: underline;">${row.Venue}</a>`
           : row.Venue;
-        html += `<tr><td>${row.Date}</td><td>${venue}</td><td>${addOneHour(row.Time)}</td></tr>`;
+        const time = row.Time.toLowerCase().includes("private") ? "Private Event" : addOneHour(row.Time);
+        html += `<tr><td>${row.Date}</td><td>${venue}</td><td>${time}</td></tr>`;
       });
       html += '</tbody></table>';
       document.getElementById('gig-table').innerHTML = html;
