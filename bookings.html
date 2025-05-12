@@ -205,6 +205,11 @@
 </form>
 
 <script>
+  function toggleMenu() {
+  var nav = document.getElementById('hamburgerNav');
+  nav.classList.toggle('show');
+}
+
   let bookedDates = [];
   const calendarElement = document.getElementById('calendar');
   const monthYear = document.getElementById('monthYear');
