@@ -353,10 +353,20 @@
   </footer>
 
   <script>
-    function toggleMenu() {
-      const nav = document.getElementById('hamburgerNav');
-      nav.classList.toggle('show');
-    }
+    const nav = document.getElementById('hamburgerNav');
+const btn = document.querySelector('.hamburger-icon');
+
+function toggleMenu() {
+  nav.classList.toggle('show');
+  btn.textContent = nav.classList.contains('show') ? '✖' : '☰';
+}
+
+document.addEventListener('click', (e) => {
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('show');
+    btn.textContent = '☰';
+  }
+});
 
     fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
       .then(response => response.json())
@@ -414,4 +424,3 @@ const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
 
 </body>
 </html>
-
