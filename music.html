@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Music & Videos - Jenny & David Music Duo, Performances and Tracks</title>
-
 <meta name="description" content="Listen to Jenny & David, an acoustic duo based in London. Watch live videos and discover their musical performances from iconic venues and events.">
 <meta name="keywords" content="Jenny and David, acoustic duo, live music London, performance videos, wedding musicians, music showreel">
-
 <link href="style.css" rel="stylesheet"/>
 <link rel="canonical" href="https://jennydavidmusic.com/music.html" />
-
 <style>
     body {
       background-color: #000;
@@ -61,7 +57,6 @@
       margin-top: 20px;
     }
 
-    /* Hamburger menu */
     .hamburger-menu {
       display: none;
       position: fixed;
@@ -107,35 +102,9 @@
       display: flex;
     }
 
-    /* Home button on desktop */
-    .home-button {
-      display: none;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: black;
-      color: gold;
-      border: 1px solid gold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      z-index: 999;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .home-button:hover {
-      background-color: gold;
-      color: black;
-      transform: scale(1.1);
-    }
-
     @media (max-width: 768px) {
       .hamburger-menu {
         display: block;
-      }
-      .home-button {
-        display: none;
       }
       .video-wrapper.instagram {
         padding-bottom: 160%;
@@ -155,12 +124,8 @@
       .mobile-only {
         display: none;
       }
-      .home-button {
-        display: block;
-      }
     }
-  </style>
-<meta content="Discover Jenny &amp; David's music information and performances." name="description"/><meta content="Jenny and David, acoustic duo, music, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/>
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -178,15 +143,12 @@
   ]
 }
 </script>
-
-
+</head>
 <body>
-
 <nav class="hero-nav">
   <a href="https://jennydavidmusic.com">Home</a>
   <a href="about.html">About</a>
   <a href="music.html" class="active">Music & Videos</a>
-
   <a href="gigs.html">Gigs</a>
   <a href="gallery.html">Gallery</a>
   <a href="reviews.html">Reviews</a>
@@ -194,56 +156,59 @@
   <a href="contact.html">Contact</a>
 </nav>
 
-<!-- Home button for desktop -->
-
-<!-- Hamburger Menu for mobile -->
 <div class="hamburger-menu">
-<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-<div class="hamburger-nav" id="hamburgerNav">
-<a href="https://jennydavidmusic.com">Home</a>
-<a href="about.html">About</a>
-<a href="music.html" class="active">Music & Videos</a>    
-<a href="gigs.html">Gigs</a>
-<a href="gallery.html">Gallery</a>
-<a href="reviews.html">Reviews</a>
-<a href="bookings.html">Bookings</a>
-<a href="contact.html">Contact</a>
+  <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+  <div class="hamburger-nav" id="hamburgerNav">
+    <a href="https://jennydavidmusic.com">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html" class="active">Music & Videos</a>    
+    <a href="gigs.html">Gigs</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="bookings.html">Bookings</a>
+    <a href="contact.html">Contact</a>
+  </div>
 </div>
-</div>
-<div class="music-section">
-<h2 class="music-video-title">Music & Videos - Jenny & David Music Duo, Performances and Tracks</h2>
 
-     
-<!-- Video YouTube 1 -->
-<div class="video-wrapper">
-<iframe allowfullscreen="" src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
+<div class="music-section">
+  <h2 class="music-video-title">Music & Videos - Jenny & David Music Duo, Performances and Tracks</h2>
+
+  <div class="video-wrapper">
+    <iframe allowfullscreen="" src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
+  </div>
+  <div class="video-wrapper">
+    <iframe allowfullscreen="" src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
+  </div>
+  <div class="video-wrapper instagram">
+    <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Cuo7L_0q3SK/embed"></iframe>
+  </div>
+  <div class="video-wrapper instagram mobile-only">
+    <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
+  </div>
+  <div class="audio-container">
+    <h3>Memories by Maroon 5</h3>
+    <audio controls="">
+      <source src="audio/Memories-Maroon%205.mp3" type="audio/mp3"/>
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 </div>
-<!-- Video YouTube 2 -->
-<div class="video-wrapper">
-<iframe allowfullscreen="" src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
-</div>
-<!-- Video Instagram 1 -->
-<div class="video-wrapper instagram">
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Cuo7L_0q3SK/embed"></iframe>
-</div>
-<!-- Video Instagram 2 – visible uniquement sur mobile -->
-<div class="video-wrapper instagram mobile-only">
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
-</div>
-<!-- Audio -->
-<div class="audio-container">
-<h3>Memories by Maroon 5</h3>
-<audio controls="">
-<source src="audio/Memories-Maroon%205.mp3" type="audio/mp3"/>
-        Your browser does not support the audio element.
-      </audio>
-</div>
-</div>
+
 <script>
-    function toggleMenu() {
-      const nav = document.getElementById('hamburgerNav');
-      nav.classList.toggle('show');
+  const nav = document.getElementById('hamburgerNav');
+  const btn = document.querySelector('.hamburger-icon');
+
+  function toggleMenu() {
+    nav.classList.toggle('show');
+    btn.textContent = nav.classList.contains('show') ? '✖' : '☰';
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+      nav.classList.remove('show');
+      btn.textContent = '☰';
     }
-  </script>
+  });
+</script>
 </body>
 </html>
