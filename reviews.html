@@ -5,13 +5,10 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Leave a Review for Jenny & David - Share Your Feedback</title>
-
   <meta name="description" content="Read genuine reviews from people who attended Jenny & David's performances. Leave your own feedback and rating.">
   <meta name="keywords" content="Jenny and David reviews, acoustic duo feedback, live music testimonials, customer reviews, event musicians London">
-
   <link href="style.css" rel="stylesheet" />
   <link rel="canonical" href="https://jennydavidmusic.com/reviews.html" />
-
   <style>
     body {
       background-color: #111;
@@ -78,54 +75,46 @@
       color: gold;
       margin-bottom: 5px;
     }
-    .back-button {
+    .hamburger-menu {
       position: fixed;
       top: 20px;
       left: 20px;
-      background-color: black;
-      color: gold;
-      padding: 10px 20px;
-      text-decoration: none;
-      border: 1px solid gold;
-      border-radius: 8px;
-      font-weight: bold;
-      z-index: 1001;
-      transition: background 0.3s, transform 0.3s;
+      z-index: 1000;
     }
-    .back-button:hover {
+    .hamburger-icon {
+      font-size: 30px;
+      color: #D4AF37;
+      cursor: pointer;
+    }
+    .hamburger-nav {
+      display: none;
+      flex-direction: column;
+      background-color: #111;
+      position: fixed;
+      top: 60px;
+      left: 20px;
+      width: 180px;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+    .hamburger-nav a {
+      color: #D4AF37;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 15px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    .hamburger-nav a:hover {
       background-color: gold;
       color: black;
-      transform: scale(1.1);
     }
-    @media (max-width: 768px) {
-      .back-button {
-        font-size: 0.9rem;
-        padding: 6px 12px;
-        top: 10px;
-      }
+    .hamburger-nav.show {
+      display: flex;
     }
   </style>
-
-  <meta content="Discover Jenny &amp; David's reviews information and performances." name="description" />
-  <meta content="Jenny and David, acoustic duo, reviews, live music" name="keywords" />
-  <meta content="Jenny &amp; David Music" name="author" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MusicGroup",
-    "name": "Jenny & David",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "10"
-    },
-    "url": "https://jennydavidmusic.com/reviews.html",
-    "description": "Reviews for Jenny & David, live acoustic duo based in London"
-  }
-  </script>
 </head>
-
 <body>
   <nav class="hero-nav">
     <a href="https://jennydavidmusic.com">Home</a>
@@ -133,10 +122,8 @@
     <a href="music.html">Music & Videos</a>
     <a href="gigs.html">Gigs</a>
     <a href="gallery.html">Gallery</a>
-   
     <a href="reviews.html" class="active">Reviews</a>
     <a href="bookings.html">Bookings</a>
-    
     <a href="contact.html">Contact</a>
   </nav>
 
@@ -158,7 +145,7 @@
     <input type="submit" value="Send Review" />
   </form>
 
-  <div class="review-list" id="reviewList">
+ <div class="review-list" id="reviewList">
     <div class="review">
       <div class="stars">★★★★★</div>
       <p><strong>Sylvain Fourre</strong>: "I remember I had lovely evening at pub with your entertainment you are great talented artists Jenny pure voice and David great guitarist hopefuly see you soon over there."</p>
@@ -201,68 +188,7 @@
     </div>
   </div>
 
-  <script>
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('rating');
-    let selectedRating = 0;
 
-    stars.forEach(star => {
-      star.addEventListener('mouseover', () => {
-        resetStars();
-        highlightStars(star.dataset.value);
-      });
-
-      star.addEventListener('mouseout', () => {
-        resetStars();
-        if (selectedRating) {
-          highlightStars(selectedRating);
-        }
-      });
-
-      star.addEventListener('click', () => {
-        selectedRating = star.dataset.value;
-        ratingInput.value = selectedRating;
-      });
-    });
-
-    function resetStars() {
-      stars.forEach(star => star.classList.remove('hovered', 'selected'));
-    }
-
-    function highlightStars(count) {
-      stars.forEach(star => {
-        if (star.dataset.value <= count) {
-          star.classList.add('hovered');
-        }
-      });
-    }
-
-    const reviewForm = document.getElementById('reviewForm');
-    const reviewList = document.getElementById('reviewList');
-
-    reviewForm.addEventListener('submit', function(event) {
-      event.preventDefault();
-      const name = this.name.value;
-      const message = this.message.value;
-      const rating = this.rating.value;
-
-      const reviewHTML = `
-        <div class="review">
-          <div class="stars">${'&#9733;'.repeat(rating)}</div>
-          <p><strong>${name}</strong>: "${message}"</p>
-        </div>
-      `;
-      reviewList.insertAdjacentHTML('afterbegin', reviewHTML);
-
-      this.reset();
-      resetStars();
-      selectedRating = 0;
-      ratingInput.value = '';
-      alert('Thank you for your review!');
-    });
-  </script>
-
-  <!-- Menu Hamburger -->
   <div class="hamburger-menu">
     <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
     <div class="hamburger-nav" id="hamburgerNav">
@@ -273,16 +199,26 @@
       <a href="gallery.html">Gallery</a>
       <a href="bookings.html">Bookings</a>
       <a href="reviews.html" class="active">Reviews</a>
-      
       <a href="contact.html">Contact</a>
     </div>
   </div>
 
   <script>
     function toggleMenu() {
-      var nav = document.getElementById('hamburgerNav');
+      const nav = document.getElementById('hamburgerNav');
+      const icon = document.querySelector('.hamburger-icon');
       nav.classList.toggle('show');
+      icon.textContent = nav.classList.contains('show') ? '✖' : '☰';
     }
+
+    document.addEventListener('click', function (event) {
+      const nav = document.getElementById('hamburgerNav');
+      const icon = document.querySelector('.hamburger-icon');
+      if (!nav.contains(event.target) && !icon.contains(event.target)) {
+        nav.classList.remove('show');
+        icon.textContent = '☰';
+      }
+    });
   </script>
 </body>
 </html>
