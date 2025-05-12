@@ -828,3 +828,7 @@ nav.hero-nav a.active,
 .hamburger-nav a.active {
   text-decoration: underline;
 }
+.calendar-day.selected {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
