@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -9,122 +8,102 @@
 <link rel="canonical" href="https://jennydavidmusic.com/contact.html" />
 
 <style>
-    body {
-      background-color: #000;
-      color: #D4AF37;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
+  body {
+    background-color: #000;
+    color: #D4AF37;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  .contact-container {
+    max-width: 600px;
+    margin: 80px auto 40px auto;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    color: white;
+  }
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    color: white;
+  }
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  input, textarea {
+    padding: 10px;
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+    background: #111;
+    color: #D4AF37;
+    font-size: 1rem;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  button {
+    padding: 10px;
+    background-color: gold;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  button:hover {
+    background-color: #ffd700;
+    transform: scale(1.05);
+  }
+  .back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: black;
+    color: gold;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid gold;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 1001;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .back-button:hover {
+    background-color: gold;
+    color: black;
+    transform: scale(1.1);
+  }
+  @media (max-width: 768px) {
+    .contact-container {
+      margin-top: 20px;
       padding: 20px;
     }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    p  { font-size: 1rem; }
+    button { font-size: 1rem; }
+  }
+</style>
 
-    .contact-container {
-      max-width: 600px;
-      margin: 80px auto 40px auto;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-    }
+<meta name="description" content="Discover Jenny &amp; David's contact information and performances.">
+<meta name="keywords" content="Jenny and David, acoustic duo, contact, live music">
+<meta name="author" content="Jenny &amp; David Music">
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 5px;
-      color: white;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      margin-top: 0;
-      color: white;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      border: 1px solid #D4AF37;
-      border-radius: 5px;
-      background: #111;
-      color: #D4AF37;
-      font-size: 1rem;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    button {
-      padding: 10px;
-      background-color: gold;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    button:hover {
-      background-color: #ffd700;
-      transform: scale(1.05);
-    }
-
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: black;
-      color: gold;
-      padding: 10px 20px;
-      text-decoration: none;
-      border: 1px solid gold;
-      border-radius: 8px;
-      font-weight: bold;
-      z-index: 1001;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .back-button:hover {
-      background-color: gold;
-      color: black;
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 768px) {
-      .contact-container {
-        margin-top: 20px;
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-
-      button {
-        font-size: 1rem;
-      }
-    }
-  </style>
-<meta content="Discover Jenny &amp; David's contact information and performances." name="description"/><meta content="Jenny and David, acoustic duo, contact, live music" name="keywords"/><meta content="Jenny &amp; David Music" name="author"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -141,7 +120,7 @@
   "description": "Contact page to book Jenny & David, an acoustic music duo based in London."
 }
 </script>
-
+</head>
 
 <body class="contact-page">
 
@@ -151,66 +130,78 @@
   <a href="music.html">Music & Videos</a>
   <a href="gigs.html">Gigs</a>
   <a href="gallery.html">Gallery</a>
-  
   <a href="reviews.html">Reviews</a>
   <a href="bookings.html">Bookings</a>
   <a href="contact.html" class="active">Contact</a>
-
-  
 </nav>
 
 <div class="contact-container">
-<h1>Contact Jenny & David - Book Our Music Duo for Your Event</h1>
-<h2>Jenny &amp; David</h2>
-<p>For any gig request or information, feel free to contact us here!</p>
-<form action="https://formspree.io/f/manoqjeg" id="contactForm" method="POST">
-<input name="name" placeholder="Your Name" required="" type="text"/>
-<input name="email" placeholder="Your Email" required="" type="email"/>
-<textarea name="message" placeholder="Your Message" required=""></textarea>
-<button type="submit">Send</button>
-</form>
-<p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
+  <h1>Contact Jenny & David - Book Our Music Duo for Your Event</h1>
+  <h2>Jenny &amp; David</h2>
+  <p>For any gig request or information, feel free to contact us here!</p>
+  <form action="https://formspree.io/f/manoqjeg" id="contactForm" method="POST">
+    <input name="name" placeholder="Your Name" required type="text"/>
+    <input name="email" placeholder="Your Email" required type="email"/>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+  <p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
 </div>
-<script>
-    document.getElementById("contactForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const form = this;
-      fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
-        headers: {
-          Accept: "application/json",
-        },
-      })
-      .then(() => {
-        document.getElementById("confirmation").style.display = "block";
-        form.reset();
-      })
-      .catch(() => {
-        alert("There was an error. Please try again.");
-      });
-    });
-  </script>
+
 <!-- Menu Hamburger -->
 <div class="hamburger-menu">
-<div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-<div class="hamburger-nav" id="hamburgerNav">
-<a href="https://jennydavidmusic.com">Home</a>
-<a href="about.html">About</a>
-<a href="music.html">Music & Videos</a>
-<a href="gigs.html">Gigs</a>
-<a href="gallery.html">Gallery</a>
-<a href="reviews.html">Reviews</a>
-<a href="bookings.html">Bookings</a>
-<a href="contact.html" class="active">Contact</a>  
-
+  <div class="hamburger-icon">☰</div>
+  <div class="hamburger-nav" id="hamburgerNav">
+    <a href="https://jennydavidmusic.com">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music & Videos</a>
+    <a href="gigs.html">Gigs</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="bookings.html">Bookings</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
 </div>
-<!-- Script JavaScript -->
+
 <script>
-    function toggleMenu() {
-      var nav = document.getElementById('hamburgerNav');
-      nav.classList.toggle('show'); // Montre ou cache le menu
+  // Form submission
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const form = this;
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    }).then(() => {
+      document.getElementById("confirmation").style.display = "block";
+      form.reset();
+    }).catch(() => {
+      alert("There was an error. Please try again.");
+    });
+  });
+
+  // Hamburger menu logic
+  const menuButton = document.querySelector('.hamburger-icon');
+  const mobileMenu = document.getElementById('hamburgerNav');
+
+  menuButton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    mobileMenu.classList.toggle('show');
+    this.textContent = mobileMenu.classList.contains('show') ? '✖' : '☰';
+  });
+
+  mobileMenu.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  document.addEventListener('click', function () {
+    if (mobileMenu.classList.contains('show')) {
+      mobileMenu.classList.remove('show');
+      menuButton.textContent = '☰';
     }
-  </script>
+  });
+</script>
+
 </body>
 </html>
+
