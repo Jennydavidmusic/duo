@@ -196,31 +196,33 @@
     });
 
   // Hamburger menu toggle + click outside
-  const button = document.querySelector(".hamburger-icon");
-  const menu = document.getElementById("hamburgerNav");
+    const button = document.querySelector(".hamburger-icon");
+const menu = document.getElementById("hamburgerNav");
 
-  button.addEventListener("click", function (e) {
-    e.stopPropagation();
-    menu.classList.toggle("show");
-    button.textContent = menu.classList.contains("show") ? "✖" : "☰";
-  });
+button.addEventListener("click", function (e) {
+  e.stopPropagation();
+  menu.classList.toggle("show");
+  button.textContent = menu.classList.contains("show") ? "✖" : "☰";
+});
 
-  document.addEventListener("click", function () {
-    if (menu.classList.contains("show")) {
-      menu.classList.remove("show");
-      button.textContent = "☰";
-    }
-  });
-
-  menu.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
-  window.addEventListener("scroll", () => {
-  if (mobileMenu.classList.contains("show")) {
-    mobileMenu.classList.remove("show");
-    menuButton.textContent = "☰";
+document.addEventListener("click", function () {
+  if (menu.classList.contains("show")) {
+    menu.classList.remove("show");
+    button.textContent = "☰";
   }
 });
+
+menu.addEventListener("click", function (e) {
+  e.stopPropagation();
+});
+
+window.addEventListener("scroll", () => {
+  if (menu.classList.contains("show")) {
+    menu.classList.remove("show");
+    button.textContent = "☰";
+  }
+});
+
 
 </script>
 
