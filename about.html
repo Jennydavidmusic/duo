@@ -133,6 +133,13 @@
       menuButton.textContent = '☰';
     }
   });
+  window.addEventListener("scroll", () => {
+  if (mobileMenu.classList.contains("show")) {
+    mobileMenu.classList.remove("show");
+    menuButton.textContent = "☰";
+  }
+});
+
 </script>
 
 </body>
