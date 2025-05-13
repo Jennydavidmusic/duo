@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Book Jenny & David - Live Music Duo for Your Event</title>
-  <link href="style.css" rel="stylesheet"/>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Jenny &amp; David - Live Music Duo for Your Event</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
     body {
       background-color: #111;
       color: gold;
@@ -119,77 +120,66 @@
       }
     }
   </style>
-</head>
+<meta content="Book Jenny &amp; David for weddings, events, and live music in London. Professional acoustic duo with a unique looping setup." name="description"/></head>
 <body>
 <nav class="hero-nav">
-  <a href="https://jennydavidmusic.com">Home</a>
-  <a href="about.html">About</a>
-  <a href="music.html">Music & Videos</a>
-  <a href="gigs.html">Gigs</a>
-  <a href="gallery.html">Gallery</a>
-  
-  <a href="reviews.html">Reviews</a>
-  <a href="bookings.html" class="active">Bookings</a>
-  <a href="contact.html">Contact</a>
+<a href="https://jennydavidmusic.com">Home</a>
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a class="active" href="bookings.html">Bookings</a>
+<a href="contact.html">Contact</a>
 </nav>
-
 <!-- Menu Hamburger -->
 <div class="hamburger-menu">
-  <div class="hamburger-icon">☰</div>
-  <div class="hamburger-nav" id="hamburgerNav">
-    <a href="https://jennydavidmusic.com">Home</a>
-    <a href="about.html">About</a>
-    <a href="music.html">Music & Videos</a>
-    <a href="gigs.html">Gigs</a>
-    <a href="gallery.html">Gallery</a>
-    
-    <a href="reviews.html">Reviews</a>
-    <a href="bookings.html" class="active">Bookings</a>
-    <a href="contact.html">Contact</a>
-  </div>
+<div class="hamburger-icon">☰</div>
+<div class="hamburger-nav" id="hamburgerNav">
+<a href="https://jennydavidmusic.com">Home</a>
+<a href="about.html">About</a>
+<a href="music.html">Music &amp; Videos</a>
+<a href="gigs.html">Gigs</a>
+<a href="gallery.html">Gallery</a>
+<a href="reviews.html">Reviews</a>
+<a class="active" href="bookings.html">Bookings</a>
+<a href="contact.html">Contact</a>
 </div>
-
-<h1 class="booking-title">Book Jenny & David - Live Music Duo for Your Event</h1>
-
+</div>
+<h1 class="booking-title">Book Jenny &amp; David - Live Music Duo for Your Event</h1>
 <div class="calendar-controls">
-  <button onclick="changeMonth(-1)">← Previous</button>
-  <h2 id="monthYear"></h2>
-  <button onclick="changeMonth(1)">Next →</button>
+<button onclick="changeMonth(-1)">← Previous</button>
+<h2 id="monthYear"></h2>
+<button onclick="changeMonth(1)">Next →</button>
 </div>
-
 <div class="day-names">
-  <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+<div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
 </div>
 <div class="calendar" id="calendar"></div>
-
 <noscript>
-  <div style="text-align: center; margin-top: 2rem; color: gold;">
-    <p><strong>Some dates may already be reserved:</strong></p>
-    <p>May 18 — Booked</p>
-    <p>May 24 — Booked</p>
-    <p>Please contact us to check availability.</p>
-  </div>
+<div style="text-align: center; margin-top: 2rem; color: gold;">
+<p><strong>Some dates may already be reserved:</strong></p>
+<p>May 18 — Booked</p>
+<p>May 24 — Booked</p>
+<p>Please contact us to check availability.</p>
+</div>
 </noscript>
-
 <div class="legend">
-  <p><span style="background-color:#8B0000; padding: 5px 10px; border-radius: 5px;">Booked</span> = Already Reserved</p>
+<p><span style="background-color:#8B0000; padding: 5px 10px; border-radius: 5px;">Booked</span> = Already Reserved</p>
 </div>
-
 <div class="booking-info">
-  <p>Planning a wedding, birthday, or private/corporate event? Request a quote today!</p>
-  <p>We specialize in creating unforgettable experiences for any occasion. Don't hesitate to get in touch!</p>
+<p>Planning a wedding, birthday, or private/corporate event? Request a quote today!</p>
+<p>We specialize in creating unforgettable experiences for any occasion. Don't hesitate to get in touch!</p>
 </div>
-
 <form action="https://formspree.io/f/manoqjeg" id="bookingForm" method="POST">
-  <h2>Contact Us for Booking</h2>
-  <input name="name" placeholder="Your Name" required type="text"/>
-  <input name="email" placeholder="Your Email" required type="email"/>
-  <input name="event-date" id="eventDateInput" placeholder="Select a Date" type="text" readonly style="background-color: #333; color: gold;" />
-  <textarea name="message" placeholder="Your Message" required rows="5"></textarea>
-  <input type="submit" value="Send"/>
-  <p class="confirmation" id="confirmationMessage">Message sent! Thank you.</p>
+<h2>Contact Us for Booking</h2>
+<input name="name" placeholder="Your Name" required="" type="text"/>
+<input name="email" placeholder="Your Email" required="" type="email"/>
+<input id="eventDateInput" name="event-date" placeholder="Select a Date" readonly="" style="background-color: #333; color: gold;" type="text"/>
+<textarea name="message" placeholder="Your Message" required="" rows="5"></textarea>
+<input type="submit" value="Send"/>
+<p class="confirmation" id="confirmationMessage">Message sent! Thank you.</p>
 </form>
-
 <script>
   // Hamburger functionality
   const menuButton = document.querySelector('.hamburger-icon');
@@ -305,6 +295,5 @@
 
   fetchBookedDates();
 </script>
-
 </body>
 </html>
