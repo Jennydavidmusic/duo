@@ -243,27 +243,35 @@
   </div>
 
   <script>
-    function toggleMenu() {
-      const nav = document.getElementById('hamburgerNav');
-      const icon = document.querySelector('.hamburger-icon');
-      nav.classList.toggle('show');
-      icon.textContent = nav.classList.contains('show') ? '✖' : '☰';
-    }
+  document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.getElementById("hamburgerNav");
+  const btn = document.querySelector(".hamburger-icon");
 
-    document.addEventListener('click', function (event) {
-      const nav = document.getElementById('hamburgerNav');
-      const icon = document.querySelector('.hamburger-icon');
-      if (!nav.contains(event.target) && !icon.contains(event.target)) {
-        nav.classList.remove('show');
-        icon.textContent = '☰';
-      }
-    });
-    window.addEventListener("scroll", () => {
-  if (mobileMenu.classList.contains("show")) {
-    mobileMenu.classList.remove("show");
-    menuButton.textContent = "☰";
+  function toggleMenu() {
+    nav.classList.toggle("show");
+    btn.textContent = nav.classList.contains("show") ? "✖" : "☰";
   }
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+      nav.classList.remove("show");
+      btn.textContent = "☰";
+    }
+  });
+
+  window.addEventListener("scroll", () => {
+    if (nav.classList.contains("show")) {
+      nav.classList.remove("show");
+      btn.textContent = "☰";
+    }
+  });
 });
+
 
   </script>
 </body>
