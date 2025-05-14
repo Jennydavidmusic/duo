@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Alice",
+    "rating": 5,
+    "comment": "Amazing performance!",
+    "date": "2025-05-14",
+    "approved": true
+  },
+  {
+    "name": "Bob",
+    "rating": 4,
+    "comment": "Great atmosphere.",
+    "date": "2025-05-13",
+    "approved": true
+  },
+  {
+    "name": "Marion",
+    "rating": 5,
+    "comment": "Un duo incroyable ! Chaque concert est un vrai plaisir.",
+    "date": "2025-05-10",
+    "approved": true
+  },
+  {
+    "name": "Alex",
+    "rating": 5,
+    "comment": "Their performance at our wedding was unforgettable.",
+    "date": "2025-05-07",
+    "approved": true
+  }
+]
