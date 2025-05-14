@@ -81,18 +81,18 @@
       margin-bottom: 5px;
       font-size: 1.2rem;
     }
-
-
-    nav.hero-nav a {
-      color: #D4AF37;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 1rem;
-      text-transform: uppercase;
+    @media screen and (min-width: 768px) {
+      .hamburger-menu {
+        display: none !important;
+      }
     }
-    nav.hero-nav a:hover {
-      text-decoration: underline;
+
+    @media screen and (max-width: 767px) {
+      nav.hero-nav {
+        display: none !important;
+      }
     }
+
   </style>
 </head>
 <body class="reviews-page">
