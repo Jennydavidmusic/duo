@@ -1,5 +1,3 @@
-
-<script>
 fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
   .then(response => response.json())
   .then(data => {
@@ -58,4 +56,3 @@ fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
   .catch(error => {
     console.error("Failed to load gig events for schema.org:", error);
   });
-</script>
