@@ -844,4 +844,9 @@ nav.hero-nav a.active,
     padding: 1px 3px;
   }
 }
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+  .about-title {
+    margin-top: 80px;
+  }
+}
 
