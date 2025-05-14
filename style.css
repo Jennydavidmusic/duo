@@ -98,7 +98,7 @@ h2, .about-title {
 }
 
 .about-title {
-  margin-top: 40px;
+  margin-top: 65px;
   font-size: 2.5rem;
 }
 
@@ -844,6 +844,4 @@ nav.hero-nav a.active,
     padding: 1px 3px;
   }
 }
-.about-title {
-  margin-top: 65px;
-}
+
