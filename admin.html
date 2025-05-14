@@ -1,112 +1,106 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Review Admin</title>
+  <title>Admin - Validate Reviews</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
     body {
-      font-family: Arial, sans-serif;
       background-color: #111;
-      color: #fff;
+      color: white;
+      font-family: Arial, sans-serif;
       padding: 20px;
+      text-align: center;
     }
     .review {
       background: #222;
-      padding: 15px;
-      margin-bottom: 15px;
-      border: 1px solid gold;
       border-radius: 10px;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
     }
-    .stars span {
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #444;
-      transition: color 0.2s;
-    }
-    .stars span.selected {
+    .stars {
       color: gold;
+      font-size: 1.2rem;
     }
     button {
-      padding: 5px 10px;
       background-color: gold;
+      color: black;
+      padding: 10px 20px;
       border: none;
-      font-weight: bold;
+      border-radius: 6px;
       cursor: pointer;
       margin-top: 10px;
+    }
+    #admin-panel {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Validate Reviews</h1>
-  <div id="admin-list"></div>
-  <button onclick="downloadJSON()">💾 Download Updated JSON</button>
+  <h1>Admin Access</h1>
+
+  <form id="login-form">
+    <input type="password" id="password-input" placeholder="Enter admin password" />
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="admin-panel">
+    <h2>Pending Reviews</h2>
+    <div id="reviews-container">Loading...</div>
+  </div>
 
   <script>
-    let reviews = [];
-    fetch('reviews.json')
-      .then(res => res.json())
-      .then(data => {
-        reviews = data;
-        showPendingReviews();
-      });
+    const PASSWORD = "Axel14082024";
 
-    function showPendingReviews() {
-      const container = document.getElementById('admin-list');
-      container.innerHTML = '';
-      reviews.forEach((review, index) => {
-        if (!review.approved) {
-          const div = document.createElement('div');
-          div.className = 'review';
-          const starsHTML = getStarsHTML(review.rating || 0, index);
-          div.innerHTML = `
-            <p><strong>${review.name}</strong> (${review.date})</p>
-            <p>${review.comment}</p>
-            <div class="stars" id="stars-${index}">${starsHTML}</div>
-            <button onclick="approve(${index})">✅ Valider</button>
-          `;
-          container.appendChild(div);
-          setStarClickHandlers(index);
-        }
-      });
-    }
-
-    function getStarsHTML(rating, index) {
-      let html = '';
-      for (let i = 1; i <= 5; i++) {
-        const selected = i <= rating ? 'selected' : '';
-        html += `<span data-index="${index}" data-star="${i}" class="${selected}">★</span>`;
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const input = document.getElementById("password-input").value;
+      if (input === PASSWORD) {
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("admin-panel").style.display = "block";
+        loadReviews();
+      } else {
+        alert("Incorrect password.");
       }
-      return html;
-    }
+    });
 
-    function setStarClickHandlers(index) {
-      const starContainer = document.getElementById(`stars-${index}`);
-      const stars = starContainer.querySelectorAll('span');
-      stars.forEach(star => {
-        star.addEventListener('click', () => {
-          const newRating = parseInt(star.getAttribute('data-star'));
-          reviews[index].rating = newRating;
-          starContainer.innerHTML = getStarsHTML(newRating, index);
-          setStarClickHandlers(index);
+    function loadReviews() {
+      fetch("reviews.json")
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("reviews-container");
+          container.innerHTML = "";
+          data.forEach((review, index) => {
+            if (!review.validated) {
+              const div = document.createElement("div");
+              div.className = "review";
+              div.innerHTML = `
+                <div class="stars">${"★".repeat(review.rating)}</div>
+                <p><strong>${review.name}</strong>: "${review.comment}"</p>
+                <button onclick="approveReview(${index})">Approuver</button>
+              `;
+              container.appendChild(div);
+            }
+          });
         });
-      });
     }
 
-    function approve(index) {
-      reviews[index].approved = true;
-      showPendingReviews();
-    }
-
-    function downloadJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reviews, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "reviews.json");
-      document.body.appendChild(dlAnchor);
-      dlAnchor.click();
-      dlAnchor.remove();
+    function approveReview(index) {
+      fetch("reviews.json")
+        .then(res => res.json())
+        .then(data => {
+          data[index].validated = true;
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "reviews.json";
+          link.click();
+          alert("Avis approuvé. Téléchargez et mettez à jour reviews.json dans GitHub.");
+          loadReviews();
+        });
     }
   </script>
 </body>
 </html>
+
