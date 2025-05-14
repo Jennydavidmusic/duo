@@ -2,48 +2,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Leave a Review for Jenny & David - Share Your Feedback</title>
-  <meta name="description" content="Read genuine reviews from people who attended Jenny & David's performances. Leave your own feedback and rating.">
-  <meta name="keywords" content="Jenny and David reviews, acoustic duo feedback, live music testimonials, customer reviews, event musicians London">
-  <link href="style.css" rel="stylesheet" />
-  <link rel="canonical" href="https://jennydavidmusic.com/reviews.html" />
+  <meta charset="utf-8"/>
+  <title>Reviews – Jenny & David Music Duo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Read real reviews from people who attended Jenny & David's acoustic live shows in London.">
+  <meta name="keywords" content="Jenny and David reviews, acoustic duo feedback, live music London, event musicians">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="canonical" href="https://jennydavidmusic.com/reviews.html"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
   <style>
     body {
       background-color: #111;
       color: white;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       text-align: center;
     }
     h1 {
       color: gold;
-      margin-bottom: 20px;
       font-size: 2.5rem;
-    }
-    .star-rating {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
-    .star {
-      color: #666;
-      transition: color 0.3s;
-    }
-    .star.hovered, .star.selected {
-      color: gold;
+      margin: 120px 20px 20px 20px;
     }
     form {
-      background: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 20px;
       border-radius: 10px;
       max-width: 500px;
-      margin: 20px auto;
+      margin: 0 auto 40px auto;
     }
     input, textarea {
       width: 90%;
@@ -53,83 +40,98 @@
       border: none;
     }
     input[type="submit"] {
-      background: gold;
+      background-color: gold;
       color: black;
       font-weight: bold;
       cursor: pointer;
     }
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+    .star {
+      color: #666;
+      cursor: pointer;
+    }
+    .star.hovered, .star.selected {
+      color: gold;
+    }
     .review-list {
-      margin-top: 40px;
       max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+      padding: 20px;
       text-align: left;
     }
     .review {
-      background: #222;
+      background-color: #222;
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 15px;
     }
-    .review .stars {
+    .stars {
       color: gold;
       margin-bottom: 5px;
-    }
-    .hamburger-menu {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
-    .hamburger-icon {
-      font-size: 30px;
-      color: #D4AF37;
-      cursor: pointer;
-    }
-    .hamburger-nav {
-      display: none;
-      flex-direction: column;
-      background-color: #111;
-      position: fixed;
-      top: 60px;
-      left: 20px;
-      width: 180px;
-      border-radius: 10px;
-      padding: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    }
-    .hamburger-nav a {
-      color: #D4AF37;
       font-size: 1.2rem;
-      text-align: center;
-      padding: 15px 25px;
-      border-radius: 8px;
-      text-decoration: none;
     }
-    .hamburger-nav a:hover {
-      background-color: gold;
-      color: black;
-    }
-    .hamburger-nav.show {
+    nav.hero-nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #000;
       display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      z-index: 999;
+    }
+    nav.hero-nav a {
+      color: #D4AF37;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+    nav.hero-nav a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
-<body>
-  <nav class="hero-nav">
-    <a href="https://jennydavidmusic.com">Home</a>
-    <a href="about.html">About</a>
-    <a href="music.html">Music & Videos</a>
-    <a href="gigs.html">Gigs</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="reviews.html" class="active">Reviews</a>
-    <a href="bookings.html">Bookings</a>
-    
-    <a href="contact.html">Contact</a>
-  </nav>
+<body class="reviews-page">
 
-  <h1 class="review-title">What People Say About Jenny & David – London Music Duo Reviews</h1>
+<nav class="hero-nav">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="music.html">Music & Videos</a>
+  <a href="gigs.html">Gigs</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="reviews.html" class="active">Reviews</a>
+  <a href="bookings.html">Bookings</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
+  <div class="hamburger-menu">
+    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+    <div class="hamburger-nav" id="hamburgerNav">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="music.html">Music & Videos</a>
+      <a href="gigs.html">Gigs</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="bookings.html">Bookings</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+
+<h1>Leave a Review for Jenny & David</h1>
+
+<form action="https://formspree.io/f/manoqjeg" method="POST">
+  <input name="name" type="text" placeholder="Your Name" required />
+  <input name="email" type="email" placeholder="Your Email" required />
   <div class="star-rating" id="starRating">
     <span class="star" data-value="1">★</span>
     <span class="star" data-value="2">★</span>
@@ -137,57 +139,24 @@
     <span class="star" data-value="4">★</span>
     <span class="star" data-value="5">★</span>
   </div>
+  <input id="rating" name="rating" type="hidden" value="" />
+  <textarea name="comment" placeholder="Your Review" rows="5" required></textarea>
+  <input type="submit" value="Send Review" />
+</form>
 
-  <form action="https://formspree.io/f/manoqjeg" id="reviewForm" method="POST">
-    <input id="rating" name="rating" type="hidden" value="" />
-    <input name="name" placeholder="Your Name" required type="text" />
-    <input name="email" placeholder="Your Email" required type="email" />
-    <textarea name="message" placeholder="Your Review" required rows="5"></textarea>
-    <input type="submit" value="Send Review" />
-  </form>
-
- <div class="review-list" id="reviewList">
+<div class="review-list" id="review-list">
+  <noscript>
     <div class="review">
       <div class="stars">★★★★★</div>
-      <p><strong>Sylvain Fourre</strong>: "I remember I had lovely evening at pub with your entertainment you are great talented artists Jenny pure voice and David great guitarist hopefuly see you soon over there."</p>
+      <p><strong>Marion</strong>: "Un duo incroyable ! Chaque concert est un vrai plaisir."</p>
     </div>
     <div class="review">
       <div class="stars">★★★★★</div>
-      <p><strong>Marion Roulettes</strong>: "Jenny et David forment un superbe duo ensemble. Si vous passez par Londres, je vous conseille fortement de vous renseigner sur leur dates de concert ! Vous passerez forcément une bonne soirée."</p>
+      <p><strong>Alex</strong>: "Their performance at our wedding was unforgettable."</p>
     </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Aurore</strong>: "I went to see Jenny &amp; David perform several times, that's always a pleasure! They are so talented, full of good energy. Simply amazing."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Colin</strong>: "I was immediately impressed by them, dynamic, entertaining, perfect for any occasion."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Viktoria</strong>: "Such wonderful artists! We are working together for many years now as they are playing in our restaurants. I recommend them very highly!"</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>lau</strong>: "It’s always a pleasure to hear Jenny’s amazing voice. We can’t get tired of your performances and I cannot wait till the next one. A talent that can’t be explained with words. Thank you."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Robert Beveridge</strong>: "Jenny and David came to play at our garden party and enchanted our guests! They have a wide repertoire and were very professional and friendly. Highly recommended."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Daniel Reynoldson</strong>: "Two of the loveliest most talented musicians you’ll ever want to meet that I am privileged to call friends."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Sofia</strong>: "We had a great time listening to both of you while eating on Valentine's Day."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Catherine</strong>: "La 1ère fois où on a entendu chanter Jenny, quelle émotion ! Elle nous donne des frissons à chaque fois qu'elle chante et humainement elle est au top. Avec David ils font un duo magique."</p>
-    </div>
-  </div>
+  </noscript>
+  <!-- Avis validés chargés ici -->
+</div>
 
 <script>
   const stars = document.querySelectorAll('.star');
@@ -196,71 +165,51 @@
 
   stars.forEach(star => {
     star.addEventListener('mouseover', () => {
-      resetStars();
-      highlightStars(star.dataset.value);
+      stars.forEach(s => s.classList.remove('hovered'));
+      star.classList.add('hovered');
+      for (let i = 0; i < star.dataset.value; i++) {
+        stars[i].classList.add('hovered');
+      }
     });
 
     star.addEventListener('mouseout', () => {
-      resetStars();
+      stars.forEach(s => s.classList.remove('hovered'));
       if (selectedRating) {
-        highlightStars(selectedRating);
+        for (let i = 0; i < selectedRating; i++) {
+          stars[i].classList.add('hovered');
+        }
       }
     });
 
     star.addEventListener('click', () => {
       selectedRating = star.dataset.value;
       ratingInput.value = selectedRating;
-      highlightStars(selectedRating);
-    });
-  });
-
-  function resetStars() {
-    stars.forEach(star => star.classList.remove('hovered', 'selected'));
-  }
-
-  function highlightStars(count) {
-    stars.forEach(star => {
-      if (star.dataset.value <= count) {
-        star.classList.add('hovered');
+      stars.forEach(s => s.classList.remove('selected'));
+      for (let i = 0; i < selectedRating; i++) {
+        stars[i].classList.add('selected');
       }
     });
-  }
+  });
 </script>
 
-  <div class="hamburger-menu">
-    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-    <div class="hamburger-nav" id="hamburgerNav">
-      <a href="https://jennydavidmusic.com">Home</a>
-      <a href="about.html">About</a>
-      <a href="music.html">Music & Videos</a>
-      <a href="gigs.html">Gigs</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="reviews.html" class="active">Reviews</a>
-      <a href="bookings.html">Bookings</a>
-     
-      <a href="contact.html">Contact</a>
-    </div>
-  </div>
+<script src="review-loader.js"></script>
 
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const nav = document.getElementById("hamburgerNav");
-  const btn = document.querySelector(".hamburger-icon");
+</body>
+</html>
+
+<script>
+  const nav = document.getElementById('hamburgerNav');
+  const btn = document.querySelector('.hamburger-icon');
 
   function toggleMenu() {
-    nav.classList.toggle("show");
-    btn.textContent = nav.classList.contains("show") ? "✖" : "☰";
+    nav.classList.toggle('show');
+    btn.textContent = nav.classList.contains('show') ? '✖' : '☰';
   }
 
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  document.addEventListener("click", (e) => {
+  document.addEventListener('click', (e) => {
     if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove("show");
-      btn.textContent = "☰";
+      nav.classList.remove('show');
+      btn.textContent = '☰';
     }
   });
 
@@ -270,9 +219,4 @@
       btn.textContent = "☰";
     }
   });
-});
-
-
-  </script>
-</body>
-</html>
+</script>
