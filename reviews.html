@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+OCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -10,7 +9,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="canonical" href="https://jennydavidmusic.com/reviews.html"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
   <style>
     body {
       background-color: #111;
@@ -44,6 +42,12 @@
       color: black;
       font-weight: bold;
       cursor: pointer;
+    }
+    #thank-you {
+      display: none;
+      color: gold;
+      margin-top: 20px;
+      font-size: 1.2rem;
     }
     .star-rating {
       display: flex;
@@ -100,7 +104,6 @@
   </style>
 </head>
 <body class="reviews-page">
-
 <nav class="hero-nav">
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
@@ -111,25 +114,22 @@
   <a href="bookings.html">Bookings</a>
   <a href="contact.html">Contact</a>
 </nav>
-
-  <div class="hamburger-menu">
-    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
-    <div class="hamburger-nav" id="hamburgerNav">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="music.html">Music & Videos</a>
-      <a href="gigs.html">Gigs</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="reviews.html">Reviews</a>
-      <a href="bookings.html">Bookings</a>
-      <a href="contact.html">Contact</a>
-    </div>
+<div class="hamburger-menu">
+  <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+  <div class="hamburger-nav" id="hamburgerNav">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music & Videos</a>
+    <a href="gigs.html">Gigs</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="bookings.html">Bookings</a>
+    <a href="contact.html">Contact</a>
   </div>
-
+</div>
 
 <h1>Leave a Review for Jenny & David</h1>
-
-<form action="https://formspree.io/f/manoqjeg" method="POST">
+<form id="review-form" onsubmit="submitReview(event)">
   <input name="name" type="text" placeholder="Your Name" required />
   <input name="email" type="email" placeholder="Your Email" required />
   <div class="star-rating" id="starRating">
@@ -143,21 +143,11 @@
   <textarea name="comment" placeholder="Your Review" rows="5" required></textarea>
   <input type="submit" value="Send Review" />
 </form>
+<p id="thank-you">Thank you for your review!</p>
 
-<div class="review-list" id="review-list">
-  <noscript>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Marion</strong>: "Un duo incroyable ! Chaque concert est un vrai plaisir."</p>
-    </div>
-    <div class="review">
-      <div class="stars">★★★★★</div>
-      <p><strong>Alex</strong>: "Their performance at our wedding was unforgettable."</p>
-    </div>
-  </noscript>
-  <!-- Avis validés chargés ici -->
-</div>
+<div class="review-list" id="review-list"></div>
 
+<script src="review-loader.js"></script>
 <script>
   const stars = document.querySelectorAll('.star');
   const ratingInput = document.getElementById('rating');
@@ -166,7 +156,6 @@
   stars.forEach(star => {
     star.addEventListener('mouseover', () => {
       stars.forEach(s => s.classList.remove('hovered'));
-      star.classList.add('hovered');
       for (let i = 0; i < star.dataset.value; i++) {
         stars[i].classList.add('hovered');
       }
@@ -190,23 +179,17 @@
       }
     });
   });
-</script>
-
-<script src="review-loader.js"></script>
-
-</body>
-</html>
-
-<script>
-  const nav = document.getElementById('hamburgerNav');
-  const btn = document.querySelector('.hamburger-icon');
 
   function toggleMenu() {
+    const nav = document.getElementById('hamburgerNav');
+    const btn = document.querySelector('.hamburger-icon');
     nav.classList.toggle('show');
     btn.textContent = nav.classList.contains('show') ? '✖' : '☰';
   }
 
   document.addEventListener('click', (e) => {
+    const nav = document.getElementById('hamburgerNav');
+    const btn = document.querySelector('.hamburger-icon');
     if (!nav.contains(e.target) && !btn.contains(e.target)) {
       nav.classList.remove('show');
       btn.textContent = '☰';
@@ -214,9 +197,36 @@
   });
 
   window.addEventListener("scroll", () => {
+    const nav = document.getElementById('hamburgerNav');
+    const btn = document.querySelector('.hamburger-icon');
     if (nav.classList.contains("show")) {
       nav.classList.remove("show");
       btn.textContent = "☰";
     }
   });
+
+  function submitReview(e) {
+    e.preventDefault();
+    const form = document.getElementById("review-form");
+    const data = new FormData(form);
+
+    fetch("https://formspree.io/f/manoqjeg", {
+      method: "POST",
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        document.getElementById("thank-you").style.display = "block";
+      } else {
+        alert("Error sending review. Please try again.");
+      }
+    }).catch(error => {
+      alert("There was a problem submitting the form.");
+    });
+  }
 </script>
+</body>
+</html>
