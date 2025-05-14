@@ -91,7 +91,7 @@ a {
 
 
 /* TITRES */
-h2, .about-title {
+h1, .about-title {
   font-size: 2rem;
   margin-bottom: 1rem;
   color: white;
