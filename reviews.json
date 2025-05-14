@@ -1,30 +1,72 @@
 [
   {
-    "name": "Alice",
+    "name": "Sylvain Fourre",
     "rating": 5,
-    "comment": "Amazing performance!",
-    "date": "2025-05-14",
+    "comment": "I remember I had lovely evening at pub with your entertainment you are great talented artists Jenny pure voice and David great guitarist hopefuly see you soon over there.",
+    "date": "2025-05-01",
     "approved": true
   },
   {
-    "name": "Bob",
-    "rating": 4,
-    "comment": "Great atmosphere.",
-    "date": "2025-05-13",
+    "name": "Marion Roulettes",
+    "rating": 5,
+    "comment": "Jenny et David forment un superbe duo ensemble. Si vous passez par Londres, je vous conseille fortement de vous renseigner sur leur dates de concert ! Vous passerez forc\u00e9ment une bonne soir\u00e9e.",
+    "date": "2025-05-02",
     "approved": true
   },
   {
-    "name": "Marion",
+    "name": "Aurore",
     "rating": 5,
-    "comment": "Un duo incroyable ! Chaque concert est un vrai plaisir.",
-    "date": "2025-05-10",
+    "comment": "I went to see Jenny & David perform several times, that's always a pleasure! They are so talented, full of good energy. Simply amazing.",
+    "date": "2025-05-03",
     "approved": true
   },
   {
-    "name": "Alex",
+    "name": "Colin",
     "rating": 5,
-    "comment": "Their performance at our wedding was unforgettable.",
+    "comment": "I was immediately impressed by them, dynamic, entertaining, perfect for any occasion.",
+    "date": "2025-05-04",
+    "approved": true
+  },
+  {
+    "name": "Viktoria",
+    "rating": 5,
+    "comment": "Such wonderful artists! We are working together for many years now as they are playing in our restaurants. I recommend them very highly!",
+    "date": "2025-05-05",
+    "approved": true
+  },
+  {
+    "name": "lau",
+    "rating": 5,
+    "comment": "It\u2019s always a pleasure to hear Jenny\u2019s amazing voice. We can\u2019t get tired of your performances and I cannot wait till the next one. A talent that can\u2019t be explained with words. Thank you.",
+    "date": "2025-05-06",
+    "approved": true
+  },
+  {
+    "name": "Robert Beveridge",
+    "rating": 5,
+    "comment": "Jenny and David came to play at our garden party and enchanted our guests! They have a wide repertoire and were very professional and friendly. Highly recommended.",
     "date": "2025-05-07",
+    "approved": true
+  },
+  {
+    "name": "Daniel Reynoldson",
+    "rating": 5,
+    "comment": "Two of the loveliest most talented musicians you\u2019ll ever want to meet that I am privileged to call friends.",
+    "date": "2025-05-08",
+    "approved": true
+  },
+  {
+    "name": "Sofia",
+    "rating": 5,
+    "comment": "We had a great time listening to both of you while eating on Valentine's Day.",
+    "date": "2025-05-09",
+    "approved": true
+  },
+  {
+    "name": "Catherine",
+    "rating": 5,
+    "comment": "La 1\u00e8re fois o\u00f9 on a entendu chanter Jenny, quelle \u00e9motion ! Elle nous donne des frissons \u00e0 chaque fois qu'elle chante et humainement elle est au top. Avec David ils font un duo magique.",
+    "date": "2025-05-10",
     "approved": true
   }
 ]
