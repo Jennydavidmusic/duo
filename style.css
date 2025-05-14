@@ -89,6 +89,28 @@ a {
   text-align: center;
 }
 
+.hero-bottom-title h1 {
+  font-size: 3.2rem;
+  color: gold;
+  font-weight: 800;
+  
+  margin: 0;
+  text-shadow: 2px 2px 8px black;
+  animation: fadeInUp 1.2s ease-out;
+  line-height: 1.1;
+}
+
+.hero-bottom-title h1 .subtitle-line {
+  font-size: 1.4rem;         /* Plus petit que le titre */
+  display: block;
+  margin-bottom: -30px;       /* Décale vers le bas */
+  transform: translateY(30px); /* Descend légèrement */
+  color: white;
+}
+
+.hero-bottom-title h1 {
+  transform: translateY(-20px); /* Remonte le bloc principal */
+}
 
 /* TITRES */
 h1, .about-title {
