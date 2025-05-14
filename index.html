@@ -433,6 +433,443 @@ const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
         document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
       });
   </script>
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Jenny & David - Professional Music Duo for Your Event</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="style.css" rel="stylesheet"/>
+  <link rel="canonical" href="https://jennydavidmusic.com/" />
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+  <meta name="description" content="Discover Jenny & David's index information and performances.">
+  <meta name="keywords" content="Jenny and David, acoustic duo, index, live music,London live events">
+  <meta name="author" content="Jenny & David Music">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    nav.hero-nav a {
+      color: white;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      display: inline-block;
+      transform: translateY(8px);
+    }
+
+    nav.hero-nav a:hover {
+      color: black;
+      background-color: white;
+    }
+
+    .social-icons i {
+      font-size: 30px;
+    }
+
+    .facebook-icon i {
+      color: #1877F2;
+    }
+
+    .instagram-icon i {
+      color: #E4405F;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+
+    .hero-bottom-title {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-bottom-title h1 {
+      font-size: 3.2rem;
+      color: gold;
+      font-weight: 800;
+      margin: 0;
+      text-shadow: 2px 2px 8px black;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .hero-bottom-subtitle {
+      position: absolute;
+      bottom: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .hero-bottom-subtitle h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 2px 2px 6px black;
+      margin: 0;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .social-icons {
+      position: absolute;
+      top: 50%;  /* Ajuste la position des icônes verticalement */
+      left: 50%;
+      transform: translate(-50%, -50%);  /* Centre les icônes horizontalement */
+      display: flex;
+      gap: 380px; /* Ajuste l'espace entre les icônes */
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Next Gig Section */
+    #next-gig {
+      margin-top: 20px;
+      text-align: center;
+      color: white;
+      background-color: #000;
+      padding: 20px;
+      border-radius: 5px;
+      position: relative;  /* Important pour positionner les icônes à l'intérieur de ce bloc */
+    }
+
+    #gig-details {
+      font-size: 1.2rem;
+    }
+
+    /* Hamburger menu styles */
+    .hamburger-menu {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      background-color: black;
+      padding: 10px 12px;
+      border-radius: 5px;
+    }
+
+    .hamburger-icon {
+      font-size: 28px;
+      color: #D4AF37;
+      cursor: pointer;
+    }
+
+    .hamburger-nav {
+      display: none;
+      flex-direction: column;
+      background-color: #111;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 180px;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+
+    .hamburger-nav.show {
+      display: flex;
+    }
+
+    .hamburger-nav a {
+      color: #D4AF37;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 15px 25px;
+      border-radius: 8px;
+    }
+
+    .hamburger-nav a:hover {
+      background-color: gold;
+      color: black;
+      border-radius: 4px;
+    }
+
+    /* Nouvelles icônes sociales (Facebook, Instagram) */
+    .new-social-icons a {
+      font-size: 30px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* Facebook */
+    .new-social-icons .facebook-icon i {
+      color: #1877F2 !important; /* Bleu Facebook */
+    }
+
+    /* Instagram */
+    .new-social-icons .instagram-icon i {
+      color: #E4405F !important; /* Rose Instagram */
+    }
+
+    /* Application de la couleur sur l'élément i */
+    .new-social-icons a i {
+      color: inherit !important; /* L'icône prend la couleur de son parent */
+    }
+
+    /* Mobile Styles - Afficher les icônes uniquement sur mobile */
+    @media (max-width: 768px) {
+      /* Afficher les nouvelles icônes sociales en haut à droite sur mobile */
+      .new-social-icons {
+        display: flex;  /* Afficher les icônes sur mobile */
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        gap: 15px; /* Espacement entre les icônes */
+      }
+
+      /* Masquer les anciennes icônes (social-icons) sur mobile */
+      .social-icons {
+        display: none;  /* Masquer les icônes existantes sur mobile */
+      }
+
+      /* Cacher le titre sur mobile */
+      .hero-bottom-title {
+        display: none; /* Cacher le titre sur mobile */
+      }
+    }
+/* iPad portrait : afficher le menu classique et centrer */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  nav.hero-nav {
+    display: flex !important;
+    justify-content: center;
+    gap: 10px; /* espacement entre les liens */
+    flex-wrap: wrap;
+    padding: 10px 0;
+  }
+
+  .hamburger-menu {
+    display: none !important;
+  }
+}
+
+  </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "Jenny & David",
+  "alternateName": "Acoustic Duo London",
+  "url": "https://jennydavidmusic.com",
+  "sameAs": [
+    "https://www.facebook.com/jennydavidmusic",
+    "https://www.instagram.com/jennydavidmusic/"
+  ],
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "London, United Kingdom"
+  },
+  "member": [
+    {
+      "@type": "Person",
+      "name": "Jenny",
+      "role": "Singer"
+    },
+    {
+      "@type": "Person",
+      "name": "David",
+      "role": "Guitarist / Looper"
+    }
+  ],
+  "genre": ["Acoustic", "Pop", "Live Music"],
+  "areaServed": {
+    "@type": "Place",
+    "name": "Greater London"
+  }
+}
+</script>
+
+</head>
+<body class="index-page">
+  <img src="images/home-banner.jpg" alt="Jenny & David – acoustic music duo in London" style="display: none;">
+
+  <nav class="hero-nav">
+    <a href="about.html">About</a>
+    <a href="music.html">Music & Videos</a>
+    <a href="gigs.html">Gigs</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="bookings.html">Bookings</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="hamburger-menu">
+    <div class="hamburger-icon" onclick="toggleMenu()">☰</div>
+    <div class="hamburger-nav" id="hamburgerNav">
+      <a href="https://jennydavidmusic.com" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="music.html">Music & Videos</a>
+      <a href="gigs.html">Gigs</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="bookings.html">Bookings</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div id="next-gig">
+      <h3>Upcoming Gig :</h3>
+      <div id="gig-details">Loading...</div>
+
+<noscript>
+  <div class="gig-fallback" style="text-align: center; margin-top: 1rem;">
+    <p><strong>Upcoming Gigs:</strong></p>
+    <p>Saturday 18 May – <a href="https://maps.google.com?q=The+Green+Pub,+Camden" target="_blank">The Green Pub, Camden</a> at 7:30 PM</p>
+    <p>Friday 24 May – <a href="https://maps.google.com?q=The+Crown,+Soho" target="_blank">The Crown, Soho</a> at 8:00 PM</p>
+  </div>
+</noscript>
+
+    </div>
+
+    <div class="hero-bottom-title">
+      <h1>Jenny & David</h1>
+      <div class="social-icons">
+        <a class="facebook-icon" href="https://www.facebook.com/jennydavidmusic" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a class="instagram-icon" href="https://www.instagram.com/jennydavidmusic/" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+      <div class="hero-bottom-subtitle">
+        <h2>Live Acoustic Music Duo From London</h2>
+      </div>
+    </div>
+  </section>
+
+<!-- Icônes sociales (Facebook et Instagram uniquement) -->
+
+<div class="new-social-icons">
+    <a href="https://www.facebook.com/jennydavidmusic" target="_blank" class="facebook-icon">
+        <i class="fab fa-facebook"></i>
+    </a>
+    <a href="https://www.instagram.com/jennydavidmusic/" target="_blank" class="instagram-icon">
+        <i class="fab fa-instagram"></i>
+    </a>
+</div>
+
+  <section class="main-content">
+    <p>We are an acoustic musical duo based in London, performing across the city. Check out our upcoming gigs below!</p>
+  </section>
+
+  <footer>
+    © 2025 Jenny & David • All rights reserved
+  </footer>
+
+  <script>
+    const nav = document.getElementById('hamburgerNav');
+const btn = document.querySelector('.hamburger-icon');
+
+function toggleMenu() {
+  nav.classList.toggle('show');
+  btn.textContent = nav.classList.contains('show') ? '✖' : '☰';
+}
+
+document.addEventListener('click', (e) => {
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('show');
+    btn.textContent = '☰';
+  }
+});
+window.addEventListener("scroll", () => {
+  if (nav.classList.contains("show")) {
+    nav.classList.remove("show");
+    btn.textContent = "☰";
+  }
+});
+
+
+
+    fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
+      .then(response => response.json())
+      .then(data => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const parseDate = (str) => {
+          if (!str) return null;
+          const parts = str.split('/');
+          if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const year = parseInt(parts[2], 10);
+            return new Date(year, month, day);
+          }
+          return null;
+        };
+
+        const upcoming = data.filter(row => {
+          const rowDate = parseDate(row.Date);
+          return rowDate && rowDate >= today;
+        });
+
+        if (upcoming.length > 0) {
+          const nextGig = upcoming[0];
+          const venueHTML = nextGig.Link
+            ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
+            : nextGig.Venue;
+
+const [day, month, year] = nextGig.Date.split('/').map(Number);
+const [hour, minute] = nextGig.Time.split(':').map(Number);
+const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h
+
+const hour12 = dateObj.getHours() % 12 || 12;
+const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
+const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
+const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
+
+
+          const gigDetails = `
+            <strong>${nextGig.Date}</strong><br>
+            ${venueHTML} at ${formattedTimeString}
+          `;
+          document.getElementById('gig-details').innerHTML = gigDetails;
+        } else {
+          document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching gigs:", err);
+        document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
+      });
+  </script>
+<script src="schema-events-from-sheet.js"></script>
+</body>
+</html>
 </body>
 </html>
