@@ -81,17 +81,19 @@
       margin-bottom: 5px;
       font-size: 1.2rem;
     }
-    nav.hero-nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      padding: 1rem 0;
-      z-index: 999;
-    }
+  nav.hero-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  z-index: 999;
+  flex-wrap: wrap; /* ✅ cette ligne règle tout */
+}
+
     nav.hero-nav a {
       color: #D4AF37;
       font-weight: bold;
