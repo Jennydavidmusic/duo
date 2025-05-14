@@ -2,85 +2,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Panel - Jenny & David</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Review Admin</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background-color: #111; color: gold; }
-    .hidden { display: none; }
-    .review { background: #222; padding: 10px; margin: 10px 0; border-radius: 6px; }
-    .review button { margin-top: 10px; }
-    input[type="password"], select { padding: 8px; font-size: 1rem; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    .review {
+      background: #222;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid gold;
+      border-radius: 10px;
+    }
+    .stars {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #555;
+    }
+    .stars.selected {
+      color: gold;
+    }
+    button {
+      padding: 5px 10px;
+      background-color: gold;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>Admin Review Validation</h1>
-  <div id="login">
-    <p>Enter admin password:</p>
-    <input type="password" id="adminPass" placeholder="••••••">
-    <button onclick="checkPassword()">Login</button>
-  </div>
-
-  <div id="adminPanel" class="hidden">
-    <h2>Pending Reviews</h2>
-    <div id="pendingReviews"></div>
-  </div>
+  <h1>Validate Reviews</h1>
+  <div id="admin-list"></div>
+  <button onclick="downloadJSON()">💾 Download Updated JSON</button>
 
   <script>
-    const correctPassword = "admin123";
+    let reviews = [];
+    fetch('reviews.json')
+      .then(res => res.json())
+      .then(data => {
+        reviews = data;
+        showPendingReviews();
+      });
 
-    function checkPassword() {
-      const input = document.getElementById("adminPass").value;
-      if (input === correctPassword) {
-        document.getElementById("login").classList.add("hidden");
-        document.getElementById("adminPanel").classList.remove("hidden");
-        loadReviews();
-      } else {
-        alert("Wrong password");
+    function showPendingReviews() {
+      const container = document.getElementById('admin-list');
+      container.innerHTML = '';
+      reviews.forEach((review, index) => {
+        if (!review.approved) {
+          const div = document.createElement('div');
+          div.className = 'review';
+          div.innerHTML = `
+            <p><strong>${review.name}</strong> (${review.date})</p>
+            <p>${review.comment}</p>
+            <div class="stars" id="stars-${index}" data-index="${index}">${getStarsHTML(review.rating || 0)}</div>
+            <button onclick="approve(${index})">✅ Valider</button>
+          `;
+          container.appendChild(div);
+          setStarClickHandlers(index);
+        }
+      });
+    }
+
+    function getStarsHTML(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        stars += `<span class="${i <= rating ? 'selected' : ''}" data-star="${i}">★</span>`;
       }
+      return stars;
     }
 
-    function loadReviews() {
-      fetch("reviews.json")
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById("pendingReviews");
-          container.innerHTML = "";
-          data.forEach((review, index) => {
-            if (!review.approved) {
-              const div = document.createElement("div");
-              div.className = "review";
-              div.innerHTML = `
-                <strong>${review.name}</strong><br>
-                <label>Stars: 
-                  <select id="stars-${index}">
-                    ${[1,2,3,4,5].map(n => `<option value="${n}" ${review.rating == n ? "selected" : ""}>${n}</option>`).join("")}
-                  </select>
-                </label><br>
-                "${review.comment}"<br>
-                <button onclick="approveReview(${index})">Valider</button>
-              `;
-              container.appendChild(div);
-            }
-          });
+    function setStarClickHandlers(index) {
+      const starDiv = document.getElementById(`stars-${index}`);
+      starDiv.querySelectorAll('span').forEach(star => {
+        star.addEventListener('click', () => {
+          const newRating = parseInt(star.getAttribute('data-star'));
+          reviews[index].rating = newRating;
+          starDiv.innerHTML = getStarsHTML(newRating);
+          setStarClickHandlers(index);
         });
+      });
     }
 
-    function approveReview(index) {
-      fetch("reviews.json")
-        .then(res => res.json())
-        .then(data => {
-          const rating = document.getElementById(`stars-${index}`).value;
-          data[index].approved = true;
-          data[index].rating = parseInt(rating);
-          const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "reviews.json";
-          a.click();
-          alert("Review validé. Remplace reviews.json sur ton site.");
-        });
+    function approve(index) {
+      reviews[index].approved = true;
+      showPendingReviews();
+    }
+
+    function downloadJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reviews, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "reviews.json");
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
     }
   </script>
 </body>
