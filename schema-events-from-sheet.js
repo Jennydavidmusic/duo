@@ -1,3 +1,4 @@
+
 fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
   .then(response => response.json())
   .then(data => {
@@ -15,10 +16,12 @@ fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
       if (!dateObj || dateObj < today || !row.Time || !row.Venue) return;
 
       const [hour, minute] = row.Time.split(':').map(Number);
+      if (isNaN(hour) || isNaN(minute)) return;
+
       dateObj.setHours(hour + 1, minute);  // +1 hour
 
-      const isoString = dateObj.toISOString(); // ex: "2025-05-24T19:30:00.000Z"
-      const startDate = isoString.slice(0, 19);  // keep "2025-05-24T19:30:00"
+      const isoString = dateObj.toISOString();
+      const startDate = isoString.slice(0, 19);
 
       const eventJson = {
         "@context": "https://schema.org",
