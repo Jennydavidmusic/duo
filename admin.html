@@ -18,12 +18,13 @@
       border: 1px solid gold;
       border-radius: 10px;
     }
-    .stars {
+    .stars span {
       cursor: pointer;
       font-size: 1.5rem;
-      color: #555;
+      color: #444;
+      transition: color 0.2s;
     }
-    .stars.selected {
+    .stars span.selected {
       color: gold;
     }
     button {
@@ -57,10 +58,11 @@
         if (!review.approved) {
           const div = document.createElement('div');
           div.className = 'review';
+          const starsHTML = getStarsHTML(review.rating || 0, index);
           div.innerHTML = `
             <p><strong>${review.name}</strong> (${review.date})</p>
             <p>${review.comment}</p>
-            <div class="stars" id="stars-${index}" data-index="${index}">${getStarsHTML(review.rating || 0)}</div>
+            <div class="stars" id="stars-${index}">${starsHTML}</div>
             <button onclick="approve(${index})">✅ Valider</button>
           `;
           container.appendChild(div);
@@ -69,21 +71,23 @@
       });
     }
 
-    function getStarsHTML(rating) {
-      let stars = '';
+    function getStarsHTML(rating, index) {
+      let html = '';
       for (let i = 1; i <= 5; i++) {
-        stars += `<span class="${i <= rating ? 'selected' : ''}" data-star="${i}">★</span>`;
+        const selected = i <= rating ? 'selected' : '';
+        html += `<span data-index="${index}" data-star="${i}" class="${selected}">★</span>`;
       }
-      return stars;
+      return html;
     }
 
     function setStarClickHandlers(index) {
-      const starDiv = document.getElementById(`stars-${index}`);
-      starDiv.querySelectorAll('span').forEach(star => {
+      const starContainer = document.getElementById(`stars-${index}`);
+      const stars = starContainer.querySelectorAll('span');
+      stars.forEach(star => {
         star.addEventListener('click', () => {
           const newRating = parseInt(star.getAttribute('data-star'));
           reviews[index].rating = newRating;
-          starDiv.innerHTML = getStarsHTML(newRating);
+          starContainer.innerHTML = getStarsHTML(newRating, index);
           setStarClickHandlers(index);
         });
       });
