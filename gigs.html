@@ -43,8 +43,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const start = addHoursToTime(originalTime, 1);
-        
+        const start = addHoursToTime(originalTime, 0);
+        const end = addHoursToTime(originalTime, 1);
 
         const startDate = `${date}T${start.time}`;
 
