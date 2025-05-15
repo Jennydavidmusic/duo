@@ -27,7 +27,13 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS9XqzZ_1Gpyr7XLn-TPUs_XX
   .then(csv => {
     const rows = csv.trim().split("\n").slice(1); // ignore en-tête
     rows.forEach(row => {
-      const [dateRaw, location, timeRaw] = row.split(",");
+      const cols = row.split(",");
+const dateRaw = cols[0];                 // Colonne A
+const location = cols[1];                // Colonne B
+const timeRaw = cols[2];                 // Colonne C
+const siteWeb = (cols[7] || "").trim();  // Colonne H
+const mapsUrl = (cols[9] || "").trim();  // Colonne J
+
 
       if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
@@ -73,6 +79,13 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS9XqzZ_1Gpyr7XLn-TPUs_XX
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.textContent = JSON.stringify(jsonLd);
+      if (siteWeb) {
+  jsonLd.location.sameAs = siteWeb;
+}
+if (mapsUrl) {
+  jsonLd.location.url = mapsUrl;
+}
+
       document.head.appendChild(script);
     });
   });
