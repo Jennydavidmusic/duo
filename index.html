@@ -75,16 +75,16 @@ const mapsUrl = (cols[9] || "").trim();  // Colonne J
           "url": "https://jennydavidmusic.com/gigs.html"
         }
       };
-
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(jsonLd);
-      if (siteWeb) {
+if (siteWeb) {
   jsonLd.location.sameAs = siteWeb;
 }
 if (mapsUrl) {
   jsonLd.location.url = mapsUrl;
 }
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(jsonLd);
+
 
       document.head.appendChild(script);
     });
