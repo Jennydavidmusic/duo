@@ -14,6 +14,7 @@
 function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
   let [year, month, day] = [0, 0, 0];
 
+  // Gère les formats "DD/MM/YYYY" ou "YYYY-MM-DD"
   if (dateStr.includes("/")) {
     const [d, m, y] = dateStr.split("/").map(Number);
     year = y;
@@ -27,8 +28,10 @@ function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
   }
 
   const [h, min] = timeStr.split(":").map(Number);
-  let hour = h + hourOffset;
-  let date = new Date(year, month - 1, day, hour, min || 0);
+
+  // Correction : on retire 8h puis on ajoute hourOffset
+  let correctedHour = h - 8 + hourOffset;
+  let date = new Date(year, month - 1, day, correctedHour, min || 0);
 
   const y = date.getFullYear();
   const mo = String(date.getMonth() + 1).padStart(2, '0');
@@ -36,11 +39,11 @@ function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
   const ho = String(date.getHours()).padStart(2, '0');
   const mi = String(date.getMinutes()).padStart(2, '0');
 
-  return `${y}-${mo}-${da}T${ho}:${mi}`;
+  return `${y}-${mo}-${da}T${ho}:${mi}:00`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace ici par ton vrai lien
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace par ton vrai lien CSV
     .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
@@ -58,7 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const originalTime = timeRaw.trim();
 
         const startDate = buildISODateTimeLocal(date, originalTime, 1); // +1h
-        const endDate = buildISODateTimeLocal(date, originalTime, 4);   // +4h
+        const endDate   = buildISODateTimeLocal(date, originalTime, 4); // +4h
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -101,9 +104,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
-
-
 
 
 <style>
