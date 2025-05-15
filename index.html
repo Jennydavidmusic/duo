@@ -12,6 +12,70 @@
   <meta name="description" content="Discover Jenny & David's index information and performances.">
   <meta name="keywords" content="Jenny and David, acoustic duo, index, live music,London live events">
   <meta name="author" content="Jenny & David Music">
+  <script>
+function addHoursToTime(timeString, hoursToAdd) {
+  const [hour, minute] = timeString.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hour + hoursToAdd, minute);
+  const newHour = String(date.getHours()).padStart(2, '0');
+  const newMinute = String(date.getMinutes()).padStart(2, '0');
+  return `${newHour}:${newMinute}`;
+}
+
+fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
+  .then(response => response.text())
+  .then(csv => {
+    const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
+    rows.forEach(row => {
+      const [date, location, time] = row.split(",");
+
+      if (!date || !location || !time || time.toLowerCase().includes("private")) return;
+
+      const formattedDate = date.trim();
+      const startTime = time.trim();
+      const endTime = addHoursToTime(startTime, 4);
+      const startDate = `${formattedDate}T${startTime}`;
+      const endDate = `${formattedDate}T${endTime}`;
+
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "MusicEvent",
+        "name": `Jenny & David at ${location}`,
+        "startDate": startDate,
+        "endDate": endDate,
+        "location": {
+          "@type": "Place",
+          "name": location,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "London",
+            "addressCountry": "UK"
+          }
+        },
+        "image": "https://jennydavidmusic.com/images/photo21.jpg",
+        "description": "Live acoustic gig with Jenny & David.",
+        "organizer": {
+          "@type": "Organization",
+          "name": "Jenny & David Music"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://jennydavidmusic.com/gigs.html"
+        }
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(jsonLd);
+      document.head.appendChild(script);
+    });
+  });
+</script>
+
+
   <style>
     html, body {
       margin: 0;
