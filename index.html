@@ -22,75 +22,71 @@ function addHoursToTime(timeString, hoursToAdd) {
   return `${newHour}:${newMinute}`;
 }
 
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS9XqzZ_1Gpyr7XLn-TPUs_XXXXXXX/pub?output=csv")  // ← mets ici le vrai lien .csv
-  .then(response => response.text())
-  .then(csv => {
-    const rows = csv.trim().split("\n").slice(1); // ignore en-tête
-    rows.forEach(row => {
-      const cols = row.split(",");
-const dateRaw = cols[0];                 // Colonne A
-const location = cols[1];                // Colonne B
-const timeRaw = cols[2];                 // Colonne C
-const siteWeb = (cols[7] || "").trim();  // Colonne H
-const mapsUrl = (cols[9] || "").trim();  // Colonne J
+window.addEventListener('DOMContentLoaded', () => {
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv")
+    .then(response => response.text())
+    .then(csv => {
+      const rows = csv.trim().split("\n").slice(1);
+      rows.forEach(row => {
+        const cols = row.split(",");
+        const dateRaw = cols[0];
+        const location = cols[1];
+        const timeRaw = cols[2];
+        const siteWeb = (cols[7] || "").trim();
+        const mapsUrl = (cols[9] || "").trim();
 
+        if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-      if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
+        const date = dateRaw.trim();
+        const originalTime = timeRaw.trim();
 
-      const date = dateRaw.trim();
-      const originalTime = timeRaw.trim();
+        const startTime = addHoursToTime(originalTime, 1);
+        const endTime = addHoursToTime(originalTime, 4);
 
-      const startTime = addHoursToTime(originalTime, 1); // +1h pour le début
-      const endTime = addHoursToTime(originalTime, 4);   // +4h pour la fin
+        const startDate = `${date}T${startTime}`;
+        const endDate = `${date}T${endTime}`;
 
-      const startDate = `${date}T${startTime}`;
-      const endDate = `${date}T${endTime}`;
-
-      const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "MusicEvent",
-        "name": `Jenny & David at ${location}`,
-        "startDate": startDate,
-        "endDate": endDate,
-        "location": {
-          "@type": "Place",
-          "name": location,
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "London",
-            "addressCountry": "UK"
+        const jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "MusicEvent",
+          "name": `Jenny & David at ${location}`,
+          "startDate": startDate,
+          "endDate": endDate,
+          "location": {
+            "@type": "Place",
+            "name": location,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "London",
+              "addressCountry": "UK"
+            }
+          },
+          "image": "https://jennydavidmusic.com/images/photo21.jpg",
+          "description": "Live acoustic gig with Jenny & David.",
+          "organizer": {
+            "@type": "Organization",
+            "name": "Jenny & David Music"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "GBP",
+            "availability": "https://schema.org/InStock",
+            "url": "https://jennydavidmusic.com/gigs.html"
           }
-        },
-        "image": "https://jennydavidmusic.com/images/photo21.jpg",
-        "description": "Live acoustic gig with Jenny & David.",
-        "organizer": {
-          "@type": "Organization",
-          "name": "Jenny & David Music"
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "GBP",
-          "availability": "https://schema.org/InStock",
-          "url": "https://jennydavidmusic.com/gigs.html"
-        }
-      };
-if (siteWeb) {
-  jsonLd.location.sameAs = siteWeb;
-}
-if (mapsUrl) {
-  jsonLd.location.url = mapsUrl;
-}
-      jsonLd.endDate = endDate; // ← ajoute bien cette ligne ici
+        };
 
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(jsonLd);
+        if (siteWeb) jsonLd.location.sameAs = siteWeb;
+        if (mapsUrl) jsonLd.location.url = mapsUrl;
 
-
-      document.head.appendChild(script);
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(jsonLd);
+        // 🔁 ajoute dans le body
+        document.body.appendChild(script);
+      });
     });
-  });
+});
 </script>
 
 
