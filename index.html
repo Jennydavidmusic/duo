@@ -81,6 +81,8 @@ if (siteWeb) {
 if (mapsUrl) {
   jsonLd.location.url = mapsUrl;
 }
+      jsonLd.endDate = endDate; // ← ajoute bien cette ligne ici
+
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.textContent = JSON.stringify(jsonLd);
