@@ -11,39 +11,16 @@
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <script>
-function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
-  let [year, month, day] = [0, 0, 0];
-
-  // Gère les formats "DD/MM/YYYY" ou "YYYY-MM-DD"
-  if (dateStr.includes("/")) {
-    const [d, m, y] = dateStr.split("/").map(Number);
-    year = y;
-    month = m;
-    day = d;
-  } else {
-    const [y, m, d] = dateStr.split("-").map(Number);
-    year = y;
-    month = m;
-    day = d;
-  }
-
-  const [h, min] = timeStr.split(":").map(Number);
-
-  // Correction : on retire 8h puis on ajoute hourOffset
-  let correctedHour = h - 8 + hourOffset;
-  let date = new Date(year, month - 1, day, correctedHour, min || 0);
-
-  const y = date.getFullYear();
-  const mo = String(date.getMonth() + 1).padStart(2, '0');
-  const da = String(date.getDate()).padStart(2, '0');
-  const ho = String(date.getHours()).padStart(2, '0');
-  const mi = String(date.getMinutes()).padStart(2, '0');
-
-  return `${y}-${mo}-${da}T${ho}:${mi}:00`;
+function correctHour(timeStr, totalOffset) {
+  let [h, m] = timeStr.split(":").map(Number);
+  let date = new Date(2000, 0, 1, h + totalOffset, m || 0);
+  let hh = String(date.getHours()).padStart(2, '0');
+  let mm = String(date.getMinutes()).padStart(2, '0');
+  return `${hh}:${mm}`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace par ton vrai lien CSV
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace par ton vrai lien
     .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
@@ -60,8 +37,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const startDate = buildISODateTimeLocal(date, originalTime, 1); // +1h
-        const endDate   = buildISODateTimeLocal(date, originalTime, 4); // +4h
+        const startTime = correctHour(originalTime, -6); // -7h (bug) +1h logique
+        const endTime = correctHour(originalTime, -3);   // -7h +4h
+
+        const startDate = `${date}T${startTime}:00`;
+        const endDate = `${date}T${endTime}:00`;
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -104,7 +84,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
 
 <style>
   .gig-table {
