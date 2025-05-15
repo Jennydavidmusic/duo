@@ -11,17 +11,17 @@
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <script>
-function correctHour(timeStr, offsetFromCsv = -7, logicOffset = 1) {
-  const [h, m] = timeStr.split(":").map(Number);
-  const date = new Date(2000, 0, 1, h + offsetFromCsv + logicOffset, m || 0);
-  const hh = String(date.getHours()).padStart(2, '0');
-  const mm = String(date.getMinutes()).padStart(2, '0');
+function fixTimeFromCSV(timeStr, correctionHours) {
+  let [h, m] = timeStr.split(":").map(Number);
+  let corrected = new Date(2000, 0, 1, h + correctionHours, m || 0);
+  const hh = String(corrected.getHours()).padStart(2, '0');
+  const mm = String(corrected.getMinutes()).padStart(2, '0');
   return `${hh}:${mm}`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace par ton vrai lien
-    .then(response => response.text())
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← ton vrai lien ici
+    .then(r => r.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
       rows.forEach(row => {
@@ -37,8 +37,9 @@ window.addEventListener('DOMContentLoaded', () => {
         const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const startTime = correctHour(originalTime, -7, 1); // -7h (bug) +1h logique
-        const endTime = correctHour(originalTime, -7, 4);   // -7h +4h
+        // 🟢 Fix +7h bug : on retire 6h → puis +1h logique = -5 total
+        const startTime = fixTimeFromCSV(originalTime, -5); // -6+1
+        const endTime   = fixTimeFromCSV(originalTime, -2); // -6+4
 
         const startDate = `${date}T${startTime}:00`;
         const endDate = `${date}T${endTime}:00`;
