@@ -14,16 +14,21 @@
   <meta name="author" content="Jenny & David Music">
 <script>
 function addHoursToTime(timeString, hoursToAdd) {
-  const [hour, minute] = timeString.split(":").map(Number);
-  const date = new Date();
-  date.setHours(hour + hoursToAdd, minute || 0);
-  const newHour = String(date.getHours()).padStart(2, '0');
-  const newMinute = String(date.getMinutes()).padStart(2, '0');
-  return `${newHour}:${newMinute}`;
+  let [hour, minute] = timeString.split(":").map(Number);
+  hour += hoursToAdd;
+  let dayOffset = 0;
+  if (hour >= 24) {
+    hour -= 24;
+    dayOffset = 1;
+  }
+  return {
+    time: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
+    dayOffset
+  };
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv")
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // Remplace par ton vrai lien
     .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
@@ -40,11 +45,18 @@ window.addEventListener('DOMContentLoaded', () => {
         const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const startTime = addHoursToTime(originalTime, 1);
-        const endTime = addHoursToTime(originalTime, 4);
+        const start = addHoursToTime(originalTime, 1);
+        const end = addHoursToTime(originalTime, 4);
 
-        const startDate = `${date}T${startTime}`;
-        const endDate = `${date}T${endTime}`;
+        const startDate = `${date}T${start.time}`;
+
+        let endDateString = date;
+        if (end.dayOffset === 1) {
+          const d = new Date(date);
+          d.setDate(d.getDate() + 1);
+          endDateString = d.toISOString().split("T")[0];
+        }
+        const endDate = `${endDateString}T${end.time}`;
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -82,13 +94,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const script = document.createElement('script');
         script.type = 'application/ld+json';
         script.textContent = JSON.stringify(jsonLd);
-        // 🔁 ajoute dans le body
         document.body.appendChild(script);
       });
     });
 });
 </script>
-
 
 
   <style>
