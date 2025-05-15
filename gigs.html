@@ -30,6 +30,7 @@ const dateRaw = cols[0];
 const location = cols[1];
 const timeRaw = cols[2];
 const siteWeb = (cols[7] || "").trim(); // Colonne H = index 7
+    const mapsUrl = (cols[9] || "").trim();  // Colonne J  
 
 
       if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
@@ -78,6 +79,9 @@ const siteWeb = (cols[7] || "").trim(); // Colonne H = index 7
       script.textContent = JSON.stringify(jsonLd);
       if (siteWeb) {
   jsonLd.location.sameAs = siteWeb;
+}
+      if (mapsUrl) {
+  jsonLd.location.url = mapsUrl;
 }
 
       document.head.appendChild(script);
