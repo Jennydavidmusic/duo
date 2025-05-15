@@ -10,17 +10,24 @@
 <link href="style.css" rel="stylesheet"/>
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+
 <script>
+function parseFrenchDate(dateStr) {
+  // Convertit 16/05/2025 → 2025-05-16
+  const [d, m, y] = dateStr.split("/").map(Number);
+  return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
 function fixTimeFromCSV(timeStr, correctionHours) {
   let [h, m] = timeStr.split(":").map(Number);
-  let corrected = new Date(2000, 0, 1, h + correctionHours, m || 0);
-  const hh = String(corrected.getHours()).padStart(2, '0');
-  const mm = String(corrected.getMinutes()).padStart(2, '0');
+  let date = new Date(2000, 0, 1, h + correctionHours, m || 0);
+  const hh = String(date.getHours()).padStart(2, '0');
+  const mm = String(date.getMinutes()).padStart(2, '0');
   return `${hh}:${mm}`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← ton vrai lien ici
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace par ton vrai lien CSV
     .then(r => r.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
@@ -34,15 +41,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-        const date = dateRaw.trim();
+        const date = parseFrenchDate(dateRaw.trim()); // convertit 16/05/2025 → 2025-05-16
         const originalTime = timeRaw.trim();
 
-        // 🟢 Fix +7h bug : on retire 6h → puis +1h logique = -5 total
-        const startTime = fixTimeFromCSV(originalTime, -5); // -6+1
-        const endTime   = fixTimeFromCSV(originalTime, -2); // -6+4
+        // ✅ retire 7h, puis ajoute 1h pour start / 4h pour end
+        const startTime = fixTimeFromCSV(originalTime, -6); // -7 + 1
+        const endTime   = fixTimeFromCSV(originalTime, -3); // -7 + 4
 
         const startDate = `${date}T${startTime}:00`;
-        const endDate = `${date}T${endTime}:00`;
+        const endDate   = `${date}T${endTime}:00`;
 
         const jsonLd = {
           "@context": "https://schema.org",
