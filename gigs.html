@@ -11,11 +11,11 @@
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <script>
-function correctHour(timeStr, totalOffset) {
-  let [h, m] = timeStr.split(":").map(Number);
-  let date = new Date(2000, 0, 1, h + totalOffset, m || 0);
-  let hh = String(date.getHours()).padStart(2, '0');
-  let mm = String(date.getMinutes()).padStart(2, '0');
+function correctHour(timeStr, offsetFromCsv = -7, logicOffset = 1) {
+  const [h, m] = timeStr.split(":").map(Number);
+  const date = new Date(2000, 0, 1, h + offsetFromCsv + logicOffset, m || 0);
+  const hh = String(date.getHours()).padStart(2, '0');
+  const mm = String(date.getMinutes()).padStart(2, '0');
   return `${hh}:${mm}`;
 }
 
@@ -37,8 +37,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const startTime = correctHour(originalTime, -6); // -7h (bug) +1h logique
-        const endTime = correctHour(originalTime, -3);   // -7h +4h
+        const startTime = correctHour(originalTime, -7, 1); // -7h (bug) +1h logique
+        const endTime = correctHour(originalTime, -7, 4);   // -7h +4h
 
         const startDate = `${date}T${startTime}:00`;
         const endDate = `${date}T${endTime}:00`;
