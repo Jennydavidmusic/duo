@@ -14,26 +14,29 @@
 function addHoursToTime(timeString, hoursToAdd) {
   const [hour, minute] = timeString.split(":").map(Number);
   const date = new Date();
-  date.setHours(hour + hoursToAdd, minute);
+  date.setHours(hour + hoursToAdd, minute || 0);
   const newHour = String(date.getHours()).padStart(2, '0');
   const newMinute = String(date.getMinutes()).padStart(2, '0');
   return `${newHour}:${newMinute}`;
 }
 
-fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS9XqzZ_1Gpyr7XLn-TPUs_XXXXXXX/pub?output=csv")  // ← mets ici le vrai lien .csv
   .then(response => response.text())
   .then(csv => {
-    const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
+    const rows = csv.trim().split("\n").slice(1); // ignore en-tête
     rows.forEach(row => {
-      const [date, location, time] = row.split(",");
+      const [dateRaw, location, timeRaw] = row.split(",");
 
-      if (!date || !location || !time || time.toLowerCase().includes("private")) return;
+      if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-      const formattedDate = date.trim();
-      const startTime = time.trim();
-      const endTime = addHoursToTime(startTime, 4);
-      const startDate = `${formattedDate}T${startTime}`;
-      const endDate = `${formattedDate}T${endTime}`;
+      const date = dateRaw.trim();
+      const originalTime = timeRaw.trim();
+
+      const startTime = addHoursToTime(originalTime, 1); // +1h pour le début
+      const endTime = addHoursToTime(originalTime, 4);   // +4h pour la fin
+
+      const startDate = `${date}T${startTime}`;
+      const endDate = `${date}T${endTime}`;
 
       const jsonLd = {
         "@context": "https://schema.org",
