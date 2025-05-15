@@ -11,23 +11,32 @@
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <script>
-function addHoursToTime(timeString, hoursToAdd) {
-  let [hour, minute] = timeString.split(":").map(Number);
-  hour += hoursToAdd;
-  let dayOffset = 0;
-  if (hour >= 24) {
-    hour -= 24;
-    dayOffset = 1;
-  }
-  return {
-    time: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
-    dayOffset
-  };
-}
+function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
+  let [year, month, day] = [0, 0, 0];
 
-function parseDateFRtoISO(dateString) {
-  const [day, month, year] = dateString.split("/").map(Number);
-  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  if (dateStr.includes("/")) {
+    const [d, m, y] = dateStr.split("/").map(Number);
+    year = y;
+    month = m;
+    day = d;
+  } else {
+    const [y, m, d] = dateStr.split("-").map(Number);
+    year = y;
+    month = m;
+    day = d;
+  }
+
+  const [h, min] = timeStr.split(":").map(Number);
+  let hour = h + hourOffset;
+  let date = new Date(year, month - 1, day, hour, min || 0);
+
+  const y = date.getFullYear();
+  const mo = String(date.getMonth() + 1).padStart(2, '0');
+  const da = String(date.getDate()).padStart(2, '0');
+  const ho = String(date.getHours()).padStart(2, '0');
+  const mi = String(date.getMinutes()).padStart(2, '0');
+
+  return `${y}-${mo}-${da}T${ho}:${mi}`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -45,30 +54,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
- let date = dateRaw.trim();
-
-// normalisation de la date
-if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(date)) {
-  // Ex: 16/05/2025 → 2025-05-16
-  const [d, m, y] = date.split("/").map(Number);
-  date = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-}
-
-
+        const date = dateRaw.trim();
         const originalTime = timeRaw.trim();
 
-        const start = addHoursToTime(originalTime, 1);
-        const end = addHoursToTime(start.time, 4); // end = start +1h
-
-        const startDate = `${date}T${start.time}`;
-
-        let endDateString = date;
-        if (end.dayOffset === 1) {
-          const d = new Date(date);
-          d.setDate(d.getDate() + 1);
-          endDateString = d.toISOString().split("T")[0];
-        }
-        const endDate = `${endDateString}T${end.time}`;
+        const startDate = buildISODateTimeLocal(date, originalTime, 1); // +1h
+        const endDate = buildISODateTimeLocal(date, originalTime, 4);   // +4h
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -111,6 +101,9 @@ if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(date)) {
     });
 });
 </script>
+
+
+
 
 
 <style>
