@@ -870,4 +870,30 @@ nav.hero-nav a.active,
 .index-preview h2 {
   color: white;
 }
+/* Taille normale (desktop) */
+.preview-image {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 1.5rem;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  .index-preview {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .preview-image {
+    width: 80%;
+    max-width: 250px;
+    margin: 0 auto 1rem;
+  }
+
+  .preview-text {
+    width: 100%;
+  }
+}
 
