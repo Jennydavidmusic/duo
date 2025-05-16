@@ -12,59 +12,28 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 <script>
-function addHoursToTime(timeString, hoursToAdd) {
-  let [hour, minute] = timeString.split(":").map(Number);
-  hour += hoursToAdd;
-  let dayOffset = 0;
-  if (hour >= 24) {
-    hour -= 24;
-    dayOffset = 1;
-  }
-  return {
-    time: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
-    dayOffset
-  };
-}
-
-function parseDateFRtoISO(dateString) {
-  const [day, month, year] = dateString.split("/").map(Number);
-  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-}
-
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← remplace ici par ton vrai lien
-    .then(response => response.text())
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← Mets ici ton vrai lien CSV
+    .then(r => r.text())
     .then(csv => {
-      const rows = csv.trim().split("\n").slice(1);
+      const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
       rows.forEach(row => {
         const cols = row.split(",");
-        const dateRaw = cols[0];
-        const location = cols[1];
-        const timeRaw = cols[10];
-        const siteWeb = (cols[7] || "").trim();
-        const mapsUrl = (cols[9] || "").trim();
+        const date = cols[0]?.trim();
+        const location = cols[1]?.trim();
+        const time = cols[10]?.trim(); // colonne K = index 10
 
-        if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
+        if (!date || !location || !time || time.toLowerCase().includes("private")) return;
 
-        let date = dateRaw.trim();
-        if (date.includes("/")) {
-          date = parseDateFRtoISO(date); // transforme 16/05/2025 → 2025-05-16
-        }
+        // Calcul endTime = start + 3h
+        const [h, m] = time.split(":").map(Number);
+        const endDateObj = new Date(2000, 0, 1, h + 3, m || 0);
+        const endH = String(endDateObj.getHours()).padStart(2, '0');
+        const endM = String(endDateObj.getMinutes()).padStart(2, '0');
+        const endTime = `${endH}:${endM}`;
 
-        const originalTime = timeRaw.trim();
-
-        const start = addHoursToTime(originalTime, 1);
-        const end = addHoursToTime(start.time, 1); // end = start +1h
-
-        const startDate = `${date}T${start.time}`;
-
-        let endDateString = date;
-        if (end.dayOffset === 1) {
-          const d = new Date(date);
-          d.setDate(d.getDate() + 1);
-          endDateString = d.toISOString().split("T")[0];
-        }
-        const endDate = `${endDateString}T${end.time}`;
+        const startDate = `${date}T${time}:00`;
+        const endDate = `${date}T${endTime}:00`;
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -95,9 +64,6 @@ window.addEventListener('DOMContentLoaded', () => {
             "url": "https://jennydavidmusic.com/gigs.html"
           }
         };
-
-        if (siteWeb) jsonLd.location.sameAs = siteWeb;
-        if (mapsUrl) jsonLd.location.url = mapsUrl;
 
         const script = document.createElement('script');
         script.type = 'application/ld+json';
