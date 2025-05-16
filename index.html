@@ -13,32 +13,23 @@
   <meta name="keywords" content="Jenny and David, acoustic duo, index, live music,London live events">
   <meta name="author" content="Jenny & David Music">
 <script>
-function buildISODateTimeLocal(dateStr, timeStr, hourOffset = 0) {
-  let [year, month, day] = [0, 0, 0];
-
-  if (dateStr.includes("/")) {
-    const [d, m, y] = dateStr.split("/").map(Number);
-    year = y;
-    month = m;
-    day = d;
-  } else {
-    const [y, m, d] = dateStr.split("-").map(Number);
-    year = y;
-    month = m;
-    day = d;
+function addHoursToTime(timeString, hoursToAdd) {
+  let [hour, minute] = timeString.split(":").map(Number);
+  hour += hoursToAdd;
+  let dayOffset = 0;
+  if (hour >= 24) {
+    hour -= 24;
+    dayOffset = 1;
   }
+  return {
+    time: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
+    dayOffset
+  };
+}
 
-  const [h, min] = timeStr.split(":").map(Number);
-  let hour = h + hourOffset;
-  let date = new Date(year, month - 1, day, hour, min || 0);
-
-  const y = date.getFullYear();
-  const mo = String(date.getMonth() + 1).padStart(2, '0');
-  const da = String(date.getDate()).padStart(2, '0');
-  const ho = String(date.getHours()).padStart(2, '0');
-  const mi = String(date.getMinutes()).padStart(2, '0');
-
-  return `${y}-${mo}-${da}T${ho}:${mi}`;
+function parseDateFRtoISO(dateString) {
+  const [day, month, year] = dateString.split("/").map(Number);
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -50,17 +41,31 @@ window.addEventListener('DOMContentLoaded', () => {
         const cols = row.split(",");
         const dateRaw = cols[0];
         const location = cols[1];
-        const timeRaw = cols[2];
+        const timeRaw = cols[10];
         const siteWeb = (cols[7] || "").trim();
         const mapsUrl = (cols[9] || "").trim();
 
         if (!dateRaw || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-        const date = dateRaw.trim();
+        let date = dateRaw.trim();
+        if (date.includes("/")) {
+          date = parseDateFRtoISO(date); // transforme 16/05/2025 → 2025-05-16
+        }
+
         const originalTime = timeRaw.trim();
 
-        const startDate = buildISODateTimeLocal(date, originalTime, 1); // +1h
-        const endDate = buildISODateTimeLocal(date, originalTime, 4);   // +4h
+        const start = addHoursToTime(originalTime, 1);
+        const end = addHoursToTime(start.time, 1); // end = start +1h
+
+        const startDate = `${date}T${start.time}`;
+
+        let endDateString = date;
+        if (end.dayOffset === 1) {
+          const d = new Date(date);
+          d.setDate(d.getDate() + 1);
+          endDateString = d.toISOString().split("T")[0];
+        }
+        const endDate = `${endDateString}T${end.time}`;
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -103,6 +108,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
 
   <style>
     html, body {
