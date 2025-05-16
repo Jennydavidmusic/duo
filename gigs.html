@@ -13,26 +13,29 @@
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← Mets ici ton vrai lien CSV
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← mets ici ton vrai lien CSV
     .then(r => r.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
       rows.forEach(row => {
         const cols = row.split(",");
-        const date = cols[0]?.trim();
-        const location = cols[1]?.trim();
-        const time = cols[10]?.trim(); // colonne K = index 10
+        const date = cols[0]?.trim();       // Colonne A
+        const location = cols[1]?.trim();   // Colonne B
+        const time = cols[10]?.trim();      // Colonne K
 
         if (!date || !location || !time || time.toLowerCase().includes("private")) return;
 
-        // Calcul endTime = start + 3h
-        const [h, m] = time.split(":").map(Number);
+        // Nettoyage robustes des formats foireux ("12,00", "12:00 ", etc.)
+        const cleanTime = time.replace(/\s/g, "").replace(",", ":");
+        const [h, m] = cleanTime.split(":").map(Number);
+
+        // endTime = +3h
         const endDateObj = new Date(2000, 0, 1, h + 3, m || 0);
         const endH = String(endDateObj.getHours()).padStart(2, '0');
         const endM = String(endDateObj.getMinutes()).padStart(2, '0');
         const endTime = `${endH}:${endM}`;
 
-        const startDate = `${date}T${time}:00`;
+        const startDate = `${date}T${cleanTime}:00`;
         const endDate = `${date}T${endTime}:00`;
 
         const jsonLd = {
@@ -73,6 +76,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+
 
 <style>
   .gig-table {
