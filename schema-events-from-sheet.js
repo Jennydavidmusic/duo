@@ -66,6 +66,7 @@ fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
           "price": "0",
           "priceCurrency": "GBP",
           "availability": "https://schema.org/InStock",
+          "validFrom": startDate,
           "url": row.Link || "https://jennydavidmusic.com/gigs.html"
         }
       };
