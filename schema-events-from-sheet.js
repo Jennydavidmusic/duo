@@ -48,6 +48,7 @@ const startDate = `${year}-${month}-${day}T${hStr}:${mStr}:00`;
           "name": "Jenny & David"
         },
         "description": `Live acoustic performance by Jenny & David at ${row.Venue} in London.`
+        "image": "https://jennydavidmusic.com/images/photo21.jpg"
       };
 
       if (row.Link) {
