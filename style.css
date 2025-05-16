@@ -922,3 +922,19 @@ nav.hero-nav a.active,
     max-width: 250px;
   }
 }
+@media (max-width: 768px) {
+  .index-preview {
+    padding: 2rem 1rem;
+    margin-bottom: 3rem; /* Plus d’espace entre les sections */
+  }
+
+  .preview-text {
+    text-align: center;
+  }
+
+  .preview-image {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
