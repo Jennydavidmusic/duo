@@ -937,4 +937,26 @@ nav.hero-nav a.active,
     max-width: 250px;
   }
 }
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #D4AF37;
+  color: black;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+  z-index: 999;
+  display: none;
+}
+
+.back-to-top:hover {
+  opacity: 0.8;
+}
 
