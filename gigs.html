@@ -15,30 +15,30 @@
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← mets ici ton vrai lien CSV
-    .then(r => r.text())
+  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← Remplace ici par ton vrai lien CSV
+    .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
       rows.forEach(row => {
         const cols = row.split(",");
-        const date = cols[0]?.trim();       // Colonne A
-        const location = cols[1]?.trim();   // Colonne B
-        const time = cols[10]?.trim();      // Colonne K
+        const date = cols[0]?.trim();       // Colonne A = date (JJ/MM/AAAA ou AAAA-MM-JJ)
+        const location = cols[1]?.trim();   // Colonne B = lieu
+        const timeRaw = cols[2]?.trim();    // Colonne C = heure
 
-        if (!date || !location || !time || time.toLowerCase().includes("private")) return;
+        if (!date || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-        // Nettoyage robustes des formats foireux ("12,00", "12:00 ", etc.)
-        const cleanTime = time.replace(/\s/g, "").replace(",", ":");
+        const cleanTime = timeRaw.replace(/\s/g, "").replace(",", ":");
         const [h, m] = cleanTime.split(":").map(Number);
+        if (isNaN(h) || isNaN(m)) return;
 
-        // endTime = +3h
-        const endDateObj = new Date(2000, 0, 1, h + 3, m || 0);
-        const endH = String(endDateObj.getHours()).padStart(2, '0');
-        const endM = String(endDateObj.getMinutes()).padStart(2, '0');
-        const endTime = `${endH}:${endM}`;
+        const startH = h + 1;
+        const endH = h + 4;
 
-        const startDate = `${date}T${cleanTime}:00`;
-        const endDate = `${date}T${endTime}:00`;
+        const startTime = `${String(startH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        const endTime   = `${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+
+        const startDate = `${date}T${startTime}:00`;
+        const endDate   = `${date}T${endTime}:00`;
 
         const jsonLd = {
           "@context": "https://schema.org",
