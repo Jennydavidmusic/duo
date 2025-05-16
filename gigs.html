@@ -10,33 +10,33 @@
 <link href="style.css" rel="stylesheet"/>
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-
 <script>
 window.addEventListener('DOMContentLoaded', () => {
   fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← mets ici ton vrai lien CSV
-    .then(r => r.text())
+    .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
       rows.forEach(row => {
         const cols = row.split(",");
         const date = cols[0]?.trim();       // Colonne A
         const location = cols[1]?.trim();   // Colonne B
-        const time = cols[10]?.trim();      // Colonne K
+        const timeRaw = cols[2]?.trim();    // Colonne C (heure brute)
 
-        if (!date || !location || !time || time.toLowerCase().includes("private")) return;
+        if (!date || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
 
-        // Nettoyage robustes des formats foireux ("12,00", "12:00 ", etc.)
-        const cleanTime = time.replace(/\s/g, "").replace(",", ":");
-        const [h, m] = cleanTime.split(":").map(Number);
+        const cleanTime = timeRaw.replace(/\s/g, "").replace(",", ":");
+        const [originalH, originalM] = cleanTime.split(":").map(Number);
 
-        // endTime = +3h
-        const endDateObj = new Date(2000, 0, 1, h + 3, m || 0);
-        const endH = String(endDateObj.getHours()).padStart(2, '0');
-        const endM = String(endDateObj.getMinutes()).padStart(2, '0');
-        const endTime = `${endH}:${endM}`;
+        if (isNaN(originalH) || isNaN(originalM)) return;
 
-        const startDate = `${date}T${cleanTime}:00`;
-        const endDate = `${date}T${endTime}:00`;
+        const hStart = originalH - 7;
+        const hEnd = hStart + 3;
+
+        const startTime = `${String(hStart).padStart(2, '0')}:${String(originalM).padStart(2, '0')}`;
+        const endTime   = `${String(hEnd).padStart(2, '0')}:${String(originalM).padStart(2, '0')}`;
+
+        const startDate = `${date}T${startTime}:00`;
+        const endDate   = `${date}T${endTime}:00`;
 
         const jsonLd = {
           "@context": "https://schema.org",
@@ -76,6 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
 
 
 
