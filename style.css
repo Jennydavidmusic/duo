@@ -867,4 +867,7 @@ nav.hero-nav a.active,
     padding: 1px 3px;
   }
 }
+.index-preview h2 {
+  color: white;
+}
 
