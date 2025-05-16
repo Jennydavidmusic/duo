@@ -11,62 +11,6 @@
 <link rel="canonical" href="https://jennydavidmusic.com/gigs.html" />
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <script>
-window.addEventListener('DOMContentLoaded', () => {
-  fetch("https://docs.google.com/spreadsheets/d/e/TON-LIEN/pub?output=csv") // ← mets ici ton vrai lien CSV
-    .then(response => response.text())
-    .then(csv => {
-      const rows = csv.trim().split("\n").slice(1); // Ignore l'en-tête
-      rows.forEach(row => {
-        const cols = row.split(",");
-        const date = cols[0]?.trim();       // Colonne A
-        const location = cols[1]?.trim();   // Colonne B
-        const timeRaw = cols[2]?.trim();    // Colonne C (heure brute)
-
-        if (!date || !location || !timeRaw || timeRaw.toLowerCase().includes("private")) return;
-
-        const cleanTime = timeRaw.replace(/\s/g, "").replace(",", ":");
-        const [originalH, originalM] = cleanTime.split(":").map(Number);
-
-        if (isNaN(originalH) || isNaN(originalM)) return;
-
-        const hStart = originalH - 7;
-        const hEnd = hStart + 3;
-
-        const startTime = `${String(hStart).padStart(2, '0')}:${String(originalM).padStart(2, '0')}`;
-        const endTime   = `${String(hEnd).padStart(2, '0')}:${String(originalM).padStart(2, '0')}`;
-
-        const startDate = `${date}T${startTime}:00`;
-        const endDate   = `${date}T${endTime}:00`;
-
-        const jsonLd = {
-          "@context": "https://schema.org",
-          "@type": "MusicEvent",
-          "name": `Jenny & David at ${location}`,
-          "startDate": startDate,
-          "endDate": endDate,
-          "location": {
-            "@type": "Place",
-            "name": location,
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "London",
-              "addressCountry": "UK"
-            }
-          },
-          "image": "https://jennydavidmusic.com/images/photo21.jpg",
-          "description": "Live acoustic gig with Jenny & David.",
-          "organizer": {
-            "@type": "Organization",
-            "name": "Jenny & David Music"
-          },
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "GBP",
-            "availability": "https://schema.org/InStock",
-            "url": "https://jennydavidmusic.com/gigs.html"
-          }
-        };
 
         const script = document.createElement('script');
         script.type = 'application/ld+json';
