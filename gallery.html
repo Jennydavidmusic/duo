@@ -132,7 +132,7 @@
 </head>
 
 <body class="gallery-page">
-
+ <div id="top"></div>
 <nav class="hero-nav">
 <a href="https://jennydavidmusic.com" title="Return to Jenny & David's homepage – Acoustic Duo in London" aria-label="Home – Jenny and David Acoustic Duo">Home</a>
 <a href="about.html" title="Learn more about Jenny & David, a professional acoustic duo based in London" aria-label="About Jenny and David">About</a>
@@ -239,6 +239,18 @@
   }
 });
 
+</script>
+<a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script>
+  const backToTop = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTop.style.display = 'block';
+    } else {
+      backToTop.style.display = 'none';
+    }
+  });
 </script>
 
 </body>
