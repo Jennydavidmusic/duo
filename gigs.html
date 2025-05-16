@@ -14,38 +14,6 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MusicEvent",
-  "name": "Jenny & David at The Green Pub",
-  "startDate": "2025-05-16T20:00:00",
-  "endDate": "2025-05-16T23:00:00",
-  "location": {
-    "@type": "Place",
-    "name": "The Green Pub",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "London",
-      "addressCountry": "UK"
-    }
-  },
-  "image": "https://jennydavidmusic.com/images/photo21.jpg",
-  "description": "Live acoustic gig with Jenny & David.",
-  "organizer": {
-    "@type": "Organization",
-    "name": "Jenny & David Music"
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "GBP",
-    "availability": "https://schema.org/InStock",
-    "url": "https://jennydavidmusic.com/gigs.html"
-  }
-}
-</script>
-
 
 <style>
   .gig-table {
@@ -215,8 +183,9 @@ window.addEventListener("scroll", () => {
   }
 });
   </script>
-
   <!-- AJOUTE CETTE LIGNE ICI -->
+  <script src="schema-events-from-sheet.js">
+  </script>
 
 
 </body>
