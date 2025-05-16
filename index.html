@@ -247,6 +247,8 @@
 
 </head>
 <body class="index-page">
+  <div id="top"></div>
+
   <img src="images/home-banner.jpg" alt="Jenny & David – acoustic music duo in London" style="display: none;">
 
   <nav class="hero-nav">
@@ -406,6 +408,18 @@ const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
       });
   </script>
 <script src="schema-events-from-sheet.js"></script>
+  <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script>
+  const backToTop = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTop.style.display = 'block';
+    } else {
+      backToTop.style.display = 'none';
+    }
+  });
+</script>
 </body>
 </html>
 <section class="index-preview">
