@@ -15,13 +15,17 @@ fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
       const dateObj = parseDate(row.Date);
       if (!dateObj || dateObj < today || !row.Time || !row.Venue) return;
 
-      const [hour, minute] = row.Time.split(':').map(Number);
-      if (isNaN(hour) || isNaN(minute)) return;
+ const [hour, minute] = row.Time.split(':').map(Number);
+if (isNaN(hour) || isNaN(minute)) return;
 
-      dateObj.setHours(hour + 1, minute);  // +1 hour
+const localHour = hour + 1;
+const year = dateObj.getFullYear();
+const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+const day = String(dateObj.getDate()).padStart(2, '0');
+const hStr = String(localHour).padStart(2, '0');
+const mStr = String(minute).padStart(2, '0');
 
-      const isoString = dateObj.toISOString();
-      const startDate = isoString.slice(0, 19);
+const startDate = `${year}-${month}-${day}T${hStr}:${mStr}:00`;
 
       const eventJson = {
         "@context": "https://schema.org",
