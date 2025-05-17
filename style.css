@@ -964,7 +964,7 @@ nav.hero-nav a.active,
   width: 100%;
   max-width: 320px;
   margin: 0 auto 1.5rem;
-  padding-bottom: 180%; /* permet un format vertical Instagram */
+  padding-bottom: 180%; /* adapte la hauteur, 180% pour vertical */
   height: 0;
   overflow: hidden;
 }
@@ -977,4 +977,5 @@ nav.hero-nav a.active,
   height: 100%;
   border: none;
 }
+
 
