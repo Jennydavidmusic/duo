@@ -960,4 +960,9 @@ nav.hero-nav a.active,
   opacity: 0.8;
 }
 
+.video-wrapper.instagram iframe {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 
