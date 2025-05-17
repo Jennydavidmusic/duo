@@ -959,23 +959,5 @@ nav.hero-nav a.active,
 .back-to-top:hover {
   opacity: 0.8;
 }
-.video-wrapper.instagram {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto 1.5rem;
-  padding-bottom: 180%; /* adapte la hauteur, 180% pour vertical */
-  height: 0;
-  overflow: hidden;
-}
-
-.video-wrapper.instagram iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
 
 
