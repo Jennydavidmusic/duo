@@ -972,4 +972,8 @@ body.index-page .index-preview h2 {
   margin-top: -3rem;
 }
 
+body.index-page .index-preview .preview-image,
+body.index-page .index-preview .preview-video {
+  margin-bottom: 2rem; /* Augmente l'espace sous l'image/vidéo */
+}
 
