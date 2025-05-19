@@ -985,10 +985,8 @@ body.index-page .index-preview {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
-
 .main-content {
-  margin: 0 !important;
-  padding: 0.5rem 1rem !important;
+  display: none;
 }
 
 
