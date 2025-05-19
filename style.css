@@ -979,10 +979,26 @@ body.index-page .index-preview {
     padding-bottom: 0.5rem;
   }
 }
-
 @media (max-width: 768px) {
   .hero {
-    margin-bottom: 0rem !important; /* supprime l’espace sous la section hero */
-    padding-bottom: 
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .main-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .index-preview:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .index-page .index-preview h2 {
+    margin-top: 0.5rem; /* Ajuste ici le titre si trop proche de la photo */
+  }
+}
+
 
 
