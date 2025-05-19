@@ -874,7 +874,7 @@ nav.hero-nav a.active,
   align-items: center;
   text-align: center;
   margin: 3rem 0;
-  border-bottom: 1px solid #333;
+  
   padding-bottom: 2rem;
 }
 
@@ -998,6 +998,7 @@ body.index-page .index-preview {
     padding-top: 0 !important;
   }
 }
+
 
 
 
