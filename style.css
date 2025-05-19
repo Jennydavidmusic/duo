@@ -973,5 +973,11 @@ body.index-page .index-preview {
   padding-bottom: 1rem;
   border-bottom: 1px solid #333; /* tu peux l’enlever si tu ne veux pas de séparation */
 }
+@media (max-width: 768px) {
+  body.index-page .index-preview {
+    margin: 0.5rem 0;
+    padding-bottom: 0.5rem;
+  }
+}
 
 
