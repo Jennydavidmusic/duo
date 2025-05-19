@@ -980,4 +980,9 @@ body.index-page .index-preview {
   }
 }
 
+@media (max-width: 768px) {
+  body.index-page .index-preview:first-of-type {
+    margin-top: 1rem; /* ou 0.5rem pour encore plus serré */
+  }
+}
 
