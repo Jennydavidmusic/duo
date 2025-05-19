@@ -968,5 +968,10 @@ nav.hero-nav a.active,
   background-color: black;
   object-fit: cover;
 }
+body.index-page .index-preview {
+  margin: 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333; /* tu peux l’enlever si tu ne veux pas de séparation */
+}
 
 
