@@ -965,6 +965,8 @@ nav.hero-nav a.active,
   border-radius: 10px;
   display: block;
   margin: 0 auto 1.5rem;
+  background-color: black;
+  object-fit: cover;
 }
 
 
