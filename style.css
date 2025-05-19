@@ -869,14 +869,15 @@ nav.hero-nav a.active,
 }
 /* Style global pour les sections de résumé sur index.html */
 .index-preview {
+  border-bottom: none !important;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: 3rem 0;
-  
-  padding-bottom: 2rem;
+  margin: 2.5rem 0;
+  padding-bottom: 0;
 }
+
 
 .index-preview h2 {
   color: white;
