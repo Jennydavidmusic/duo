@@ -959,5 +959,12 @@ nav.hero-nav a.active,
 .back-to-top:hover {
   opacity: 0.8;
 }
+.preview-video {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto 1.5rem;
+}
 
 
