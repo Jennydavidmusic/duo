@@ -155,29 +155,26 @@
   <p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
 </div>
 <div class="faq-section">
-  <h2>Frequently Asked Questions</h2>
+  <h2 style="text-align: center;">Frequently Asked Questions</h2>
 
-  <button class="accordion">How much do Jenny & David cost to hire?</button>
+  <button class="accordion">How much do Jenny & David cost to hire? <span class="arrow">▼</span></button>
   <div class="panel"><p>Our rates vary depending on the event location, timings, and performance duration. Please use the contact form above to get a personalised quote.</p></div>
-  <button class="accordion">How long do you perform for?</button>
+
+  <button class="accordion">How long do you perform for? <span class="arrow">▼</span></button>
   <div class="panel"><p>Our standard format is 3 x 45-minute live sets, but this can be tailored to your event.</p></div>
-  <button class="accordion">What styles of music do you play?</button>
+
+  <button class="accordion">What styles of music do you play? <span class="arrow">▼</span></button>
   <div class="panel"><p>We perform a wide selection of songs from the 60s to today — covering acoustic pop, soul, folk, and modern classics.</p></div>
 
- 
-
-  <button class="accordion">Can you play music between sets?</button>
+  <button class="accordion">Can you play music between sets? <span class="arrow">▼</span></button>
   <div class="panel"><p>Yes! We provide background music between sets — from our own playlists or yours. We can also add a DJ-style performance if you'd like the party to continue after our acoustic sets.</p></div>
 
-  <button class="accordion">Can we request songs?</button>
+  <button class="accordion">Can we request songs? <span class="arrow">▼</span></button>
   <div class="panel"><p>Absolutely. We’re happy to learn your ceremony song or first dance. If there are songs you'd prefer we don’t play, just let us know in advance.</p></div>
 
-  <button class="accordion">Can you perform our first dance live?</button>
+  <button class="accordion">Can you perform our first dance live? <span class="arrow">▼</span></button>
   <div class="panel"><p>We love performing first dances — it’s always a special moment. Let us know your chosen song in advance, and we’ll make it part of the magic.</p></div>
-
- 
 </div>
-
 
 <!-- Menu Hamburger -->
 <div class="hamburger-menu">
@@ -253,12 +250,19 @@
   });
 </script>
 <script>
-  const accordions = document.querySelectorAll(".accordion");
-  accordions.forEach(btn => {
+  const acc = document.querySelectorAll(".accordion");
+  acc.forEach(btn => {
     btn.addEventListener("click", function () {
       this.classList.toggle("active");
       const panel = this.nextElementSibling;
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
+      const arrow = this.querySelector(".arrow");
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+        arrow.textContent = "▼";
+      } else {
+        panel.style.display = "block";
+        arrow.textContent = "▲";
+      }
     });
   });
 </script>
