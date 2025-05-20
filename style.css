@@ -1034,16 +1034,21 @@ body.index-page .index-preview {
 .accordion.active {
   background-color: #222;
 }
-
+  .accordion .arrow {
+    float: right;
+  }
 .panel {
-  padding: 0 18px;
+  padding: 0 20px;
   display: none;
   overflow: hidden;
   background-color: #000;
   color: white;
   border-bottom: 1px solid #333;
 }
-
+  .panel p {
+    color: white;
+    margin: 15px 0;
+  }
  
 
 
