@@ -1036,6 +1036,7 @@ body.index-page .index-preview {
 }
   .accordion .arrow {
     float: right;
+    color: white;
   }
 .panel {
   padding: 0 20px;
