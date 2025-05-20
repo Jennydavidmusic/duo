@@ -999,6 +999,50 @@ body.index-page .index-preview {
     padding-top: 0 !important;
   }
 }
+.faq-section {
+  margin-top: 60px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+}
+
+.faq-section h2 {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+.faq-section p {
+  color: white;
+}
+
+.accordion {
+  background-color: #111;
+  color: #D4AF37;
+  cursor: pointer;
+  padding: 16px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  border-bottom: 1px solid #333;
+}
+
+.accordion:hover,
+.accordion.active {
+  background-color: #222;
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #000;
+  color: white;
+  border-bottom: 1px solid #333;
+}
 
  
 
