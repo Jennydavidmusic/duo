@@ -154,30 +154,26 @@
   </form>
   <p id="confirmation" style="display:none; color: lightgreen; margin-top: 15px;">Your message has been sent. Thank you!</p>
 </div>
-<section class="faq-section">
-  <h2>🎤 FAQ – Frequently Asked Questions</h2>
+<div class="faq-section">
+  <h2>Frequently Asked Questions</h2>
 
-  <h3>💰 How much does it cost to book Jenny & David?</h3>
-  <p style="color: white;">Each booking is unique, so we tailor our prices depending on the event details — including location, performance duration, and finish time. We're competitively priced, so send us the details and we’ll send you a personalised quote.</p>
- <h3>⏱ How long do you perform?</h3>
-  <p style="color: white;">Our standard performance includes 3 x 45-minute live sets, but we’re flexible and can adapt to your event schedule.</p>
+  <button class="accordion">How much do Jenny & David cost to hire?</button>
+  <div class="panel"><p>Our rates vary depending on the event location, timings, and performance duration. Please use the contact form above to get a personalised quote.</p></div>
 
-  
-  <h3>🎶 What kind of music do you play?</h3>
-  <p style="color: white;">We cover a wide mix of hits from the 60s to the present day — perfect for any atmosphere, from laid-back receptions to lively dancefloors.</p>
+  <button class="accordion">What styles of music do you play?</button>
+  <div class="panel"><p>We perform a wide selection of songs from the 60s to today — covering acoustic pop, soul, folk, and modern classics.</p></div>
 
-  <h3>🎵 Can we request songs?</h3>
-  <p style="color: white;">Yes! Especially for key moments like the first dance or ceremony. If there are songs you'd rather skip, just let us know in advance.</p>
+  <button class="accordion">How long do you perform for?</button>
+  <div class="panel"><p>Our standard format is 3 x 45-minute live sets, but this can be tailored to your event.</p></div>
 
-  <h3>📀 Can you play music between your sets?</h3>
-  <p style="color: white;">Absolutely. We include background music between sets in our fee. You can use one of our curated playlists, your own, or even request a <strong>DJ-style set</strong> to keep the energy going between performances.</p>
+  <button class="accordion">Can you play music between sets?</button>
+  <div class="panel"><p>Yes! We provide background music between sets — from our own playlists or yours. We can also add a DJ-style performance if you'd like the party to continue after our acoustic sets.</p></div>
 
+  <button class="accordion">Can we request songs?</button>
+  <div class="panel"><p>Absolutely. We’re happy to learn your ceremony song or first dance. If there are songs you'd prefer we don’t play, just let us know in advance.</p></div>
 
-  <h3>💃 Can you perform our first dance live?</h3>
-  <p style="color: white;">Definitely — it’s one of our favourite parts of performing. Just let us know your chosen song in time to rehearse it.</p>
-
-  
-</section>
+ 
+</div>
 
 
 <!-- Menu Hamburger -->
@@ -251,6 +247,16 @@
     } else {
       backToTop.style.display = 'none';
     }
+  });
+</script>
+<script>
+  const accordions = document.querySelectorAll(".accordion");
+  accordions.forEach(btn => {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
   });
 </script>
 
