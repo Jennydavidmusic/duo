@@ -1050,7 +1050,31 @@ body.index-page .index-preview {
     color: white;
     margin: 15px 0;
   }
+.quote-under-icons a {
+  font-size: 0.65rem !important;
+  padding: 2px 6px !important;
+  border: 1px solid gold !important;
+  border-radius: 3px !important;
+  font-weight: 600 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important; /* presque opaque */
+  color: gold !important;
+  line-height: 1.1 !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease;
+}
 
+.quote-under-icons a:hover {
+  background-color: rgba(255, 215, 0, 0.9) !important;
+  color: black !important;
+}
+
+
+.quote-under-icons {
+  position: fixed !important;
+  top: 17px !important;
+  right: 88px !important; /* diminue la valeur pour le rapprocher du bord droit */
+  z-index: 999 !important;
+}
 
 
 
