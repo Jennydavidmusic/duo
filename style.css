@@ -1076,5 +1076,10 @@ body.index-page .index-preview {
   z-index: 999 !important;
 }
 
+@media (min-width: 769px) {
+  .quote-under-icons {
+    display: none !important;
+  }
+}
 
 
