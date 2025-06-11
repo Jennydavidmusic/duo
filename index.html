@@ -403,7 +403,7 @@ window.addEventListener("scroll", () => {
 });
 
   </script>
-  <script>
+ <script>
   fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
     .then(response => response.json())
     .then(data => {
@@ -422,29 +422,16 @@ window.addEventListener("scroll", () => {
         return null;
       };
 
-      const offsetHours = 1;
-
       const filtered = data.filter(row => {
         const rowDate = parseDate(row.Date);
         if (!rowDate || !row.Time) return false;
 
         const [hour, minute] = row.Time.split(':').map(Number);
         const gigTime = new Date(rowDate);
-
-        // Gérer le +1h avec bascule de jour
-        if (hour + 1 >= 24) {
-          gigTime.setDate(gigTime.getDate() + 1);
-          gigTime.setHours((hour + 1) % 24, minute);
-        } else {
-        gigTime.setHours(hour + 1, minute);
-        
-        }
+        gigTime.setHours(hour + 1, minute); // +1h décalage
 
         const diffHours = (now - gigTime) / (1000 * 60 * 60);
 
-        // Affiche si :
-        // - le concert est à venir
-        // - ou il a commencé il y a moins de 3h
         return gigTime > now || (diffHours >= 0 && diffHours <= 3);
       });
 
@@ -456,12 +443,11 @@ window.addEventListener("scroll", () => {
 
         const [day, month, year] = nextGig.Date.split('/').map(Number);
         const [hour, minute] = nextGig.Time.split(':').map(Number);
-        const dateObj = new Date(year, month - 1, day, hour + offsetHours, minute);
-        
+        const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h décalage
+
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const weekday = daysOfWeek[dateObj.getDay()];
         const formattedDate = `${weekday} ${nextGig.Date}`;
-
 
         const hour12 = dateObj.getHours() % 12 || 12;
         const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
@@ -469,7 +455,7 @@ window.addEventListener("scroll", () => {
         const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
 
         const gigDetails = `
-          <strong>${nextGig.Date}</strong><br>
+          <strong>${formattedDate}</strong><br>
           ${venueHTML} at ${formattedTimeString}
         `;
         document.getElementById('gig-details').innerHTML = gigDetails;
@@ -482,7 +468,6 @@ window.addEventListener("scroll", () => {
       document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
     });
 </script>
-
 
 
 
