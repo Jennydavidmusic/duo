@@ -404,58 +404,52 @@ window.addEventListener("scroll", () => {
 
 
 
-    fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
-      .then(response => response.json())
-      .then(data => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
+  .then(response => response.json())
+  .then(data => {
+    const now = new Date();
 
-        const parseDate = (str) => {
-          if (!str) return null;
-          const parts = str.split('/');
-          if (parts.length === 3) {
-            const day = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10) - 1;
-            const year = parseInt(parts[2], 10);
-            return new Date(year, month, day);
-          }
-          return null;
-        };
+    const parseDateTime = (dateStr, timeStr) => {
+      if (!dateStr || !timeStr) return null;
+      const [day, month, year] = dateStr.split('/').map(Number);
+      const [hour, minute] = timeStr.split(':').map(Number);
+      return new Date(year, month - 1, day, hour, minute);
+    };
 
-        const upcoming = data.filter(row => {
-          const rowDate = parseDate(row.Date);
-          return rowDate && rowDate >= today;
-        });
+    const upcoming = data.find(row => {
+      const gigTime = parseDateTime(row.Date, row.Time);
+      if (!gigTime) return false;
+      const diffMs = gigTime - now;
+      const diffHours = diffMs / (1000 * 60 * 60);
+      return diffHours >= 3;
+    });
 
-        if (upcoming.length > 0) {
-          const nextGig = upcoming[0];
-          const venueHTML = nextGig.Link
-            ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
-            : nextGig.Venue;
+    if (upcoming) {
+      const venueHTML = upcoming.Link
+        ? `<a href="${upcoming.Link}" target="_blank" style="color: gold; text-decoration: underline;">${upcoming.Venue}</a>`
+        : upcoming.Venue;
 
-const [day, month, year] = nextGig.Date.split('/').map(Number);
-const [hour, minute] = nextGig.Time.split(':').map(Number);
-const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h
+      const gigTime = parseDateTime(upcoming.Date, upcoming.Time);
+      gigTime.setHours(gigTime.getHours() + 1); // +1h
 
-const hour12 = dateObj.getHours() % 12 || 12;
-const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
-const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
-const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
+      const hour12 = gigTime.getHours() % 12 || 12;
+      const minuteStr = gigTime.getMinutes().toString().padStart(2, '0');
+      const ampm = gigTime.getHours() >= 12 ? 'PM' : 'AM';
+      const formattedTime = `${hour12}:${minuteStr} ${ampm}`;
 
+      document.getElementById('gig-details').innerHTML = `
+        <strong>${upcoming.Date}</strong><br>
+        ${venueHTML} at ${formattedTime}
+      `;
+    } else {
+      document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
+    }
+  })
+  .catch(err => {
+    console.error("Error fetching gigs:", err);
+    document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
+  });
 
-          const gigDetails = `
-            <strong>${nextGig.Date}</strong><br>
-            ${venueHTML} at ${formattedTimeString}
-          `;
-          document.getElementById('gig-details').innerHTML = gigDetails;
-        } else {
-          document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
-        }
-      })
-      .catch(err => {
-        console.error("Error fetching gigs:", err);
-        document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
-      });
   </script>
 <script src="schema-events-from-sheet.js"></script>
   <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
