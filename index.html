@@ -430,7 +430,15 @@ window.addEventListener("scroll", () => {
 
         const [hour, minute] = row.Time.split(':').map(Number);
         const gigTime = new Date(rowDate);
-        gigTime.setHours(hour + offsetHours, minute);
+
+        // Gérer le +1h avec bascule de jour
+        if (hour + 1 >= 24) {
+          gigTime.setDate(gigTime.getDate() + 1);
+          gigTime.setHours((hour + 1) % 24, minute);
+        } else {
+        gigTime.setHours(hour + 1, minute);
+        
+        }
 
         const diffHours = (now - gigTime) / (1000 * 60 * 60);
 
