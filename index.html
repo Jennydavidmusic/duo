@@ -477,70 +477,7 @@ window.addEventListener("scroll", () => {
       document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
     });
 </script>
-<script>
-  fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
-    .then(response => response.json())
-    .then(data => {
-      const now = new Date();
-      now.setSeconds(0, 0);
 
-      const parseDate = (str) => {
-        if (!str) return null;
-        const parts = str.split('/');
-        if (parts.length === 3) {
-          const day = parseInt(parts[0], 10);
-          const month = parseInt(parts[1], 10) - 1;
-          const year = parseInt(parts[2], 10);
-          return new Date(year, month, day);
-        }
-        return null;
-      };
-
-      const filtered = data.filter(row => {
-        const rowDate = parseDate(row.Date);
-        if (!rowDate || !row.Time) return false;
-
-        const [hour, minute] = row.Time.split(':').map(Number);
-        const gigTime = new Date(rowDate);
-        gigTime.setHours(hour + 1, minute); // +1h
-
-        const diffHours = (now - gigTime) / (1000 * 60 * 60);
-
-        // Affiche si :
-        // - le concert est à venir
-        // - ou a commencé il y a moins de 3h
-        return gigTime > now || (diffHours >= 0 && diffHours <= 3);
-      });
-
-      if (filtered.length > 0) {
-        const nextGig = filtered[0];
-        const venueHTML = nextGig.Link
-          ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
-          : nextGig.Venue;
-
-        const [day, month, year] = nextGig.Date.split('/').map(Number);
-        const [hour, minute] = nextGig.Time.split(':').map(Number);
-        const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h
-
-        const hour12 = dateObj.getHours() % 12 || 12;
-        const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
-        const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
-        const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
-
-        const gigDetails = `
-          <strong>${nextGig.Date}</strong><br>
-          ${venueHTML} at ${formattedTimeString}
-        `;
-        document.getElementById('gig-details').innerHTML = gigDetails;
-      } else {
-        document.getElementById('gig-details').innerHTML = "No upcoming gigs at the moment.";
-      }
-    })
-    .catch(err => {
-      console.error("Error fetching gigs:", err);
-      document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
-    });
-</script>
 
 
 
