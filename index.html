@@ -403,7 +403,7 @@ window.addEventListener("scroll", () => {
 });
 
   </script>
- <script>
+<script>
   fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
     .then(response => response.json())
     .then(data => {
@@ -428,7 +428,7 @@ window.addEventListener("scroll", () => {
 
         const [hour, minute] = row.Time.split(':').map(Number);
         const gigTime = new Date(rowDate);
-        gigTime.setHours(hour + 1, minute); // +1h décalage
+        gigTime.setHours(hour + 1, minute); // Ajout de +1h
 
         const diffHours = (now - gigTime) / (1000 * 60 * 60);
 
@@ -437,22 +437,23 @@ window.addEventListener("scroll", () => {
 
       if (filtered.length > 0) {
         const nextGig = filtered[0];
-        const venueHTML = nextGig.Link
-          ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
-          : nextGig.Venue;
-
-        const [day, month, year] = nextGig.Date.split('/').map(Number);
         const [hour, minute] = nextGig.Time.split(':').map(Number);
-        const dateObj = new Date(year, month - 1, day, hour + 1, minute); // +1h décalage
+        const baseDate = parseDate(nextGig.Date);
+        const dateObj = new Date(baseDate);
+        dateObj.setHours(hour + 1, minute); // +1h
 
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const weekday = daysOfWeek[dateObj.getDay()];
-        const formattedDate = `${weekday} ${nextGig.Date}`;
+        const formattedDate = `${weekday} ${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
 
         const hour12 = dateObj.getHours() % 12 || 12;
         const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
         const ampm = dateObj.getHours() >= 12 ? 'PM' : 'AM';
         const formattedTimeString = `${hour12}:${minuteStr} ${ampm}`;
+
+        const venueHTML = nextGig.Link
+          ? `<a href="${nextGig.Link}" target="_blank" style="color: gold; text-decoration: underline;">${nextGig.Venue}</a>`
+          : nextGig.Venue;
 
         const gigDetails = `
           <strong>${formattedDate}</strong><br>
@@ -468,7 +469,6 @@ window.addEventListener("scroll", () => {
       document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
     });
 </script>
-
 
 
 
