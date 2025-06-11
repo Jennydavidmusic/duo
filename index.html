@@ -402,8 +402,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-
-
 fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
   .then(response => response.json())
   .then(data => {
@@ -449,6 +447,9 @@ fetch("https://opensheet.elk.sh/1-7nFW51MxrXj1fzymfnCrETIHCMTkYHNZjVx1XX9iug/1")
     console.error("Error fetching gigs:", err);
     document.getElementById('gig-details').innerHTML = "Failed to load gigs.";
   });
+
+
+
 
   </script>
 <script src="schema-events-from-sheet.js"></script>
