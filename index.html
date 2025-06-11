@@ -457,6 +457,11 @@ window.addEventListener("scroll", () => {
         const [day, month, year] = nextGig.Date.split('/').map(Number);
         const [hour, minute] = nextGig.Time.split(':').map(Number);
         const dateObj = new Date(year, month - 1, day, hour + offsetHours, minute);
+        
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const weekday = daysOfWeek[dateObj.getDay()];
+        const formattedDate = `${weekday} ${nextGig.Date}`;
+
 
         const hour12 = dateObj.getHours() % 12 || 12;
         const minuteStr = dateObj.getMinutes().toString().padStart(2, '0');
