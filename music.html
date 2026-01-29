@@ -247,10 +247,10 @@
 
 
   <div class="video-wrapper">
-    <iframe allowfullscreen="" src="https://www.youtube.com/embed/rgNG6-iYWKo"></iframe>
+    <div class=" embed-box" data-yt-id="rgNG6-iYWKo"><button type="button" class="embed-accept">Play video</button></div>
   </div>
   <div class="video-wrapper">
-    <iframe allowfullscreen="" src="https://www.youtube.com/embed/QPFZwry92j0"></iframe>
+    <div class=" embed-box" data-yt-id="QPFZwry92j0"><button type="button" class="embed-accept">Play video</button></div>
   </div>
 <video class="preview-video" controls preload="metadata" poster="images/video-thumbnail-4s.jpg">
   <source src="videos/live1.mp4" type="video/mp4">
@@ -258,7 +258,7 @@
 </video>
 
   <div class="video-wrapper instagram mobile-only">
-    <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.instagram.com/p/Ck0t48hKELF/embed"></iframe>
+    <div class=" embed-box" data-ig-src="https://www.instagram.com/p/Ck0t48hKELF/embed"><button type="button" class="embed-accept">View post</button></div>
   </div>
   <div class="audio-container">
     <h3>Memories by Maroon 5</h3>
@@ -310,5 +310,6 @@ window.addEventListener("scroll", () => {
   <i class="fab fa-whatsapp"></i>
 </a>
 
+  <script src="js/cookies.js" defer></script>
 </body>
 </html>
