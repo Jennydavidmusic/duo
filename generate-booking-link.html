@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Booking Link Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial;
+  background: #000;
+  color: #fff;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+.container {
+  max-width:500px;
+  width:100%;
+}
+input {
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:8px;
+  border:none;
+}
+button {
+  width:100%;
+  padding:15px;
+  background:#d4af37;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+textarea {
+  width:100%;
+  height:120px;
+  margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Booking Link Generator</h2>
+
+<input id="venue" placeholder="Venue">
+<input id="date" placeholder="Date (Friday 12 June)">
+<input id="time" placeholder="Time (8pm-10pm)">
+<input id="price" placeholder="Price (300)">
+<input id="name" placeholder="Client name">
+<input id="email" placeholder="Client email">
+
+<button onclick="generate()">Generate Link</button>
+
+<textarea id="result"></textarea>
+</div>
+
+<script>
+function encode(str){
+  return encodeURIComponent(str);
+}
+
+function generate(){
+  const venue = encode(document.getElementById("venue").value);
+  const date = encode(document.getElementById("date").value);
+  const time = document.getElementById("time").value;
+  const price = document.getElementById("price").value;
+  const name = encode(document.getElementById("name").value);
+  const email = document.getElementById("email").value;
+
+  const link = `https://jennydavidmusic.com/confirm-booking-prefill-final.html?venue=${venue}&items=${date}|${time}|${price}&name=${name}&email=${email}`;
+
+  document.getElementById("result").value = link;
+}
+</script>
+
+</body>
+</html>
