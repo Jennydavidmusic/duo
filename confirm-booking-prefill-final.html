@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -368,7 +368,14 @@
     const depositEnabled = params.get("deposit") === "30";
     const depositDue = params.get("deposit_due") || "within 48 hours of confirmation";
 
+    const nameParam = params.get("name");
+    const emailParam = params.get("email");
+    const notesParam = params.get("notes");
+
     document.getElementById("venue").textContent = venue;
+    if (nameParam) document.getElementById("contactName").value = nameParam;
+    if (emailParam) document.getElementById("contactEmail").value = emailParam;
+    if (notesParam) document.getElementById("notes").value = notesParam;
 
     function escapeHtml(str) {
       return String(str)
@@ -700,6 +707,4 @@
 
 </body>
 </html>
-
-
 
