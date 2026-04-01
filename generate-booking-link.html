@@ -205,10 +205,8 @@ button {
       <button class="secondary" type="button" onclick="copyWhatsAppMessage()">Copy WhatsApp message</button>
       <button class="secondary" type="button" onclick="copyEmailMessage()">Copy email rich text</button>
     </div>
-    <button class="secondary" type="button" onclick="generateEmailHtml()" style="margin-top:10px;">Generate email HTML</button>
-    <textarea id="emailHtml" readonly placeholder="Email HTML will appear here"></textarea>
     <div class="help" style="margin-top:10px;">
-      WhatsApp will always show the full URL. For email, use the rich-text copy button or copy the HTML below into an HTML-compatible editor.
+      WhatsApp will always show the full URL. For email, use the rich-text copy button.
     </div>
   </div>
 
@@ -421,13 +419,6 @@ function buildEmailHtml() {
 <p style="font-family:Arial,sans-serif;font-size:16px;margin:0;">Please confirm your booking by clicking the title above.</p>`;
 }
 
-function generateEmailHtml() {
-  if (!document.getElementById("result").value.trim()) {
-    generate();
-  }
-  document.getElementById("emailHtml").value = buildEmailHtml();
-}
-
 function copyWhatsAppMessage() {
   const link = document.getElementById("result").value.trim();
   const title = buildPrettyTitle();
@@ -502,8 +493,7 @@ function generate() {
   document.getElementById("result").value = link;
   updatePrettyTitle();
   updatePreview();
-  document.getElementById("emailHtml").value = buildEmailHtml();
-}
+  }
 
 document.getElementById("depositDue").addEventListener("input", updatePreview);
 document.getElementById("venue").addEventListener("input", updatePrettyTitle);
@@ -513,7 +503,7 @@ addBookingRow();
 toggleDepositFields();
 updatePrettyTitle();
 updatePreview();
-document.getElementById("emailHtml").value = "";
+
 </script>
 
 </body>
