@@ -310,6 +310,11 @@
     <div class="bookings-title">Requested dates</div>
     <div class="booking-list" id="bookingList"></div>
 
+    <div class="summary-box" style="display:none;">
+      <div class="box-label">Total fee</div>
+      <div class="box-value" id="totalFee">To be confirmed</div>
+    </div>
+
     <div class="deposit-box" id="depositBox" style="display:none;">
       <div class="box-label">Deposit</div>
       <div class="box-value" id="depositText"></div>
@@ -463,6 +468,8 @@
     renderBookings(items);
 
     const total = items.reduce((sum, item) => sum + feeToNumber(item.fee), 0);
+    const totalFeeEl = document.getElementById("totalFee");
+    totalFeeEl.textContent = total > 0 ? formatGBP(total) : "To be confirmed";
 
     const depositBox = document.getElementById("depositBox");
     const depositText = document.getElementById("depositText");
@@ -573,6 +580,7 @@
       });
 
       messageLines.push("");
+      messageLines.push("Total fee: " + payload.totalFeeFormatted);
 
       if (payload.depositEnabled && payload.depositAmountFormatted) {
         messageLines.push("Deposit: " + payload.depositAmountFormatted + " (" + payload.depositDue + ")");
@@ -685,6 +693,7 @@
       });
 
       summaryLines.push("");
+      summaryLines.push("Total fee: " + payload.totalFeeFormatted);
 
       if (payload.depositEnabled && payload.depositAmountFormatted) {
         summaryLines.push("Deposit: " + payload.depositAmountFormatted + " (" + payload.depositDue + ")");
