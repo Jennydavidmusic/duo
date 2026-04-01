@@ -299,7 +299,7 @@
     <div class="brand">Jenny & David</div>
     <h1>Booking Confirmation</h1>
     <div class="intro">
-      Please review the details below and confirm the booking. Any dates added in the generator will appear below.
+      Please review the details below and confirm the booking. Any dates and deposit details added in the generator will appear below.
     </div>
 
     <div class="box">
@@ -310,12 +310,16 @@
     <div class="bookings-title">Requested dates</div>
     <div class="booking-list" id="bookingList"></div>
 
-    <div class="summary-box">
-      <div class="box-label">Total fee</div>
-      <div class="box-value" id="totalFee">To be confirmed</div>
-    </div>
+    
 
     <div class="deposit-box" id="depositBox" style="display:none;">
+      <div class="box-label">Deposit payment details</div>
+      <div class="box-value">
+        Name: David Debaptistis<br>
+        Sort code: 77-91-22<br>
+        Account number: 40889963
+      </div>
+
       <div class="box-label">Deposit</div>
       <div class="box-value" id="depositText"></div>
     </div>
@@ -438,8 +442,8 @@
       }
 
       bookingList.innerHTML = items.map((item, index) => {
-        const feeDisplay = item.fee
-          ? (String(item.fee).trim().startsWith("£") ? item.fee : "£" + item.fee)
+        const feeDisplay = "£" + item.fee
+          ? (String("£" + item.fee).trim().startsWith("£") ? "£" + item.fee : "£" + "£" + item.fee)
           : "To be confirmed";
 
         return `
@@ -461,7 +465,7 @@
     const items = parseItems(rawItems);
     renderBookings(items);
 
-    const total = items.reduce((sum, item) => sum + feeToNumber(item.fee), 0);
+    const total = items.reduce((sum, item) => sum + feeToNumber("£" + item.fee), 0);
     const totalFeeEl = document.getElementById("totalFee");
     totalFeeEl.textContent = total > 0 ? formatGBP(total) : "To be confirmed";
 
@@ -567,8 +571,8 @@
       ];
 
       payload.items.forEach((item, idx) => {
-        const feeDisplay = item.fee
-          ? (String(item.fee).startsWith("£") ? item.fee : "£" + item.fee)
+        const feeDisplay = "£" + item.fee
+          ? (String("£" + item.fee).startsWith("£") ? "£" + item.fee : "£" + "£" + item.fee)
           : "TBC";
         messageLines.push(`${idx + 1}. ${item.date || "TBC"} | ${item.time || "TBC"} | ${feeDisplay}`);
       });
@@ -611,8 +615,8 @@
     function renderConfirmed(payload, sentOnline) {
       const confirmedItemsHtml = items.length
         ? items.map(item => {
-            const feeDisplay = item.fee
-              ? (String(item.fee).trim().startsWith("£") ? item.fee : "£" + item.fee)
+            const feeDisplay = "£" + item.fee
+              ? (String("£" + item.fee).trim().startsWith("£") ? "£" + item.fee : "£" + "£" + item.fee)
               : "";
             return `
               <div class="confirmed-item">
@@ -683,7 +687,7 @@
 
       payload.items.forEach((item, idx) => {
         summaryLines.push(
-          `${idx + 1}. ${item.date || "TBC"} | ${item.time || "TBC"} | ${item.fee ? (String(item.fee).startsWith("£") ? item.fee : "£" + item.fee) : "TBC"}`
+          `${idx + 1}. ${item.date || "TBC"} | ${item.time || "TBC"} | ${"£" + item.fee ? (String("£" + item.fee).startsWith("£") ? "£" + item.fee : "£" + "£" + item.fee) : "TBC"}`
         );
       });
 

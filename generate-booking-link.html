@@ -44,7 +44,7 @@ h2 {
   letter-spacing: 0.3px;
 }
 
-input, textarea {
+input, textarea, select {
   width: 100%;
   padding: 12px;
   margin-bottom: 10px;
@@ -66,7 +66,8 @@ textarea {
   margin-bottom: 10px;
 }
 
-.booking-row {
+.booking-row,
+.panel {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(212,175,55,0.25);
   border-radius: 12px;
@@ -135,6 +136,16 @@ button {
   padding-left: 18px;
 }
 
+.summary-line {
+  margin-top: 8px;
+  color: #fff;
+}
+
+.deposit-extra {
+  display: none;
+  margin-top: 8px;
+}
+
 @media (max-width: 700px) {
   body {
     padding: 16px;
@@ -166,12 +177,29 @@ button {
     <button class="primary" type="button" onclick="generate()">Generate link</button>
   </div>
 
+  <div class="section-title">Deposit</div>
+  <div class="panel">
+    <label style="display:block; margin-bottom:8px; color:#d4af37; font-weight:bold;">Deposit option</label>
+    <select id="depositSelect" onchange="toggleDepositFields(); updatePreview();">
+      <option value="none">No deposit</option>
+      <option value="30">30% deposit</option>
+    </select>
+
+    <div class="deposit-extra" id="depositExtra">
+      <input id="depositDue" placeholder="Deposit due wording (example: within 48 hours of confirmation)">
+    </div>
+
+    
+    <div class="summary-line" id="depositPreviewLine" style="display:none;"><strong>Deposit amount:</strong> <span id="depositAmount">£0</span></div>
+  </div>
+
   <div class="section-title">Generated link</div>
   <textarea id="result" readonly></textarea>
 
   <div class="booking-preview">
     <strong>Current bookings in link:</strong>
     <ul id="previewList"></ul>
+    <div class="summary-line" id="previewDepositText"></div>
   </div>
 </div>
 
@@ -187,20 +215,74 @@ function createInput(value = "", placeholder = "") {
   return input;
 }
 
+function getRowsData() {
+  return Array.from(document.querySelectorAll(".booking-row"))
+    .map(row => {
+      const date = row.querySelector(".date-input").value.trim();
+      const time = row.querySelector(".time-input").value.trim();
+      const price = row.querySelector(".price-input").value.trim().replace(/^£/, "");
+      return { date, time, price };
+    });
+}
+
+function feeToNumber(value) {
+  const cleaned = String(value || "").replace(/[^\d.]/g, "");
+  const num = parseFloat(cleaned);
+  return isNaN(num) ? 0 : num;
+}
+
+function formatGBP(amount) {
+  return "£" + amount.toFixed(2).replace(".00", "");
+}
+
+function calculateTotal() {
+  return getRowsData().reduce((sum, item) => sum + feeToNumber(item.price), 0);
+}
+
+function toggleDepositFields() {
+  const value = document.getElementById("depositSelect").value;
+  const extra = document.getElementById("depositExtra");
+  const previewLine = document.getElementById("depositPreviewLine");
+
+  if (value === "30") {
+    extra.style.display = "block";
+    previewLine.style.display = "block";
+  } else {
+    extra.style.display = "none";
+    previewLine.style.display = "none";
+  }
+}
+
 function updatePreview() {
   const preview = document.getElementById("previewList");
-  const rows = Array.from(document.querySelectorAll(".booking-row"));
-  const items = rows.map((row, index) => {
-    const date = row.querySelector(".date-input").value.trim();
-    const time = row.querySelector(".time-input").value.trim();
-    const price = row.querySelector(".price-input").value.trim();
-    if (!date && !time && !price) return "";
-    return `Date ${index + 1}: ${date || "TBC"} | ${time || "TBC"} | ${price ? "£" + price.replace(/^£/, "") : "TBC"}`;
-  }).filter(Boolean);
+  const items = getRowsData()
+    .map((item, index) => {
+      if (!item.date && !item.time && !item.price) return "";
+      return `Date ${index + 1}: ${item.date || "TBC"} | ${item.time || "TBC"} | ${item.price ? "£" + item.price : "TBC"}`;
+    })
+    .filter(Boolean);
 
   preview.innerHTML = items.length
     ? items.map(item => `<li>${item}</li>`).join("")
     : "<li>No booking dates added yet.</li>";
+
+  const total = calculateTotal();
+  document.getElementById("totalAmount").textContent = formatGBP(total);
+
+  const depositValue = document.getElementById("depositSelect").value;
+  const dueText = document.getElementById("depositDue").value.trim() || "within 48 hours of confirmation";
+  const depositPreviewText = document.getElementById("previewDepositText");
+  const depositAmountEl = document.getElementById("depositAmount");
+
+  if (depositValue === "30") {
+    const depositAmount = total * 0.30;
+    depositAmountEl.textContent = formatGBP(depositAmount);
+    depositPreviewText.textContent = `Deposit: 30% due ${dueText} (${formatGBP(depositAmount)})`;
+    depositPreviewText.style.display = "block";
+  } else {
+    depositPreviewText.textContent = "";
+    depositPreviewText.style.display = "none";
+  }
 }
 
 function addBookingRow(date = "", time = "", price = "") {
@@ -224,7 +306,7 @@ function addBookingRow(date = "", time = "", price = "") {
   timeInput.className = "time-input";
   timeInput.addEventListener("input", updatePreview);
 
-  const priceInput = createInput(price, "Price (300)");
+  const priceInput = createInput(price, "Price (£300)");
   priceInput.className = "price-input";
   priceInput.addEventListener("input", updatePreview);
 
@@ -262,24 +344,32 @@ function generate() {
   const email = document.getElementById("email").value.trim();
   const notes = encode(document.getElementById("notes").value.trim());
 
-  const items = Array.from(document.querySelectorAll(".booking-row"))
-    .map(row => {
-      const date = row.querySelector(".date-input").value.trim();
-      const time = row.querySelector(".time-input").value.trim();
-      const price = row.querySelector(".price-input").value.trim().replace(/^£/, "");
-      if (!date && !time && !price) return "";
-      return `${date}|${time}|${price}`;
+  const items = getRowsData()
+    .map(item => {
+      if (!item.date && !item.time && !item.price) return "";
+      return `${item.date}|${item.time}|${item.price}`;
     })
     .filter(Boolean)
     .join(";");
 
-  const link = `https://jennydavidmusic.com/confirm-booking-prefill-final.html?venue=${venue}&items=${encode(items)}&name=${name}&email=${email}&notes=${notes}`;
+  const depositValue = document.getElementById("depositSelect").value;
+  const dueText = document.getElementById("depositDue").value.trim() || "within 48 hours of confirmation";
+
+  let link = `https://jennydavidmusic.com/confirm-booking-prefill-final.html?venue=${venue}&items=${encode(items)}&name=${name}&email=${email}&notes=${notes}`;
+
+  if (depositValue === "30") {
+    link += `&deposit=30&deposit_due=${encode(dueText)}`;
+  }
 
   document.getElementById("result").value = link;
   updatePreview();
 }
 
+document.getElementById("depositDue").addEventListener("input", updatePreview);
+
 addBookingRow();
+toggleDepositFields();
+updatePreview();
 </script>
 
 </body>
