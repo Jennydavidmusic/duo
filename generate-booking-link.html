@@ -196,6 +196,14 @@ button {
   <div class="section-title">Generated link</div>
   <textarea id="result" readonly></textarea>
 
+  <div class="panel" style="margin-top:10px;">
+    <label style="display:block; margin-bottom:8px; color:#d4af37; font-weight:bold;">Booking contract title</label>
+    <div id="prettyTitle" style="font-weight:bold; font-size:18px; color:#fff; line-height:1.5; margin-bottom:10px;">
+      Jenny &amp; David – Booking Contract
+    </div>
+    <button class="secondary" type="button" onclick="copyMessage()">Copy message</button>
+  </div>
+
   <div class="booking-preview">
     <strong>Current bookings in link:</strong>
     <ul id="previewList"></ul>
@@ -300,6 +308,7 @@ function addBookingRow(date = "", time = "", price = "") {
   const dateInput = createInput(date, "Date (Friday 12 June)");
   dateInput.className = "date-input";
   dateInput.addEventListener("input", updatePreview);
+  dateInput.addEventListener("input", updatePrettyTitle);
 
   const timeInput = createInput(time, "Time (8pm-10pm)");
   timeInput.className = "time-input";
@@ -321,6 +330,7 @@ function addBookingRow(date = "", time = "", price = "") {
     wrapper.remove();
     refreshLabels();
     updatePreview();
+    updatePrettyTitle();
   };
 
   wrapper.appendChild(label);
@@ -335,6 +345,59 @@ function refreshLabels() {
     const label = row.querySelector(".booking-label");
     label.textContent = "Booking date " + (index + 1);
   });
+}
+
+
+function getMainDateLabel() {
+  const rows = Array.from(document.querySelectorAll(".booking-row"));
+  const dates = rows
+    .map(row => {
+      const input = row.querySelector(".date-input");
+      return input ? input.value.trim() : "";
+    })
+    .filter(Boolean);
+
+  if (!dates.length) return "";
+
+  const firstDate = dates[0];
+  const extraCount = dates.length - 1;
+
+  if (extraCount === 1) return firstDate + " + 1 more date";
+  if (extraCount > 1) return firstDate + " + " + extraCount + " more dates";
+
+  return firstDate;
+}
+
+function buildPrettyTitle() {
+  const venue = document.getElementById("venue").value.trim();
+  const clientName = document.getElementById("name").value.trim();
+  const dateLabel = getMainDateLabel();
+
+  let parts = ["Jenny & David", "Booking Contract"];
+
+  if (venue) parts.push(venue);
+  if (dateLabel) parts.push(dateLabel);
+  if (clientName) parts.push(clientName);
+
+  return parts.join(" – ");
+}
+
+function updatePrettyTitle() {
+  document.getElementById("prettyTitle").textContent = buildPrettyTitle();
+}
+
+function copyMessage() {
+  const link = document.getElementById("result").value.trim();
+  const title = buildPrettyTitle();
+
+  const message = `${title}
+
+Please confirm your booking using the link below:
+${link}`;
+
+  navigator.clipboard.writeText(message)
+    .then(() => alert("Message copied."))
+    .catch(() => alert("Copy failed on this device."));
 }
 
 function generate() {
@@ -361,13 +424,17 @@ function generate() {
   }
 
   document.getElementById("result").value = link;
+  updatePrettyTitle();
   updatePreview();
 }
 
 document.getElementById("depositDue").addEventListener("input", updatePreview);
+document.getElementById("venue").addEventListener("input", updatePrettyTitle);
+document.getElementById("name").addEventListener("input", updatePrettyTitle);
 
 addBookingRow();
 toggleDepositFields();
+updatePrettyTitle();
 updatePreview();
 </script>
 
