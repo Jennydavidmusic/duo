@@ -201,7 +201,15 @@ button {
     <div id="prettyTitle" style="font-weight:bold; font-size:18px; color:#fff; line-height:1.5; margin-bottom:10px;">
       Jenny &amp; David – Booking Contract
     </div>
-    <button class="secondary" type="button" onclick="copyMessage()">Copy message</button>
+    <div class="actions">
+      <button class="secondary" type="button" onclick="copyWhatsAppMessage()">Copy WhatsApp message</button>
+      <button class="secondary" type="button" onclick="copyEmailMessage()">Copy email rich text</button>
+    </div>
+    <button class="secondary" type="button" onclick="generateEmailHtml()" style="margin-top:10px;">Generate email HTML</button>
+    <textarea id="emailHtml" readonly placeholder="Email HTML will appear here"></textarea>
+    <div class="help" style="margin-top:10px;">
+      WhatsApp will always show the full URL. For email, use the rich-text copy button or copy the HTML below into an HTML-compatible editor.
+    </div>
   </div>
 
   <div class="booking-preview">
@@ -386,7 +394,41 @@ function updatePrettyTitle() {
   document.getElementById("prettyTitle").textContent = buildPrettyTitle();
 }
 
-function copyMessage() {
+
+function escapeAttribute(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escapeHtmlText(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function buildEmailHtml() {
+  const link = document.getElementById("result").value.trim();
+  const venue = document.getElementById("venue").value.trim();
+  const title = venue ? `Jenny & David Booking – ${venue}` : "Jenny & David Booking";
+
+  return `<p style="font-family:Arial,sans-serif;font-size:18px;font-weight:bold;margin:0 0 16px 0;">
+  <a href="${escapeAttribute(link)}" style="color:#000;text-decoration:none;">${escapeHtmlText(title)}</a>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:16px;margin:0;">Please confirm your booking by clicking the title above.</p>`;
+}
+
+function generateEmailHtml() {
+  if (!document.getElementById("result").value.trim()) {
+    generate();
+  }
+  document.getElementById("emailHtml").value = buildEmailHtml();
+}
+
+function copyWhatsAppMessage() {
   const link = document.getElementById("result").value.trim();
   const title = buildPrettyTitle();
 
@@ -396,8 +438,42 @@ Please confirm your booking using the link below:
 ${link}`;
 
   navigator.clipboard.writeText(message)
-    .then(() => alert("Message copied."))
+    .then(() => alert("WhatsApp message copied."))
     .catch(() => alert("Copy failed on this device."));
+}
+
+async function copyEmailMessage() {
+  const link = document.getElementById("result").value.trim() || (generate(), document.getElementById("result").value.trim());
+  const venue = document.getElementById("venue").value.trim();
+  const title = venue ? `Jenny & David Booking – ${venue}` : "Jenny & David Booking";
+
+  const html = buildEmailHtml();
+
+  const text = `${title}
+
+Please confirm your booking by clicking the title below:
+${link}`;
+
+  try {
+    if (navigator.clipboard && window.ClipboardItem) {
+      const item = new ClipboardItem({
+        "text/html": new Blob([html], { type: "text/html" }),
+        "text/plain": new Blob([text], { type: "text/plain" })
+      });
+      await navigator.clipboard.write([item]);
+      alert("Email message copied.");
+    } else {
+      await navigator.clipboard.writeText(text);
+      alert("Rich copy is not supported on this device. Plain email message copied instead.");
+    }
+  } catch (e) {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Rich copy failed. Plain email message copied instead.");
+    } catch (err) {
+      alert("Copy failed on this device.");
+    }
+  }
 }
 
 function generate() {
@@ -426,6 +502,7 @@ function generate() {
   document.getElementById("result").value = link;
   updatePrettyTitle();
   updatePreview();
+  document.getElementById("emailHtml").value = buildEmailHtml();
 }
 
 document.getElementById("depositDue").addEventListener("input", updatePreview);
@@ -436,6 +513,7 @@ addBookingRow();
 toggleDepositFields();
 updatePrettyTitle();
 updatePreview();
+document.getElementById("emailHtml").value = "";
 </script>
 
 </body>
