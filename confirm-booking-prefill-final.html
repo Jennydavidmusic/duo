@@ -9,6 +9,10 @@
     * { box-sizing: border-box; }
 
     html, body {
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
       margin: 0;
       padding: 0;
       min-height: 100%;
@@ -24,7 +28,7 @@
     }
 
     .card {
-      width: 100%;
+      width: min(100%, 820px);
       max-width: 820px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(212,175,55,0.35);
@@ -148,7 +152,7 @@
       background: rgba(255,255,255,0.03);
       color: #fff;
       padding: 13px 14px;
-      font-size: 15px;
+      font-size: 16px;
       outline: none;
     }
 
@@ -295,7 +299,7 @@
     <div class="brand">Jenny & David</div>
     <h1>Booking Confirmation</h1>
     <div class="intro">
-      Please review the details below and confirm the booking.
+      Please review the details below and confirm the booking. Any dates added in the generator will appear below.
     </div>
 
     <div class="box">
@@ -707,4 +711,3 @@
 
 </body>
 </html>
-
