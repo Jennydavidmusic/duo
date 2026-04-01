@@ -172,10 +172,7 @@ button {
   <div class="help">Add as many dates as you want. They will all appear on the client confirmation page.</div>
   <div id="bookingRows"></div>
 
-  <div class="actions">
-    <button class="secondary" type="button" onclick="addBookingRow()">+ Add booking date</button>
-    <button class="primary" type="button" onclick="generate()">Generate link</button>
-  </div>
+  
 
   <div class="section-title">Deposit</div>
   <div class="panel">
@@ -191,6 +188,11 @@ button {
 
     
     <div class="summary-line" id="depositPreviewLine" style="display:none;"><strong>Deposit amount:</strong> <span id="depositAmount">£0</span></div>
+  </div>
+
+  <div class="actions">
+    <button class="secondary" type="button" onclick="addBookingRow()">+ Add booking date</button>
+    <button class="primary" type="button" onclick="generate()">Generate booking link</button>
   </div>
 
   <div class="section-title">Generated link</div>
