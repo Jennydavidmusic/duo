@@ -21,8 +21,8 @@ a {
   background-repeat: no-repeat;
 }
 .video-wrapper.short-youtube {
-  padding-bottom: 177.78%;
-  max-width: 420px;
+  padding-bottom: 140%;
+  max-width: 380px;
   margin: 10px auto;
 }
 @media screen and (min-width: 768px) {
