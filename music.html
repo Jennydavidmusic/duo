@@ -100,7 +100,24 @@
       padding-bottom: 56.25%;
       overflow: hidden;
     }
+.video-wrapper.youtube-normal {
+  margin: 10px auto;
+}
 
+.video-wrapper.short-youtube {
+  height: auto !important;
+  padding-bottom: 0 !important;
+  aspect-ratio: 9 / 16;
+  max-width: 420px;
+  margin: 10px auto;
+}
+
+.video-wrapper.short-youtube .embed-box {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
     iframe {
       border: none;
       position: absolute;
