@@ -418,5 +418,24 @@ window.addEventListener("scroll", () => {
 </a>
 
   <script src="js/cookies.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.embed-box[data-yt-id]').forEach(box => {
+    box.addEventListener('click', () => {
+      const ytId = box.dataset.ytId;
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+
+      box.innerHTML = '';
+      box.appendChild(iframe);
+    }, { once: true });
+  });
+});
+</script>
+
 </body>
 </html>
