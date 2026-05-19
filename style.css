@@ -23,7 +23,7 @@ a {
 .video-wrapper.short-youtube {
   padding-bottom: 177.78%;
   max-width: 420px;
-  margin: 40px auto;
+  margin: 15px auto;
 }
 @media screen and (min-width: 768px) {
   .hero {
