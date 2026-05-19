@@ -176,6 +176,7 @@
         justify-self: center;
       }
     }
+
 @media (max-width: 768px) {
 
   .video-mosaic {
@@ -191,7 +192,16 @@
     justify-content: center;
     align-items: flex-start;
     gap: 6px;
-    margin-bottom: -20px;
+
+    grid-column: auto !important;
+    grid-row: auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  .mosaic-local-video {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    margin-top: 0 !important;
   }
 
   .video-wrapper.short-youtube {
@@ -201,8 +211,6 @@
   }
 
 }
- 
-
   
 
     h2 {
