@@ -20,11 +20,7 @@ a {
   
   background-repeat: no-repeat;
 }
-.video-wrapper.short-youtube {
-  padding-bottom: 140%;
-  max-width: 380px;
-  margin: 10px auto;
-}
+
 @media screen and (min-width: 768px) {
   .hero {
     animation: slideshow 30s infinite;
