@@ -100,6 +100,9 @@
       padding-bottom: 56.25%;
       overflow: hidden;
     }
+.video-wrapper.youtube-normal {
+  margin: 10px auto;
+}
 
 
 
@@ -149,26 +152,45 @@
         align-items: start;
       }
 
+      .youtube-left {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .youtube-right {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .mosaic-local-video {
+        grid-column: 1;
+        grid-row: 2;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+      }
+
       .short-row {
         grid-column: 2;
         grid-row: 2;
         justify-self: center;
       }
-
-      .mosaic-local-video {
-        grid-column: 2;
-        grid-row: 3;
-        max-width: 520px;
-      }
     }
 
     @media (max-width: 768px) {
       .short-row {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: flex-start;
         gap: 6px;
+        width: 100%;
       }
 
       .video-wrapper.short-youtube {
+        width: 46%;
         max-width: 46%;
+        margin: 0 !important;
       }
     }
 
@@ -310,17 +332,22 @@
 
   <div class="video-mosaic">
 
-    <div class="video-wrapper">
+    <div class="video-wrapper youtube-left">
       <div class="embed-box" data-yt-id="rgNG6-iYWKo">
         <button type="button" class="embed-accept">Play video</button>
       </div>
     </div>
 
-    <div class="video-wrapper">
+    <div class="video-wrapper youtube-right">
       <div class="embed-box" data-yt-id="QPFZwry92j0">
         <button type="button" class="embed-accept">Play video</button>
       </div>
     </div>
+
+    <video class="preview-video mosaic-local-video" controls preload="metadata" poster="images/video-thumbnail-4s.jpg">
+      <source src="videos/live1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
     <div class="short-row">
 
@@ -337,11 +364,6 @@
       </div>
 
     </div>
-
-    <video class="preview-video mosaic-local-video" controls preload="metadata" poster="images/video-thumbnail-4s.jpg">
-      <source src="videos/live1.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
 
   </div>
 
