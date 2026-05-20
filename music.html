@@ -177,7 +177,8 @@
       }
     }
 
-@media (max-width: 768px) {
+
+  @media (max-width: 768px) {
 
   .video-mosaic {
     display: flex !important;
@@ -204,14 +205,18 @@
     margin-top: 0 !important;
   }
 
-.video-wrapper.short-youtube {
-  width: 46%;
-  max-width: 46%;
-  padding-bottom: 95% !important;
-  margin: 0 !important;
+  .video-wrapper.short-youtube {
+    width: 46%;
+    max-width: 46%;
+    padding-bottom: 95% !important;
+    margin: 0 !important;
+  }
+
+  .video-wrapper iframe {
+    object-fit: contain !important;
+  }
+
 }
-}
-  
 
     h2 {
       font-size: 2rem;
