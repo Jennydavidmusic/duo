@@ -211,9 +211,13 @@
     margin: 0 !important;
   }
 
-  .video-wrapper iframe {
-    object-fit: cover !important;
-    transform: scale(0.96);
+  .video-wrapper:not(.short-youtube) {
+    padding-bottom: 56.25% !important;
+  }
+
+  .video-wrapper:not(.short-youtube) iframe {
+    object-fit: contain !important;
+    background: black;
   }
 
 }
