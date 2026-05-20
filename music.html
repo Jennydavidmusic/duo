@@ -177,8 +177,7 @@
       }
     }
 
-
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
 
   .video-mosaic {
     display: flex !important;
@@ -213,7 +212,8 @@
   }
 
   .video-wrapper iframe {
-    object-fit: contain !important;
+    object-fit: cover !important;
+    transform: scale(0.96);
   }
 
 }
