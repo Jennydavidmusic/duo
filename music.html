@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Watch Jenny & David | Acoustic Covers, Live Videos & Music Performances</title>
 <meta name="description" content="Listen to Jenny & David, an acoustic duo based in London. Watch live videos and discover their musical performances from iconic venues and events.">
@@ -456,5 +457,29 @@ window.addEventListener("scroll", () => {
 </a>
 
   <script src="js/cookies.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.embed-box[data-yt-id]').forEach(box => {
+    box.addEventListener('click', () => {
+      const ytId = box.dataset.ytId;
+
+      const iframe = document.createElement('iframe');
+      const params = new URLSearchParams({ autoplay: "1", rel: "0" });
+      if (window.location.origin && window.location.origin !== "null") {
+        params.set("origin", window.location.origin);
+      }
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(ytId)}?${params.toString()}`;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+      box.innerHTML = '';
+      box.appendChild(iframe);
+    }, { once: true });
+  });
+});
+</script>
+
 </body>
 </html>

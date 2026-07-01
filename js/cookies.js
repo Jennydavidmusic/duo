@@ -65,6 +65,18 @@
   }
 
   // ---------- Embed loader ----------
+  function youtubeSrc(id, autoplay) {
+    const params = new URLSearchParams();
+    if (autoplay) params.set("autoplay", "1");
+    params.set("rel", "0");
+
+    if (window.location.origin && window.location.origin !== "null") {
+      params.set("origin", window.location.origin);
+    }
+
+    return "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?" + params.toString();
+  }
+
   function replaceWithIframe(ph, src){
     const cls = ph.getAttribute("data-embed-class") || "";
     const height = ph.getAttribute("data-embed-height") || "315px";
@@ -76,11 +88,12 @@
     iframe.setAttribute("frameborder", "0");
     iframe.setAttribute("allowfullscreen", "");
     iframe.setAttribute("loading", "lazy");
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
     iframe.style.width = "100%";
     iframe.style.height = height;
     iframe.setAttribute(
       "allow",
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     );
 
     ph.replaceWith(iframe);
@@ -92,7 +105,7 @@
       const id = ph.getAttribute("data-yt-id");
       if (!id) return;
       // nocookie domain is better for GDPR + often more stable
-      replaceWithIframe(ph, "https://www.youtube-nocookie.com/embed/" + id);
+      replaceWithIframe(ph, youtubeSrc(id, false));
     });
   }
 
