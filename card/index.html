@@ -34,15 +34,7 @@
     </section>
 
     <section class="main-video" aria-label="Jenny and David live showreel">
-      <video
-        id="mainVideo"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster="assets/live-photo.webp"
-      >
+      <video id="mainVideo" autoplay muted loop playsinline preload="metadata" poster="assets/live-photo.webp">
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
@@ -64,17 +56,27 @@
         <h2 id="live-title">More live moments</h2>
       </div>
 
-      <div class="short-row">
-        <div class="video-wrapper short-youtube">
-          <div class="embed-box" data-yt-id="6yZOedVUP7g">
-            <button type="button" class="embed-accept">Play video</button>
-          </div>
+      <div class="shorts-grid">
+        <div class="short-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/6yZOedVUP7g?rel=0&playsinline=1"
+            title="Wonderful Time — Jenny and David"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
 
-        <div class="video-wrapper short-youtube">
-          <div class="embed-box" data-yt-id="qaIxZ-x5Wfw">
-            <button type="button" class="embed-accept">Play video</button>
-          </div>
+        <div class="short-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/qaIxZ-x5Wfw?rel=0&playsinline=1"
+            title="Saturday Night in London — Jenny and David"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
     </section>
@@ -100,7 +102,7 @@
       <a href="https://jennydavidmusic.com">jennydavidmusic.com</a>
       <a href="mailto:jennydavidmusic@gmail.com">jennydavidmusic@gmail.com</a>
 
-      <div class="socials" aria-label="Social media">
+      <div class="socials">
         <a href="https://www.instagram.com/jennydavidmusic" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="https://www.facebook.com/jennydavidmusic" target="_blank" rel="noopener noreferrer">Facebook</a>
         <a href="https://www.youtube.com/@jennydavidmusic" target="_blank" rel="noopener noreferrer">YouTube</a>
@@ -112,7 +114,6 @@
     <footer>Performing across London since 2016</footer>
   </main>
 
-  <script src="../js/cookies.js" defer></script>
   <script src="script.js"></script>
 </body>
 </html>

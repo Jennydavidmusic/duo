@@ -13,11 +13,7 @@
 }
 
 *{box-sizing:border-box}
-
-html{
-  background:var(--black);
-  scroll-behavior:smooth;
-}
+html{background:var(--black);scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -31,16 +27,9 @@ body{
   text-rendering:optimizeLegibility;
 }
 
-img,video{
-  display:block;
-  max-width:100%;
-}
-
+img,video{display:block;max-width:100%}
 a{color:inherit}
-
-button,a{
-  -webkit-tap-highlight-color:transparent;
-}
+button,a{-webkit-tap-highlight-color:transparent}
 
 .page{
   width:min(100%,var(--max-width));
@@ -48,10 +37,17 @@ button,a{
   padding:max(16px,env(safe-area-inset-top)) 14px max(30px,env(safe-area-inset-bottom));
 }
 
-.business-card{
-  overflow:hidden;
-  border:1px solid rgba(226,193,122,.2);
+.business-card,
+.main-video,
+.youtube-section,
+.booking-card,
+.contact-panel{
+  border:1px solid var(--line);
   border-radius:var(--radius-xl);
+  overflow:hidden;
+}
+
+.business-card{
   background:#07101d;
   box-shadow:var(--shadow);
 }
@@ -59,7 +55,6 @@ button,a{
 .business-card img{
   width:100%;
   height:auto;
-  object-fit:contain;
 }
 
 .intro{
@@ -100,9 +95,6 @@ h1 span{color:var(--gold-light)}
 
 .main-video{
   position:relative;
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:var(--radius-xl);
   background:#000;
   box-shadow:var(--shadow);
 }
@@ -110,7 +102,6 @@ h1 span{color:var(--gold-light)}
 .main-video video{
   width:100%;
   height:auto;
-  object-fit:contain;
   background:#000;
 }
 
@@ -158,9 +149,7 @@ h1 span{color:var(--gold-light)}
 
 .youtube-section{
   margin-top:28px;
-  padding:28px 16px;
-  border:1px solid var(--line);
-  border-radius:var(--radius-xl);
+  padding:28px 18px;
   background:var(--panel);
 }
 
@@ -176,54 +165,35 @@ h1 span{color:var(--gold-light)}
   line-height:1.08;
 }
 
-.youtube-grid{
+.shorts-grid{
+  width:min(100%,680px);
+  margin:0 auto;
   display:grid;
-  gap:16px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
 }
 
-.youtube-card{
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:17px;
-  background:rgba(255,255,255,.025);
-}
-
-.youtube-frame{
+.short-frame{
   position:relative;
   width:100%;
-  aspect-ratio:16/9;
+  aspect-ratio:9/16;
+  overflow:hidden;
+  border-radius:18px;
   background:#000;
 }
 
-.youtube-frame iframe{
+.short-frame iframe{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
   border:0;
-}
-
-.youtube-copy{
-  padding:15px 16px 17px;
-}
-
-.youtube-copy strong{
-  display:block;
-  margin-bottom:5px;
-  font-size:1rem;
-}
-
-.youtube-copy span{
-  color:var(--muted);
-  font-size:.84rem;
+  background:#000;
 }
 
 .booking-card{
   display:grid;
   margin-top:28px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:var(--radius-xl);
   background:linear-gradient(135deg,rgba(7,17,31,.94),rgba(3,3,3,.98));
   box-shadow:var(--shadow);
 }
@@ -237,7 +207,6 @@ h1 span{color:var(--gold-light)}
 .booking-photo img{
   width:100%;
   height:auto;
-  object-fit:contain;
 }
 
 .booking-copy{
@@ -265,29 +234,20 @@ h1 span{color:var(--gold-light)}
   border-radius:14px;
   text-decoration:none;
   font-weight:800;
-  transition:transform .16s ease,border-color .16s ease;
-}
-
-.button:hover{
-  transform:translateY(-2px);
 }
 
 .primary{
   color:#070707;
   background:linear-gradient(135deg,var(--gold-light),var(--gold));
-  box-shadow:0 14px 36px rgba(198,146,54,.18);
 }
 
 .secondary{
   border:1px solid rgba(226,193,122,.55);
-  background:transparent;
 }
 
 .contact-panel{
   margin-top:28px;
   padding:26px 18px;
-  border:1px solid rgba(255,255,255,.075);
-  border-radius:var(--radius-lg);
   background:rgba(255,255,255,.02);
   text-align:center;
 }
@@ -330,28 +290,12 @@ footer{
   text-align:center;
 }
 
-.sound-button:focus-visible,
-.button:focus-visible,
-.socials a:focus-visible{
-  outline:3px solid rgba(226,193,122,.72);
-  outline-offset:3px;
-}
-
 @media(min-width:680px){
-  .page{
-    padding-left:24px;
-    padding-right:24px;
-  }
-
-  .youtube-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
+  .page{padding-left:24px;padding-right:24px}
   .booking-card{
     grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
     align-items:center;
   }
-
   .booking-copy{
     display:flex;
     flex-direction:column;
@@ -362,97 +306,20 @@ footer{
 }
 
 @media(max-width:520px){
-  .page{
-    padding-left:9px;
-    padding-right:9px;
-  }
+  .page{padding-left:9px;padding-right:9px}
+  .business-card,.main-video,.youtube-section,.booking-card,.contact-panel{border-radius:18px}
+  .youtube-section{padding-left:12px;padding-right:12px}
+  .shorts-grid{gap:8px}
+}
 
-  .business-card,
-  .main-video,
-  .youtube-section,
-  .booking-card{
-    border-radius:18px;
-  }
-
-  .youtube-section{
-    padding-left:12px;
-    padding-right:12px;
-  }
+@media(max-width:360px){
+  .shorts-grid{grid-template-columns:1fr}
 }
 
 @media(prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
+  *,*::before,*::after{
     scroll-behavior:auto!important;
     transition-duration:.01ms!important;
     animation-duration:.01ms!important;
-  }
-}
-
-
-/* Exact Shorts layout used by music.html */
-.video-wrapper{
-  position:relative;
-  width:100%;
-  max-width:800px;
-  margin:0 auto;
-  height:0;
-  padding-bottom:56.25%;
-  overflow:hidden;
-}
-
-.video-wrapper .embed-box{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  box-sizing:border-box;
-}
-
-.short-row{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  align-items:flex-start;
-}
-
-.video-wrapper.short-youtube{
-  max-width:220px;
-  margin:0;
-  padding-bottom:177.78% !important;
-}
-
-/* Preserve the styling generated by the site's cookies.js */
-.embed-box iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-@media(max-width:768px){
-  .short-row{
-    display:flex !important;
-    flex-direction:row !important;
-    justify-content:center;
-    align-items:flex-start;
-    gap:6px;
-    margin-bottom:0 !important;
-  }
-
-  .video-wrapper.short-youtube{
-    width:46%;
-    max-width:46%;
-    padding-bottom:95% !important;
-    margin:0 !important;
-  }
-}
-
-@media(max-width:380px){
-  .video-wrapper.short-youtube{
-    width:47%;
-    max-width:47%;
   }
 }
