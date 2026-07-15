@@ -25,3 +25,5 @@ Structure finale :
 
 Adresse :
 https://jennydavidmusic.com/card/
+
+Les deux vidéos sont présentées comme des cartes verticales YouTube Shorts et ouvrent l'interface Shorts.
