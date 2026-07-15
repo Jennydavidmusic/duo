@@ -26,4 +26,6 @@ Structure finale :
 Adresse :
 https://jennydavidmusic.com/card/
 
-Les deux Shorts sont maintenant intégrés directement dans la page, sans vignette intermédiaire.
+IMPORTANT
+Cette version charge ../js/cookies.js, exactement comme music.html.
+Elle utilise aussi le même HTML .embed-box[data-yt-id] et le même script de lecture.
