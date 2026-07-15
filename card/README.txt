@@ -1,13 +1,16 @@
-JENNY & DAVID — CARD FINAL
+JENNY & DAVID — CARD FINAL SHARE PREVIEW
 
 Cette version conserve :
-- la mise en page PC corrigée ;
+- la mise en page mobile et PC corrigée ;
 - les Shorts verticaux ;
 - l'absence de bandeau cookies ;
-- la vidéo principale ../videos/live1.mp4 ;
-- les effets au clic sur Call, Book Us et les réseaux sociaux.
+- les interactions sur Call, Book Us, Instagram, Facebook, YouTube ;
+- les liens site et e-mail qui passent en or au toucher/survol.
 
-Nouveau :
-- le site et l'adresse e-mail ne sont pas soulignés ;
-- ils passent en or au survol, au focus et au toucher ;
-- légère lueur dorée pour indiquer qu'ils sont cliquables.
+Nouveau partage social :
+- Titre : Jenny & David – Live Music Duo | London
+- Description : Live music for pubs, weddings, corporate events and private parties.
+- Image : card/assets/business-card.webp
+- Balises Open Graph + Twitter/X Card.
+
+Après l'upload, WhatsApp, Messenger, Facebook ou iMessage peuvent conserver l'ancien aperçu en cache pendant quelque temps.
