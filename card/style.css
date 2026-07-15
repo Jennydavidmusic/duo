@@ -398,41 +398,35 @@ footer{
 }
 
 .short-card{
-  display:block;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.09);
   border-radius:18px;
   background:#090909;
-  text-decoration:none;
   box-shadow:0 18px 42px rgba(0,0,0,.32);
-  transition:transform .18s ease,border-color .18s ease;
 }
 
-.short-card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(226,193,122,.55);
-}
-
-.short-media{
+.short-launch{
   position:relative;
+  display:block;
   width:100%;
+  padding:0;
+  border:0;
+  background:#111;
+  cursor:pointer;
   aspect-ratio:9/16;
   overflow:hidden;
-  background:#111;
 }
 
-.short-media img{
+.short-launch img{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center;
 }
 
 .short-overlay{
   position:absolute;
   inset:0;
-  background:
-    linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 24%,transparent 64%,rgba(0,0,0,.72) 100%);
+  background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 24%,transparent 64%,rgba(0,0,0,.72) 100%);
 }
 
 .short-top{
@@ -445,6 +439,7 @@ footer{
   align-items:center;
   gap:9px;
   color:#fff;
+  text-align:left;
 }
 
 .short-avatar{
@@ -509,12 +504,11 @@ footer{
   transform:rotate(18deg);
 }
 
-.shorts-shape{
+.shorts-icon span{
   position:relative;
   z-index:1;
   color:#fff;
   font-size:1.8rem;
-  line-height:1;
   transform:rotate(8deg) translateX(2px);
 }
 
@@ -525,6 +519,7 @@ footer{
   right:14px;
   bottom:14px;
   color:#fff;
+  text-align:left;
   text-shadow:0 2px 8px rgba(0,0,0,.75);
 }
 
@@ -539,6 +534,19 @@ footer{
   font-size:.75rem;
 }
 
+.short-player{
+  width:100%;
+  aspect-ratio:9/16;
+  background:#000;
+}
+
+.short-player iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
 @media(max-width:520px){
   .shorts-grid{gap:8px}
   .short-top{top:9px;left:9px;right:9px;gap:7px}
@@ -546,7 +554,7 @@ footer{
   .short-title{font-size:.78rem}
   .shorts-icon{width:62px;height:62px;border-radius:20px}
   .shorts-icon::before,.shorts-icon::after{width:39px;height:20px}
-  .shorts-shape{font-size:1.5rem}
+  .shorts-icon span{font-size:1.5rem}
   .short-bottom{left:10px;right:10px;bottom:10px}
   .short-bottom strong{font-size:.78rem}
   .short-bottom span{font-size:.66rem}
