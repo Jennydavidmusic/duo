@@ -26,4 +26,5 @@ Structure finale :
 Adresse :
 https://jennydavidmusic.com/card/
 
-Solution 1 : chaque Short remplace sa propre vignette dans la même carte. Aucun lecteur ne s'ajoute en dessous.
+Les Shorts utilisent maintenant exactement le même principe que music.html :
+.embed-box[data-yt-id] est remplacé par l'iframe au premier clic.

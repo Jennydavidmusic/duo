@@ -32,41 +32,27 @@
 })();
 
 
-document.querySelectorAll(".short-card").forEach((card) => {
-  const stage = card.querySelector(".short-stage");
-  const cover = card.querySelector(".short-cover");
-  const videoId = card.dataset.videoId;
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.embed-box[data-yt-id]').forEach(box => {
+    box.addEventListener('click', () => {
+      const ytId = box.dataset.ytId;
 
-  if (!stage || !cover || !videoId) return;
+      const iframe = document.createElement('iframe');
+      const params = new URLSearchParams({ autoplay: "1", rel: "0" });
 
-  cover.addEventListener("click", () => {
-    document.querySelectorAll(".short-card").forEach((otherCard) => {
-      if (otherCard === card) return;
-
-      const otherStage = otherCard.querySelector(".short-stage");
-      const savedCover = otherCard._savedCover;
-
-      if (otherStage && savedCover && otherStage.querySelector("iframe")) {
-        otherStage.innerHTML = "";
-        otherStage.appendChild(savedCover);
+      if (window.location.origin && window.location.origin !== "null") {
+        params.set("origin", window.location.origin);
       }
-    });
 
-    const savedCover = cover;
-    const iframe = document.createElement("iframe");
+      iframe.src =
+        `https://www.youtube-nocookie.com/embed/${encodeURIComponent(ytId)}?${params.toString()}`;
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
 
-    iframe.src =
-      `https://www.youtube-nocookie.com/embed/${videoId}` +
-      `?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
-
-    iframe.title = "Jenny and David live video";
-    iframe.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    iframe.allowFullscreen = true;
-
-    stage.innerHTML = "";
-    stage.appendChild(iframe);
-
-    card._savedCover = savedCover;
+      box.innerHTML = "";
+      box.appendChild(iframe);
+    }, { once: true });
   });
 });
