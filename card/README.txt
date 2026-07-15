@@ -1,14 +1,20 @@
-JENNY & DAVID — CARD
+JENNY & DAVID — CARD FINAL
 
-Dépose le dossier complet "card" à la racine de ton dépôt GitHub.
+Téléverse le dossier complet "card" à la racine de ton dépôt GitHub.
+
+Le nouveau dossier contient :
+- uniquement le recto en haut ;
+- la vidéo ../videos/live1.mp4 ;
+- les deux vidéos YouTube intégrées ;
+- le bouton Call ;
+- le bouton Book Us vers bookings.html ;
+- le design responsive.
 
 Structure finale :
 
 /
-├── index.html
-├── images/
 ├── videos/
-│   └── live.mp4
+│   └── live1.mp4
 └── card/
     ├── index.html
     ├── style.css
@@ -17,11 +23,5 @@ Structure finale :
         ├── business-card.webp
         └── live-photo.webp
 
-La page utilisera automatiquement :
-../videos/live.mp4
-
-Adresse finale :
+Adresse :
 https://jennydavidmusic.com/card/
-
-Le bouton Book Us renvoie vers :
-https://jennydavidmusic.com/bookings.html

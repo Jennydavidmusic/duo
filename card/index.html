@@ -4,22 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#050505">
+
   <title>Jenny & David | Digital Card</title>
   <meta name="description" content="Jenny & David — London live music duo. Two musicians with the energy of a full band. 100% live, no backing tracks.">
+
   <meta property="og:title" content="Jenny & David | Sounds Like a Full Band">
   <meta property="og:description" content="Two musicians. The energy of a full band.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jennydavidmusic.com/card/">
   <meta property="og:image" content="https://jennydavidmusic.com/card/assets/business-card.webp">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <main class="page">
+
     <header class="business-card">
-      <img src="assets/business-card-front.webp" alt="Jenny and David business card">
+      <img src="assets/business-card.webp" alt="Jenny and David — Sounds Like a Full Band">
     </header>
 
     <section class="intro">
@@ -29,10 +34,19 @@
     </section>
 
     <section class="main-video" aria-label="Jenny and David live showreel">
-      <video id="mainVideo" autoplay muted loop playsinline preload="metadata" poster="assets/live-photo.webp">
+      <video
+        id="mainVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="assets/live-photo.webp"
+      >
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
+
       <button id="soundButton" class="sound-button" type="button" aria-pressed="false">
         <span id="soundIcon" aria-hidden="true">🔇</span>
         <span id="soundText">Play sound</span>
@@ -53,11 +67,14 @@
       <div class="youtube-grid">
         <article class="youtube-card">
           <div class="youtube-frame">
-            <iframe src="https://www.youtube-nocookie.com/embed/6yZOedVUP7g?rel=0"
-              title="Jenny and David live performance" loading="lazy"
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/6yZOedVUP7g?rel=0"
+              title="Jenny and David live performance"
+              loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
+              allowfullscreen
+            ></iframe>
           </div>
           <div class="youtube-copy">
             <strong>Pub Singalong</strong>
@@ -67,11 +84,14 @@
 
         <article class="youtube-card">
           <div class="youtube-frame">
-            <iframe src="https://www.youtube-nocookie.com/embed/qaIxZ-x5Wfw?rel=0"
-              title="Jenny and David full band energy" loading="lazy"
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/qaIxZ-x5Wfw?rel=0"
+              title="Jenny and David full band energy"
+              loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
+              allowfullscreen
+            ></iframe>
           </div>
           <div class="youtube-copy">
             <strong>Full Band Energy</strong>
@@ -85,10 +105,12 @@
       <div class="booking-photo">
         <img src="assets/live-photo.webp" alt="Jenny and David performing live" loading="lazy">
       </div>
+
       <div class="booking-copy">
         <p class="eyebrow">Bookings</p>
         <h2 id="booking-title">Bring the energy to your venue.</h2>
         <p>Pubs · Weddings · Corporate events · Private parties</p>
+
         <div class="buttons">
           <a class="button primary" href="tel:+447563711966">Call 07563 711966</a>
           <a class="button secondary" href="https://jennydavidmusic.com/bookings.html">Book Us</a>
@@ -99,16 +121,19 @@
     <section class="contact-panel">
       <a href="https://jennydavidmusic.com">jennydavidmusic.com</a>
       <a href="mailto:jennydavidmusic@gmail.com">jennydavidmusic@gmail.com</a>
+
       <div class="socials" aria-label="Social media">
         <a href="https://www.instagram.com/jennydavidmusic" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="https://www.facebook.com/jennydavidmusic" target="_blank" rel="noopener noreferrer">Facebook</a>
         <a href="https://www.youtube.com/@jennydavidmusic" target="_blank" rel="noopener noreferrer">YouTube</a>
       </div>
+
       <p>@jennydavidmusic</p>
     </section>
 
     <footer>Performing across London since 2016</footer>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
