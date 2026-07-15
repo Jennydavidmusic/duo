@@ -1,16 +1,13 @@
-JENNY & DAVID — CARD FINAL AVEC INTERACTIONS
+JENNY & DAVID — CARD FINAL
 
 Cette version conserve :
 - la mise en page PC corrigée ;
 - les Shorts verticaux ;
 - l'absence de bandeau cookies ;
-- la vidéo principale ../videos/live1.mp4.
+- la vidéo principale ../videos/live1.mp4 ;
+- les effets au clic sur Call, Book Us et les réseaux sociaux.
 
-Retour visuel au clic :
-- Call : vert ;
-- Book Us : or ;
-- Instagram : dégradé Instagram ;
-- Facebook : bleu ;
-- YouTube : rouge.
-
-Les effets fonctionnent au toucher, à la souris et au clavier.
+Nouveau :
+- le site et l'adresse e-mail ne sont pas soulignés ;
+- ils passent en or au survol, au focus et au toucher ;
+- légère lueur dorée pour indiquer qu'ils sont cliquables.

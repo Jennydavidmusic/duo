@@ -458,3 +458,25 @@ footer{
     transform:none;
   }
 }
+
+
+/* Contact links: subtle premium feedback without underlines */
+.contact-link{
+  text-decoration:none !important;
+  transition:
+    color .16s ease,
+    text-shadow .16s ease,
+    transform .16s ease !important;
+}
+
+.contact-link:hover,
+.contact-link:focus-visible{
+  color:var(--gold-light) !important;
+  text-shadow:0 0 14px rgba(226,193,122,.28);
+}
+
+.contact-link.is-pressed{
+  color:var(--gold-light) !important;
+  text-shadow:0 0 16px rgba(226,193,122,.38);
+  transform:scale(.98) !important;
+}
