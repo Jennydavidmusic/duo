@@ -26,5 +26,4 @@ Structure finale :
 Adresse :
 https://jennydavidmusic.com/card/
 
-Les Shorts utilisent maintenant exactement le même principe que music.html :
-.embed-box[data-yt-id] est remplacé par l'iframe au premier clic.
+Les deux Shorts sont maintenant intégrés directement dans la page, sans vignette intermédiaire.
