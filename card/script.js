@@ -33,40 +33,40 @@
 
 
 document.querySelectorAll(".short-card").forEach((card) => {
-  const button = card.querySelector(".short-launch");
-  const player = card.querySelector(".short-player");
+  const stage = card.querySelector(".short-stage");
+  const cover = card.querySelector(".short-cover");
   const videoId = card.dataset.videoId;
 
-  if (!button || !player || !videoId) return;
+  if (!stage || !cover || !videoId) return;
 
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".short-player iframe").forEach((frame) => {
-      if (!player.contains(frame)) {
-        frame.remove();
-      }
-    });
-
+  cover.addEventListener("click", () => {
     document.querySelectorAll(".short-card").forEach((otherCard) => {
-      if (otherCard !== card) {
-        const otherButton = otherCard.querySelector(".short-launch");
-        const otherPlayer = otherCard.querySelector(".short-player");
-        if (otherButton && otherPlayer) {
-          otherButton.hidden = false;
-          otherPlayer.hidden = true;
-          otherPlayer.innerHTML = "";
-        }
+      if (otherCard === card) return;
+
+      const otherStage = otherCard.querySelector(".short-stage");
+      const savedCover = otherCard._savedCover;
+
+      if (otherStage && savedCover && otherStage.querySelector("iframe")) {
+        otherStage.innerHTML = "";
+        otherStage.appendChild(savedCover);
       }
     });
 
+    const savedCover = cover;
     const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`;
-    iframe.title = "Jenny and David YouTube Short";
-    iframe.allow = "autoplay; encrypted-media; picture-in-picture; web-share";
+
+    iframe.src =
+      `https://www.youtube-nocookie.com/embed/${videoId}` +
+      `?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
+
+    iframe.title = "Jenny and David live video";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
     iframe.allowFullscreen = true;
 
-    player.innerHTML = "";
-    player.appendChild(iframe);
-    player.hidden = false;
-    button.hidden = true;
+    stage.innerHTML = "";
+    stage.appendChild(iframe);
+
+    card._savedCover = savedCover;
   });
 });

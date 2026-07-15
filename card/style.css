@@ -401,48 +401,56 @@ footer{
   overflow:hidden;
   border:1px solid rgba(255,255,255,.09);
   border-radius:18px;
-  background:#090909;
+  background:#000;
   box-shadow:0 18px 42px rgba(0,0,0,.32);
 }
 
-.short-launch{
+.short-stage{
   position:relative;
-  display:block;
   width:100%;
-  padding:0;
-  border:0;
-  background:#111;
-  cursor:pointer;
   aspect-ratio:9/16;
-  overflow:hidden;
+  background:#000;
 }
 
-.short-launch img{
+.short-cover{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  padding:0;
+  border:0;
+  overflow:hidden;
+  color:#fff;
+  background:#000;
+  cursor:pointer;
+}
+
+.short-cover img{
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center;
 }
 
-.short-overlay{
+.cover-shade{
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 24%,transparent 64%,rgba(0,0,0,.72) 100%);
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 24%,transparent 65%,rgba(0,0,0,.72));
 }
 
-.short-top{
+.cover-head{
   position:absolute;
   z-index:2;
-  top:13px;
-  left:13px;
-  right:13px;
+  top:12px;
+  left:12px;
+  right:12px;
   display:flex;
   align-items:center;
   gap:9px;
-  color:#fff;
   text-align:left;
 }
 
-.short-avatar{
+.cover-avatar{
   flex:0 0 auto;
   width:38px;
   height:38px;
@@ -456,108 +464,73 @@ footer{
   font-weight:700;
 }
 
-.short-title{
-  min-width:0;
+.cover-title{
   overflow:hidden;
-  font-size:.91rem;
+  font-size:.92rem;
   font-weight:800;
   line-height:1.2;
   text-overflow:ellipsis;
   white-space:nowrap;
-  text-shadow:0 2px 8px rgba(0,0,0,.65);
+  text-shadow:0 2px 8px rgba(0,0,0,.7);
 }
 
-.shorts-icon{
+.cover-play{
   position:absolute;
   z-index:2;
   top:50%;
   left:50%;
-  width:74px;
-  height:74px;
+  width:72px;
+  height:72px;
   display:grid;
   place-items:center;
-  border-radius:24px;
-  background:#ff0033;
-  box-shadow:0 12px 32px rgba(0,0,0,.36);
-  transform:translate(-50%,-50%) rotate(-8deg);
-}
-
-.shorts-icon::before,
-.shorts-icon::after{
-  content:"";
-  position:absolute;
-  width:46px;
-  height:24px;
-  border-radius:14px;
-  background:#ff0033;
-}
-
-.shorts-icon::before{
-  top:-8px;
-  right:-2px;
-  transform:rotate(18deg);
-}
-
-.shorts-icon::after{
-  bottom:-8px;
-  left:-2px;
-  transform:rotate(18deg);
-}
-
-.shorts-icon span{
-  position:relative;
-  z-index:1;
+  border-radius:22px;
   color:#fff;
+  background:#ff0033;
+  box-shadow:0 12px 32px rgba(0,0,0,.4);
+  transform:translate(-50%,-50%);
   font-size:1.8rem;
-  transform:rotate(8deg) translateX(2px);
+  padding-left:4px;
 }
 
-.short-bottom{
+.cover-foot{
   position:absolute;
   z-index:2;
-  left:14px;
-  right:14px;
-  bottom:14px;
-  color:#fff;
+  left:13px;
+  right:13px;
+  bottom:13px;
   text-align:left;
   text-shadow:0 2px 8px rgba(0,0,0,.75);
 }
 
-.short-bottom strong{
+.cover-foot strong{
   display:block;
   margin-bottom:3px;
   font-size:.9rem;
 }
 
-.short-bottom span{
-  color:rgba(255,255,255,.78);
-  font-size:.75rem;
+.cover-foot span{
+  color:rgba(255,255,255,.8);
+  font-size:.74rem;
 }
 
-.short-player{
-  width:100%;
-  aspect-ratio:9/16;
-  background:#000;
-}
-
-.short-player iframe{
+.short-stage iframe{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   border:0;
-  display:block;
+  background:#000;
 }
 
 @media(max-width:520px){
   .shorts-grid{gap:8px}
-  .short-top{top:9px;left:9px;right:9px;gap:7px}
-  .short-avatar{width:32px;height:32px;font-size:.68rem}
-  .short-title{font-size:.78rem}
-  .shorts-icon{width:62px;height:62px;border-radius:20px}
-  .shorts-icon::before,.shorts-icon::after{width:39px;height:20px}
-  .shorts-icon span{font-size:1.5rem}
-  .short-bottom{left:10px;right:10px;bottom:10px}
-  .short-bottom strong{font-size:.78rem}
-  .short-bottom span{font-size:.66rem}
+  .cover-head{top:9px;left:9px;right:9px;gap:7px}
+  .cover-avatar{width:32px;height:32px;font-size:.68rem}
+  .cover-title{font-size:.78rem}
+  .cover-play{width:60px;height:60px;border-radius:18px;font-size:1.45rem}
+  .cover-foot{left:10px;right:10px;bottom:10px}
+  .cover-foot strong{font-size:.78rem}
+  .cover-foot span{font-size:.66rem}
 }
 
 @media(max-width:360px){

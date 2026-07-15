@@ -26,4 +26,4 @@ Structure finale :
 Adresse :
 https://jennydavidmusic.com/card/
 
-Les deux Shorts se lisent désormais directement dans la page après un clic sur leur miniature.
+Solution 1 : chaque Short remplace sa propre vignette dans la même carte. Aucun lecteur ne s'ajoute en dessous.
