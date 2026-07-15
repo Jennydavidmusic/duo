@@ -1,8 +1,16 @@
-JENNY & DAVID — CARD CLEAN FINAL
+JENNY & DAVID — CARD FINAL AVEC INTERACTIONS
 
-- Aucun chargement de js/cookies.js
-- Aucun bandeau cookie
-- Shorts intégrés directement
-- Mise en page PC corrigée
-- Vidéo principale : ../videos/live1.mp4
-- URL : https://jennydavidmusic.com/card/
+Cette version conserve :
+- la mise en page PC corrigée ;
+- les Shorts verticaux ;
+- l'absence de bandeau cookies ;
+- la vidéo principale ../videos/live1.mp4.
+
+Retour visuel au clic :
+- Call : vert ;
+- Book Us : or ;
+- Instagram : dégradé Instagram ;
+- Facebook : bleu ;
+- YouTube : rouge.
+
+Les effets fonctionnent au toucher, à la souris et au clavier.
