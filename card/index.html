@@ -40,10 +40,6 @@
 <body>
   <main class="page">
 
-    <header class="business-card">
-      <img src="assets/business-card.webp" alt="Jenny and David — Sounds Like a Full Band">
-    </header>
-
     <section class="intro">
       <p class="eyebrow">London live music duo</p>
       <h1>Two musicians.<br><span>The energy of a full band.</span></h1>
@@ -51,7 +47,7 @@
     </section>
 
     <section class="main-video" aria-label="Jenny and David live showreel">
-      <video id="mainVideo" autoplay muted loop playsinline preload="metadata" poster="assets/live-photo.webp">
+      <video id="mainVideo" autoplay muted loop playsinline preload="auto">
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
@@ -143,18 +139,66 @@
 
   <script>
     (() => {
+      const mainVideo = document.getElementById("mainVideo");
+      const soundButton = document.getElementById("soundButton");
       const shortVideos = Array.from(document.querySelectorAll(".local-short-video"));
+
+      const pauseOtherShorts = (activeVideo) => {
+        shortVideos.forEach((video) => {
+          if (video !== activeVideo && !video.paused) {
+            video.pause();
+          }
+        });
+      };
+
+      const pauseAllShorts = () => {
+        shortVideos.forEach((video) => {
+          if (!video.paused) {
+            video.pause();
+          }
+        });
+      };
+
       shortVideos.forEach((video) => {
         video.addEventListener("play", () => {
-          shortVideos.forEach((otherVideo) => {
-            if (otherVideo !== video && !otherVideo.paused) otherVideo.pause();
-          });
+          pauseOtherShorts(video);
+
+          // live1 continues playing silently in the background.
+          if (mainVideo) {
+            mainVideo.muted = true;
+          }
         });
+
         video.addEventListener("ended", () => {
           video.currentTime = 0;
           video.load();
         });
       });
+
+      if (soundButton && mainVideo) {
+        // card-v2.js changes the mute state first. We check the final state
+        // immediately afterwards and pause every Short when live1 has sound.
+        soundButton.addEventListener("click", () => {
+          window.setTimeout(() => {
+            if (!mainVideo.muted && mainVideo.volume > 0) {
+              pauseAllShorts();
+
+              if (mainVideo.paused) {
+                mainVideo.play().catch(() => {});
+              }
+            }
+          }, 0);
+        });
+      }
+
+      if (mainVideo) {
+        // Covers unmuting through native controls or another script.
+        mainVideo.addEventListener("volumechange", () => {
+          if (!mainVideo.muted && mainVideo.volume > 0) {
+            pauseAllShorts();
+          }
+        });
+      }
     })();
   </script>
 </body>
