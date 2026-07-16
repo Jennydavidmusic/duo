@@ -284,98 +284,83 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const mainVideo = document.getElementById("mainVideo");
-  const shorts = [...document.querySelectorAll(".local-short-video")];
+  const restartButton = document.getElementById("restartPlayButton");
 
-  shorts.forEach(video => {
-    const frame = video.closest(".short-frame");
-    const button = frame.querySelector(".play-overlay");
+  if (!mainVideo || !restartButton) return;
 
-    button.addEventListener("click", () => {
-      shorts.forEach(other => {
-        if (other !== video) {
-          other.pause();
-          other.closest(".short-frame").classList.remove("playing");
-        }
-      });
+  let pausedByScroll = false;
 
-      if (mainVideo) {
-        mainVideo.muted = true;
-      }
+  const hideRestartButton = () => {
+    restartButton.classList.remove("show");
+  };
 
-      video.play();
-      frame.classList.add("playing");
-    });
-
-    video.addEventListener("play", () => {
-      shorts.forEach(other => {
-        if (other !== video) other.pause();
-      });
-      frame.classList.add("playing");
-      if (mainVideo) mainVideo.muted = true;
-    });
-
-    video.addEventListener("pause", () => {
-      frame.classList.remove("playing");
-    });
-
-    video.addEventListener("ended", () => {
-      video.currentTime = 0;
-      frame.classList.remove("playing");
-    });
-  });
-
-  if(mainVideo){
-    mainVideo.addEventListener("volumechange", () => {
-      if(!mainVideo.muted && mainVideo.volume > 0){
-        shorts.forEach(video => video.pause());
-      }
-    });
-  }
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const mainVideo = document.getElementById("mainVideo");
-
-  if (!mainVideo) return;
-
-  let userPaused = false;
-
-  mainVideo.addEventListener("pause", () => {
-    if (!mainVideo.ended) {
-      userPaused = true;
+  const showRestartButton = () => {
+    if (pausedByScroll) {
+      restartButton.classList.add("show");
     }
-  });
+  };
 
-  mainVideo.addEventListener("play", () => {
-    userPaused = false;
+  // Toujours démarrer directement, en muet, au chargement.
+  mainVideo.muted = true;
+  mainVideo.setAttribute("muted", "");
+  mainVideo.setAttribute("autoplay", "");
+  mainVideo.setAttribute("playsinline", "");
+
+  hideRestartButton();
+
+  mainVideo.play().catch(() => {
+    // Sur certains navigateurs, autoplay peut attendre une interaction,
+    // mais le bouton ne doit pas apparaître tant que le scroll n'a pas mis en pause.
   });
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
+      const sufficientlyVisible =
+        entry.isIntersecting && entry.intersectionRatio > 0.45;
 
-      if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
-
-        if (!userPaused) {
-          mainVideo.play().catch(() => {});
+      if (sufficientlyVisible) {
+        if (pausedByScroll) {
+          mainVideo.play().then(() => {
+            pausedByScroll = false;
+            hideRestartButton();
+          }).catch(() => {});
         }
-
       } else {
-
         if (!mainVideo.paused) {
+          pausedByScroll = true;
           mainVideo.pause();
+          showRestartButton();
         }
-
       }
-
     });
   }, {
-    threshold: [0.45]
+    threshold: [0, 0.45, 1]
   });
 
   observer.observe(mainVideo);
 
+  restartButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      await mainVideo.play();
+      pausedByScroll = false;
+      hideRestartButton();
+    } catch (error) {
+      console.warn("Main video could not restart.", error);
+    }
+  });
+
+  mainVideo.addEventListener("play", () => {
+    if (!pausedByScroll) {
+      hideRestartButton();
+    }
+  });
+
+  mainVideo.addEventListener("pause", () => {
+    showRestartButton();
+  });
 });
 </script>
 
