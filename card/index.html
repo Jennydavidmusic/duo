@@ -343,6 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const mainVideo = document.getElementById("mainVideo");
   const restartButton = document.getElementById("mainRestartButton");
+  const soundButton = document.getElementById("soundButton");
+  const shortVideos = Array.from(document.querySelectorAll(".local-short-video"));
 
   if (!mainVideo || !restartButton) return;
 
@@ -353,31 +355,43 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const showRestartButton = () => {
-    if (pausedByScroll) {
-      restartButton.classList.add("show");
+    restartButton.classList.add("show");
+  };
+
+  const pauseShorts = () => {
+    shortVideos.forEach((video) => {
+      if (!video.paused) {
+        video.pause();
+      }
+    });
+  };
+
+  const playMainWithSound = async () => {
+    pauseShorts();
+    mainVideo.muted = false;
+
+    try {
+      await mainVideo.play();
+      pausedByScroll = false;
+      hideRestartButton();
+    } catch (error) {
+      console.warn("Main video could not play.", error);
     }
   };
 
-  // Start immediately, muted, without showing the restart button.
+  // Démarrage immédiat en lecture muette.
   mainVideo.muted = true;
   hideRestartButton();
   mainVideo.play().catch(() => {});
 
+  // Pause automatique quand la vidéo quitte suffisamment l'écran.
+  // Elle ne repart pas automatiquement quand on remonte.
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const visibleEnough =
         entry.isIntersecting && entry.intersectionRatio >= 0.45;
 
-      if (visibleEnough) {
-        if (pausedByScroll) {
-          mainVideo.play()
-            .then(() => {
-              pausedByScroll = false;
-              hideRestartButton();
-            })
-            .catch(() => {});
-        }
-      } else if (!mainVideo.paused) {
+      if (!visibleEnough && !mainVideo.paused) {
         pausedByScroll = true;
         mainVideo.pause();
         showRestartButton();
@@ -389,24 +403,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(mainVideo);
 
+  // Le gros bouton relance la vidéo avec le son.
   restartButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    mainVideo.play()
-      .then(() => {
-        pausedByScroll = false;
-        hideRestartButton();
-      })
-      .catch(() => {});
+    playMainWithSound();
   });
+
+  // Clic directement sur la vidéo : pause / reprise.
+  mainVideo.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (mainVideo.paused) {
+      playMainWithSound();
+    } else {
+      pausedByScroll = false;
+      mainVideo.pause();
+      showRestartButton();
+    }
+  });
+
+  // Le bouton de son ne doit pas être interprété comme un clic sur la vidéo.
+  if (soundButton) {
+    soundButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  }
 
   mainVideo.addEventListener("play", hideRestartButton);
 
   mainVideo.addEventListener("pause", () => {
-    if (pausedByScroll) {
-      showRestartButton();
-    }
+    showRestartButton();
   });
 });
 </script>
