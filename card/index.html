@@ -330,45 +330,25 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const mainVideo = document.getElementById("mainVideo");
+  const mainBox = document.querySelector(".main-video");
 
-  if (!mainVideo) return;
-
-  let userPaused = false;
-
-  mainVideo.addEventListener("pause", () => {
-    if (!mainVideo.ended) {
-      userPaused = true;
-    }
-  });
-
-  mainVideo.addEventListener("play", () => {
-    userPaused = false;
-  });
+  if (!mainVideo || !mainBox) return;
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
+      const visibleEnough =
+        entry.isIntersecting && entry.intersectionRatio > 0.45;
 
-      if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
-
-        if (!userPaused) {
-          mainVideo.play().catch(() => {});
-        }
-
-      } else {
-
-        if (!mainVideo.paused) {
-          mainVideo.pause();
-        }
-
+      if (!visibleEnough && !mainVideo.paused) {
+        mainVideo.pause();
+        mainBox.classList.add("show-main-play");
       }
-
     });
   }, {
-    threshold: [0.45]
+    threshold: [0, 0.45, 1]
   });
 
   observer.observe(mainVideo);
-
 });
 </script>
 
