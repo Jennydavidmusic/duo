@@ -365,34 +365,83 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 
+
+
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
   const mainVideo = document.getElementById("mainVideo");
   const restartButton = document.getElementById("restartPlayButton");
+  const shortVideos = document.querySelectorAll(".local-short-video");
 
-  if (!mainVideo || !restartButton) return;
+  if (!mainVideo) return;
 
-  const updateRestartButton = () => {
-    restartButton.classList.toggle("show", mainVideo.paused);
+  let pausedByScroll = false;
+
+  if (restartButton) {
+    restartButton.classList.remove("show");
+  }
+
+  const showButton = () => {
+    if (restartButton && pausedByScroll) {
+      restartButton.classList.add("show");
+    }
   };
 
-  restartButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    try {
-      await mainVideo.play();
-      updateRestartButton();
-    } catch (error) {
-      console.warn("Main video could not restart.", error);
+  const hideButton = () => {
+    if (restartButton) {
+      restartButton.classList.remove("show");
     }
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
+
+        if (pausedByScroll) {
+          mainVideo.play().catch(() => {});
+          pausedByScroll = false;
+          hideButton();
+        }
+
+      } else {
+
+        if (!mainVideo.paused) {
+          mainVideo.pause();
+          pausedByScroll = true;
+          showButton();
+        }
+
+      }
+
+    });
+  }, {
+    threshold:[0.45]
   });
 
-  mainVideo.addEventListener("play", updateRestartButton);
-  mainVideo.addEventListener("pause", updateRestartButton);
-  mainVideo.addEventListener("loadeddata", updateRestartButton);
+  observer.observe(mainVideo);
 
-  updateRestartButton();
+
+  if (restartButton) {
+    restartButton.addEventListener("click", () => {
+      mainVideo.play().catch(() => {});
+      pausedByScroll = false;
+      hideButton();
+    });
+  }
+
+
+  // Keep Shorts independent but stop live1 sound conflicts
+  shortVideos.forEach(video => {
+
+    video.addEventListener("play", () => {
+      mainVideo.muted = true;
+    });
+
+  });
+
 });
 </script>
 
