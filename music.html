@@ -379,6 +379,74 @@
       }
     }
 
+
+    .main-local-card {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .main-local-card .mosaic-local-video {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .main-local-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 76px;
+      height: 76px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .58);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 4;
+      font-size: 32px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .main-local-play span {
+      margin-left: 5px;
+    }
+
+    .main-local-card.playing .main-local-play {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (min-width: 769px) {
+      .main-local-card {
+        grid-column: 1;
+        grid-row: 2;
+        max-width: 100%;
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-local-card {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+
+      .main-local-play {
+        width: 68px;
+        height: 68px;
+        font-size: 29px;
+      }
+    }
+
 </style>
 <script type="application/ld+json">
 {
@@ -445,10 +513,27 @@
       </div>
     </div>
 
-    <video class="preview-video mosaic-local-video" controls preload="metadata" poster="images/video-thumbnail-4s.jpg">
-      <source src="videos/live1.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="main-local-card">
+      <video
+        id="mainLocalVideo"
+        class="preview-video mosaic-local-video"
+        controls
+        playsinline
+        preload="metadata"
+        poster="images/video-thumbnail-4s.jpg"
+      >
+        <source src="videos/live1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <button
+        class="main-local-play"
+        type="button"
+        aria-label="Play main live video"
+      >
+        <span aria-hidden="true">▶</span>
+      </button>
+    </div>
 
     <div class="short-row">
 
@@ -629,10 +714,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const mainLocalVideo = document.querySelector(".mosaic-local-video");
+  const mainLocalVideo = document.getElementById("mainLocalVideo");
+  const mainLocalCard = mainLocalVideo?.closest(".main-local-card");
+  const mainLocalPlay = mainLocalCard?.querySelector(".main-local-play");
+
+  mainLocalPlay?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    pauseOtherVideos(mainLocalVideo);
+
+    mainLocalVideo.play()
+      .then(() => mainLocalCard?.classList.add("playing"))
+      .catch((error) => {
+        console.warn("Main video playback could not start.", error);
+      });
+  });
 
   mainLocalVideo?.addEventListener("play", () => {
     pauseOtherVideos(mainLocalVideo);
+    mainLocalCard?.classList.add("playing");
+  });
+
+  mainLocalVideo?.addEventListener("pause", () => {
+    mainLocalCard?.classList.remove("playing");
+  });
+
+  mainLocalVideo?.addEventListener("ended", () => {
+    mainLocalVideo.currentTime = 0;
+    mainLocalVideo.load();
+    mainLocalCard?.classList.remove("playing");
   });
 });
 </script>
