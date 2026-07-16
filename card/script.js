@@ -30,3 +30,53 @@
   video.addEventListener("volumechange", sync);
   sync();
 })();
+(() => {
+
+const video = document.getElementById("mainVideo");
+const playButton = document.getElementById("mainPlayButton");
+const box = document.querySelector(".main-video");
+
+if(!video || !playButton || !box) return;
+
+
+// clic directement sur la vidéo
+video.addEventListener("click", () => {
+
+  if(video.paused){
+    video.play();
+    box.classList.remove("show-play");
+  } else {
+    video.pause();
+    box.classList.add("show-play");
+  }
+
+});
+
+
+// bouton ▶ après pause
+playButton.addEventListener("click", () => {
+
+  video.muted = false;
+  video.play();
+
+  box.classList.remove("show-play");
+
+});
+
+
+// afficher le bouton seulement quand elle est arrêtée
+video.addEventListener("pause", () => {
+
+  if(!video.ended){
+    box.classList.add("show-play");
+  }
+
+});
+
+
+// cacher quand elle repart
+video.addEventListener("play", () => {
+  box.classList.remove("show-play");
+});
+
+})();
