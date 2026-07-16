@@ -447,32 +447,6 @@
       }
     }
 
-
-    .main-local-toggle {
-      position: absolute;
-      inset: 0 0 56px 0;
-      z-index: 2;
-      border: 0;
-      padding: 0;
-      background: transparent;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .main-local-card.playing .main-local-toggle {
-      display: block;
-    }
-
-    .main-local-card:not(.playing) .main-local-toggle {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .main-local-toggle {
-        inset: 0 0 52px 0;
-      }
-    }
-
 </style>
 <script type="application/ld+json">
 {
@@ -551,12 +525,6 @@
         <source src="videos/live1.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-
-      <button
-        class="main-local-toggle"
-        type="button"
-        aria-label="Pause or resume main live video"
-      ></button>
 
       <button
         class="main-local-play"
@@ -750,8 +718,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainLocalCard = mainLocalVideo?.closest(".main-local-card");
   const mainLocalPlay = mainLocalCard?.querySelector(".main-local-play");
 
-  const mainLocalToggle = mainLocalCard?.querySelector(".main-local-toggle");
-
   mainLocalPlay?.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -763,18 +729,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => {
         console.warn("Main video playback could not start.", error);
       });
-  });
-
-  mainLocalToggle?.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (mainLocalVideo.paused) {
-      pauseOtherVideos(mainLocalVideo);
-      mainLocalVideo.play().catch(() => {});
-    } else {
-      mainLocalVideo.pause();
-    }
   });
 
   mainLocalVideo?.addEventListener("play", () => {
