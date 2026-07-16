@@ -23,6 +23,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="card-v2.css?v=2">
+
+  <style>
+    .short-frame .local-short-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #000;
+      border: 0;
+      border-radius: inherit;
+    }
+  </style>
 </head>
 
 <body>
@@ -63,25 +75,33 @@
 
       <div class="shorts-grid">
         <div class="short-frame">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/6yZOedVUP7g?rel=0&playsinline=1"
-            title="Wonderful Time — Jenny and David"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+          <video
+            id="coldplayVideo"
+            class="local-short-video"
+            controls
+            playsinline
+            preload="metadata"
+            poster="assets/coldplay-poster.jpg"
+            aria-label="Coldplay live moment"
+          >
+            <source src="assets/coldplay.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
         </div>
 
         <div class="short-frame">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/qaIxZ-x5Wfw?rel=0&playsinline=1"
-            title="Saturday Night in London — Jenny and David"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+          <video
+            id="cranberriesVideo"
+            class="local-short-video"
+            controls
+            playsinline
+            preload="metadata"
+            poster="assets/cranberries-poster.jpg"
+            aria-label="The Cranberries live moment"
+          >
+            <source src="assets/the%20cranberries.MP4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
         </div>
       </div>
     </section>
@@ -120,5 +140,22 @@
   </main>
 
   <script src="card-v2.js?v=2"></script>
+
+  <script>
+    (() => {
+      const shortVideos = Array.from(document.querySelectorAll(".local-short-video"));
+      shortVideos.forEach((video) => {
+        video.addEventListener("play", () => {
+          shortVideos.forEach((otherVideo) => {
+            if (otherVideo !== video && !otherVideo.paused) otherVideo.pause();
+          });
+        });
+        video.addEventListener("ended", () => {
+          video.currentTime = 0;
+          video.load();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
