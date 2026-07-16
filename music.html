@@ -136,15 +136,13 @@
       padding-bottom: 177.78% !important;
     }
 
-    .mosaic-local-video,
-    .short-local-video {
+    .mosaic-local-video {
       width: 100%;
-      height: 100%;
+      max-width: 420px;
       margin: 0 auto;
       border-radius: 10px;
       display: block;
       background-color: black;
-      object-fit: cover;
     }
 
  @media (min-width: 769px) {
@@ -319,6 +317,68 @@
         display: none;
       }
     }
+
+    .local-short-card {
+      position: relative;
+      width: 220px;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #000;
+    }
+
+    .local-short-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .local-short-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .58);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      font-size: 32px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .local-short-play span {
+      margin-left: 5px;
+    }
+
+    .local-short-card.playing .local-short-play {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .local-short-card {
+        width: 46%;
+        max-width: 46%;
+      }
+
+      .local-short-play {
+        width: 64px;
+        height: 64px;
+        font-size: 28px;
+      }
+    }
+
 </style>
 <script type="application/ld+json">
 {
@@ -392,16 +452,50 @@
 
     <div class="short-row">
 
-      <div class="video-wrapper short-youtube">
-        <video class="short-local-video" poster="images/coldplay-poster.jpg" preload="metadata" controls playsinline>
+      <div class="local-short-card">
+        <video
+          id="coldplayVideo"
+          class="local-short-video"
+          controls
+          playsinline
+          preload="metadata"
+          poster="images/coldplay-poster.jpg"
+          aria-label="Coldplay live moment"
+        >
           <source src="videos/coldplay.mp4" type="video/mp4">
+          Your browser does not support the video tag.
         </video>
+
+        <button
+          class="local-short-play"
+          type="button"
+          aria-label="Play Coldplay video"
+        >
+          <span aria-hidden="true">▶</span>
+        </button>
       </div>
 
-      <div class="video-wrapper short-youtube">
-        <video class="short-local-video" poster="images/crandberries-poster.jpg" preload="metadata" controls playsinline>
-          <source src="videos/the cranberries.MP4" type="video/mp4">
+      <div class="local-short-card">
+        <video
+          id="cranberriesVideo"
+          class="local-short-video"
+          controls
+          playsinline
+          preload="metadata"
+          poster="images/cranberries-poster.jpg"
+          aria-label="The Cranberries live moment"
+        >
+          <source src="videos/the%20cranberries.MP4" type="video/mp4">
+          Your browser does not support the video tag.
         </video>
+
+        <button
+          class="local-short-play"
+          type="button"
+          aria-label="Play The Cranberries video"
+        >
+          <span aria-hidden="true">▶</span>
+        </button>
       </div>
 
     </div>
@@ -483,17 +577,65 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const videos = document.querySelectorAll("video");
-  videos.forEach(video => {
-    video.addEventListener("play", () => {
-      videos.forEach(other => {
-        if (other !== video) other.pause();
-      });
+  const localVideos = Array.from(
+    document.querySelectorAll(".local-short-video, .mosaic-local-video")
+  );
+
+  const shortVideos = Array.from(
+    document.querySelectorAll(".local-short-video")
+  );
+
+  const pauseOtherVideos = (activeVideo) => {
+    localVideos.forEach((video) => {
+      if (video !== activeVideo && !video.paused) {
+        video.pause();
+      }
     });
+  };
+
+  shortVideos.forEach((video) => {
+    const card = video.closest(".local-short-card");
+    const playButton = card?.querySelector(".local-short-play");
+
+    playButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      pauseOtherVideos(video);
+
+      video.play()
+        .then(() => card?.classList.add("playing"))
+        .catch((error) => {
+          console.warn("Video playback could not start.", error);
+        });
+    });
+
+    video.addEventListener("play", () => {
+      pauseOtherVideos(video);
+      card?.classList.add("playing");
+    });
+
+    video.addEventListener("pause", () => {
+      card?.classList.remove("playing");
+    });
+
+    video.addEventListener("ended", () => {
+      video.currentTime = 0;
+      video.load();
+      card?.classList.remove("playing");
+    });
+  });
+
+  const mainLocalVideo = document.querySelector(".mosaic-local-video");
+
+  mainLocalVideo?.addEventListener("play", () => {
+    pauseOtherVideos(mainLocalVideo);
   });
 });
 </script>
+
 </body>
 </html>
