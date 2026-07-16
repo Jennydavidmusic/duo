@@ -66,6 +66,41 @@
       pointer-events:none;
     }
 
+  
+    .main-video{
+      position:relative;
+    }
+
+    .restart-play-button{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:76px;
+      height:76px;
+      border-radius:50%;
+      border:0;
+      background:rgba(0,0,0,.58);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:5;
+      font-size:32px;
+      backdrop-filter:blur(4px);
+      -webkit-backdrop-filter:blur(4px);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .restart-play-button.show{
+      display:flex;
+    }
+
+    .restart-play-button span{
+      margin-left:5px;
+    }
+
   </style>
 </head>
 
@@ -85,6 +120,10 @@
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
+
+      <button id="restartPlayButton" class="restart-play-button" type="button" aria-label="Play video">
+        <span aria-hidden="true">▶</span>
+      </button>
 
       <button id="soundButton" class="sound-button" type="button" aria-pressed="false">
         <span id="soundIcon" aria-hidden="true">🔇</span>
@@ -337,6 +376,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(mainVideo);
 
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mainVideo = document.getElementById("mainVideo");
+  const restartButton = document.getElementById("restartPlayButton");
+
+  if (!mainVideo || !restartButton) return;
+
+  const updateRestartButton = () => {
+    restartButton.classList.toggle("show", mainVideo.paused);
+  };
+
+  restartButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      await mainVideo.play();
+      updateRestartButton();
+    } catch (error) {
+      console.warn("Main video could not restart.", error);
+    }
+  });
+
+  mainVideo.addEventListener("play", updateRestartButton);
+  mainVideo.addEventListener("pause", updateRestartButton);
+  mainVideo.addEventListener("loadeddata", updateRestartButton);
+
+  updateRestartButton();
 });
 </script>
 
