@@ -71,7 +71,7 @@
       position:relative;
     }
 
-    .restart-play-button{
+    .main-restart-button{
       position:absolute;
       top:50%;
       left:50%;
@@ -86,18 +86,18 @@
       align-items:center;
       justify-content:center;
       cursor:pointer;
-      z-index:5;
+      z-index:6;
       font-size:32px;
       backdrop-filter:blur(4px);
       -webkit-backdrop-filter:blur(4px);
       box-shadow:0 10px 30px rgba(0,0,0,.35);
     }
 
-    .restart-play-button.show{
+    .main-restart-button.show{
       display:flex;
     }
 
-    .restart-play-button span{
+    .main-restart-button span{
       margin-left:5px;
     }
 
@@ -121,7 +121,12 @@
         Your browser does not support HTML5 video.
       </video>
 
-      <button id="restartPlayButton" class="restart-play-button" type="button" aria-label="Play video">
+      <button
+        id="mainRestartButton"
+        class="main-restart-button"
+        type="button"
+        aria-label="Play main video"
+      >
         <span aria-hidden="true">▶</span>
       </button>
 
@@ -284,7 +289,60 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const mainVideo = document.getElementById("mainVideo");
-  const restartButton = document.getElementById("restartPlayButton");
+  const shorts = [...document.querySelectorAll(".local-short-video")];
+
+  shorts.forEach(video => {
+    const frame = video.closest(".short-frame");
+    const button = frame.querySelector(".play-overlay");
+
+    button.addEventListener("click", () => {
+      shorts.forEach(other => {
+        if (other !== video) {
+          other.pause();
+          other.closest(".short-frame").classList.remove("playing");
+        }
+      });
+
+      if (mainVideo) {
+        mainVideo.muted = true;
+      }
+
+      video.play();
+      frame.classList.add("playing");
+    });
+
+    video.addEventListener("play", () => {
+      shorts.forEach(other => {
+        if (other !== video) other.pause();
+      });
+      frame.classList.add("playing");
+      if (mainVideo) mainVideo.muted = true;
+    });
+
+    video.addEventListener("pause", () => {
+      frame.classList.remove("playing");
+    });
+
+    video.addEventListener("ended", () => {
+      video.currentTime = 0;
+      frame.classList.remove("playing");
+    });
+  });
+
+  if(mainVideo){
+    mainVideo.addEventListener("volumechange", () => {
+      if(!mainVideo.muted && mainVideo.volume > 0){
+        shorts.forEach(video => video.pause());
+      }
+    });
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mainVideo = document.getElementById("mainVideo");
+  const restartButton = document.getElementById("mainRestartButton");
 
   if (!mainVideo || !restartButton) return;
 
@@ -300,37 +358,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Toujours démarrer directement, en muet, au chargement.
+  // Start immediately, muted, without showing the restart button.
   mainVideo.muted = true;
-  mainVideo.setAttribute("muted", "");
-  mainVideo.setAttribute("autoplay", "");
-  mainVideo.setAttribute("playsinline", "");
-
   hideRestartButton();
-
-  mainVideo.play().catch(() => {
-    // Sur certains navigateurs, autoplay peut attendre une interaction,
-    // mais le bouton ne doit pas apparaître tant que le scroll n'a pas mis en pause.
-  });
+  mainVideo.play().catch(() => {});
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      const sufficientlyVisible =
-        entry.isIntersecting && entry.intersectionRatio > 0.45;
+      const visibleEnough =
+        entry.isIntersecting && entry.intersectionRatio >= 0.45;
 
-      if (sufficientlyVisible) {
+      if (visibleEnough) {
         if (pausedByScroll) {
-          mainVideo.play().then(() => {
-            pausedByScroll = false;
-            hideRestartButton();
-          }).catch(() => {});
+          mainVideo.play()
+            .then(() => {
+              pausedByScroll = false;
+              hideRestartButton();
+            })
+            .catch(() => {});
         }
-      } else {
-        if (!mainVideo.paused) {
-          pausedByScroll = true;
-          mainVideo.pause();
-          showRestartButton();
-        }
+      } else if (!mainVideo.paused) {
+        pausedByScroll = true;
+        mainVideo.pause();
+        showRestartButton();
       }
     });
   }, {
@@ -339,109 +389,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(mainVideo);
 
-  restartButton.addEventListener("click", async (event) => {
+  restartButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    try {
-      await mainVideo.play();
-      pausedByScroll = false;
-      hideRestartButton();
-    } catch (error) {
-      console.warn("Main video could not restart.", error);
-    }
+    mainVideo.play()
+      .then(() => {
+        pausedByScroll = false;
+        hideRestartButton();
+      })
+      .catch(() => {});
   });
 
-  mainVideo.addEventListener("play", () => {
-    if (!pausedByScroll) {
-      hideRestartButton();
-    }
-  });
+  mainVideo.addEventListener("play", hideRestartButton);
 
   mainVideo.addEventListener("pause", () => {
-    showRestartButton();
-  });
-});
-</script>
-
-
-
-
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const mainVideo = document.getElementById("mainVideo");
-  const restartButton = document.getElementById("restartPlayButton");
-  const shortVideos = document.querySelectorAll(".local-short-video");
-
-  if (!mainVideo) return;
-
-  let pausedByScroll = false;
-
-  if (restartButton) {
-    restartButton.classList.remove("show");
-  }
-
-  const showButton = () => {
-    if (restartButton && pausedByScroll) {
-      restartButton.classList.add("show");
+    if (pausedByScroll) {
+      showRestartButton();
     }
-  };
-
-  const hideButton = () => {
-    if (restartButton) {
-      restartButton.classList.remove("show");
-    }
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
-
-        if (pausedByScroll) {
-          mainVideo.play().catch(() => {});
-          pausedByScroll = false;
-          hideButton();
-        }
-
-      } else {
-
-        if (!mainVideo.paused) {
-          mainVideo.pause();
-          pausedByScroll = true;
-          showButton();
-        }
-
-      }
-
-    });
-  }, {
-    threshold:[0.45]
   });
-
-  observer.observe(mainVideo);
-
-
-  if (restartButton) {
-    restartButton.addEventListener("click", () => {
-      mainVideo.play().catch(() => {});
-      pausedByScroll = false;
-      hideButton();
-    });
-  }
-
-
-  // Keep Shorts independent but stop live1 sound conflicts
-  shortVideos.forEach(video => {
-
-    video.addEventListener("play", () => {
-      mainVideo.muted = true;
-    });
-
-  });
-
 });
 </script>
 
