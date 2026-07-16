@@ -294,5 +294,51 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mainVideo = document.getElementById("mainVideo");
+
+  if (!mainVideo) return;
+
+  let userPaused = false;
+
+  mainVideo.addEventListener("pause", () => {
+    if (!mainVideo.ended) {
+      userPaused = true;
+    }
+  });
+
+  mainVideo.addEventListener("play", () => {
+    userPaused = false;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
+
+        if (!userPaused) {
+          mainVideo.play().catch(() => {});
+        }
+
+      } else {
+
+        if (!mainVideo.paused) {
+          mainVideo.pause();
+        }
+
+      }
+
+    });
+  }, {
+    threshold: [0.45]
+  });
+
+  observer.observe(mainVideo);
+
+});
+</script>
+
 </body>
 </html>
