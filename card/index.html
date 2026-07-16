@@ -66,6 +66,38 @@
       pointer-events:none;
     }
 
+    .main-video{
+      position:relative;
+    }
+
+    .main-play-overlay{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:82px;
+      height:82px;
+      border-radius:50%;
+      border:0;
+      background:rgba(0,0,0,.55);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:4;
+      font-size:34px;
+    }
+
+    .main-video.playing .main-play-overlay{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .main-video.paused .main-play-overlay{
+      opacity:1;
+    }
+
   </style>
 </head>
 
@@ -85,6 +117,10 @@
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
+
+      <button class="main-play-overlay" id="mainPlayOverlay" type="button" aria-label="Play live video">
+        <span>▶</span>
+      </button>
 
       <button id="soundButton" class="sound-button" type="button" aria-pressed="false">
         <span id="soundIcon" aria-hidden="true">🔇</span>
