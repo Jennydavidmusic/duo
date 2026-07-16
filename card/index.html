@@ -66,6 +66,48 @@
       pointer-events:none;
     }
 
+    .main-video{
+      position:relative;
+    }
+
+    .main-play-overlay{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:82px;
+      height:82px;
+      border-radius:50%;
+      border:0;
+      background:rgba(0,0,0,.55);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:4;
+      font-size:34px;
+    }
+
+    .main-play-overlay{
+      transition:opacity .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    .main-play-overlay:hover{
+      transform:translate(-50%,-50%) scale(1.06);
+      background:rgba(0,0,0,.72);
+    }
+
+    .main-video.playing .main-play-overlay{
+      opacity:.72;
+      pointer-events:auto;
+    }
+
+    .main-video.paused .main-play-overlay{
+      opacity:1;
+      pointer-events:auto;
+    }
+
   </style>
 </head>
 
@@ -85,6 +127,10 @@
         <source src="../videos/live1.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
+
+      <button class="main-play-overlay" id="mainPlayOverlay" type="button" aria-label="Play live video">
+        <span>▶</span>
+      </button>
 
       <button id="soundButton" class="sound-button" type="button" aria-pressed="false">
         <span id="soundIcon" aria-hidden="true">🔇</span>
@@ -294,5 +340,100 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mainSection = document.querySelector(".main-video");
+  const mainVideo = document.getElementById("mainVideo");
+  const mainButton = document.getElementById("mainPlayOverlay");
+  const mainIcon = mainButton ? mainButton.querySelector("span") : null;
+  const soundButton = document.getElementById("soundButton");
+  const shortVideos = Array.from(document.querySelectorAll(".local-short-video"));
+
+  if (!mainSection || !mainVideo || !mainButton || !mainIcon) return;
+
+  const updateMainState = () => {
+    const isPaused = mainVideo.paused;
+
+    mainSection.classList.toggle("paused", isPaused);
+    mainSection.classList.toggle("playing", !isPaused);
+
+    mainIcon.textContent = isPaused ? "▶" : "❚❚";
+    mainButton.setAttribute(
+      "aria-label",
+      isPaused ? "Play live video" : "Pause live video"
+    );
+  };
+
+  const pauseAllShorts = () => {
+    shortVideos.forEach((video) => {
+      if (!video.paused) video.pause();
+    });
+  };
+
+  const playMainVideo = async () => {
+    pauseAllShorts();
+
+    try {
+      await mainVideo.play();
+    } catch (error) {
+      console.warn("Main video could not play.", error);
+    }
+
+    updateMainState();
+  };
+
+  const toggleMainVideo = async () => {
+    if (mainVideo.paused) {
+      await playMainVideo();
+    } else {
+      mainVideo.pause();
+      updateMainState();
+    }
+  };
+
+  mainButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleMainVideo();
+  });
+
+  mainVideo.addEventListener("click", (event) => {
+    event.preventDefault();
+    toggleMainVideo();
+  });
+
+  // Do not let the sound control also trigger play/pause.
+  if (soundButton) {
+    soundButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      window.setTimeout(() => {
+        if (!mainVideo.muted && mainVideo.volume > 0) {
+          pauseAllShorts();
+
+          if (mainVideo.paused) {
+            playMainVideo();
+          }
+        }
+      }, 0);
+    });
+  }
+
+  mainVideo.addEventListener("play", updateMainState);
+  mainVideo.addEventListener("pause", updateMainState);
+  mainVideo.addEventListener("loadeddata", updateMainState);
+
+  // Starting a Short mutes live1 but leaves its image moving.
+  shortVideos.forEach((video) => {
+    video.addEventListener("play", () => {
+      mainVideo.muted = true;
+    });
+  });
+
+  updateMainState();
+});
+</script>
+
 </body>
 </html>
