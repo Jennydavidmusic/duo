@@ -136,13 +136,15 @@
       padding-bottom: 177.78% !important;
     }
 
-    .mosaic-local-video {
+    .mosaic-local-video,
+    .short-local-video {
       width: 100%;
-      max-width: 420px;
+      height: 100%;
       margin: 0 auto;
       border-radius: 10px;
       display: block;
       background-color: black;
+      object-fit: cover;
     }
 
  @media (min-width: 769px) {
@@ -391,15 +393,15 @@
     <div class="short-row">
 
       <div class="video-wrapper short-youtube">
-        <div class="embed-box" data-yt-id="6yZOedVUP7g">
-          <button type="button" class="embed-accept">Play video</button>
-        </div>
+        <video class="short-local-video" poster="images/coldplay-poster.jpg" preload="metadata" controls playsinline>
+          <source src="videos/coldplay.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="video-wrapper short-youtube">
-        <div class="embed-box" data-yt-id="qaIxZ-x5Wfw">
-          <button type="button" class="embed-accept">Play video</button>
-        </div>
+        <video class="short-local-video" poster="images/crandberries-poster.jpg" preload="metadata" controls playsinline>
+          <source src="videos/the cranberries.MP4" type="video/mp4">
+        </video>
       </div>
 
     </div>
@@ -481,5 +483,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const videos = document.querySelectorAll("video");
+  videos.forEach(video => {
+    video.addEventListener("play", () => {
+      videos.forEach(other => {
+        if (other !== video) other.pause();
+      });
+    });
+  });
+});
+</script>
 </body>
 </html>
