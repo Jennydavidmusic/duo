@@ -34,6 +34,38 @@
       border: 0;
       border-radius: inherit;
     }
+    .short-frame{
+      position:relative;
+    }
+
+    .play-overlay{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      border:0;
+      background:rgba(0,0,0,.55);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:3;
+      font-size:32px;
+    }
+
+    .play-overlay span{
+      margin-left:5px;
+    }
+
+    .short-frame.playing .play-overlay{
+      opacity:0;
+      pointer-events:none;
+    }
+
   </style>
 </head>
 
@@ -85,6 +117,9 @@
             <source src="assets/coldplay.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
           </video>
+          <button class="play-overlay" type="button" aria-label="Play Coldplay">
+            <span>▶</span>
+          </button>
         </div>
 
         <div class="short-frame">
@@ -100,6 +135,9 @@
             <source src="assets/the%20cranberries.MP4" type="video/mp4">
             Your browser does not support HTML5 video.
           </video>
+          <button class="play-overlay" type="button" aria-label="Play Cranberries">
+            <span>▶</span>
+          </button>
         </div>
       </div>
     </section>
@@ -203,5 +241,58 @@
       }
     })();
   </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mainVideo = document.getElementById("mainVideo");
+  const shorts = [...document.querySelectorAll(".local-short-video")];
+
+  shorts.forEach(video => {
+    const frame = video.closest(".short-frame");
+    const button = frame.querySelector(".play-overlay");
+
+    button.addEventListener("click", () => {
+      shorts.forEach(other => {
+        if (other !== video) {
+          other.pause();
+          other.closest(".short-frame").classList.remove("playing");
+        }
+      });
+
+      if (mainVideo) {
+        mainVideo.muted = true;
+      }
+
+      video.play();
+      frame.classList.add("playing");
+    });
+
+    video.addEventListener("play", () => {
+      shorts.forEach(other => {
+        if (other !== video) other.pause();
+      });
+      frame.classList.add("playing");
+      if (mainVideo) mainVideo.muted = true;
+    });
+
+    video.addEventListener("pause", () => {
+      frame.classList.remove("playing");
+    });
+
+    video.addEventListener("ended", () => {
+      video.currentTime = 0;
+      frame.classList.remove("playing");
+    });
+  });
+
+  if(mainVideo){
+    mainVideo.addEventListener("volumechange", () => {
+      if(!mainVideo.muted && mainVideo.volume > 0){
+        shorts.forEach(video => video.pause());
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>
