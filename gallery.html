@@ -66,7 +66,6 @@
     cursor:pointer;
     z-index:1;
     isolation:isolate;
-    --preview-shift-x:0%;
 }
 
 .gallery-item{
@@ -117,7 +116,7 @@
 
     .gallery-item.image-ready:hover::after{
         opacity:1;
-        transform:translateX(var(--preview-shift-x)) scale(1.35);
+        transform:scale(1.35);
     }
 }
 
@@ -128,30 +127,21 @@
 
     .gallery-item.mobile-active.image-ready::after{
         opacity:1;
-        transform:translateX(var(--preview-shift-x)) scale(1.16);
+        transform:scale(1.16);
     }
 }
 
-/* Sur tablette, les photos situées sur les bords s'agrandissent vers l'intérieur. */
-@media (min-width:700px) and (max-width:1180px){
-    .gallery-item.edge-left{
-        --preview-shift-x:12%;
+/* Tablettes et téléphones en paysage :
+   grille stable, ouverture plein écran uniquement au toucher. */
+@media (min-width:700px) and (max-width:1180px),
+       (orientation:landscape) and (hover:none) and (pointer:coarse) {
+    .gallery-item.mobile-active::after {
+        opacity:0 !important;
+        transform:scale(.94) !important;
     }
 
-    .gallery-item.edge-right{
-        --preview-shift-x:-12%;
-    }
-
-    @media (hover:hover) and (pointer:fine){
-        .gallery-item.image-ready:hover::after{
-            transform:translateX(var(--preview-shift-x)) scale(1.22);
-        }
-    }
-
-    @media (hover:none), (pointer:coarse){
-        .gallery-item.mobile-active.image-ready::after{
-            transform:translateX(var(--preview-shift-x)) scale(1.18);
-        }
+    .gallery-item.mobile-active {
+        z-index:1 !important;
     }
 }
 
@@ -322,7 +312,10 @@
 
   // APERÇU MOBILE FLUIDE AU CENTRE DE L’ÉCRAN
   const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
-  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const mobileScrollEffectEnabled = () =>
+    window.matchMedia('(hover: none), (pointer: coarse)').matches &&
+    window.matchMedia('(orientation: portrait)').matches &&
+    window.innerWidth < 700;
 
   // Prépare chaque image seulement une fois réellement chargée.
   galleryItems.forEach(item => {
@@ -357,41 +350,7 @@
     }
   });
 
-
-  // DÉTECTE AUTOMATIQUEMENT LES PHOTOS SUR LES BORDS DE CHAQUE LIGNE
-  const updateGalleryEdges = () => {
-    galleryItems.forEach(item => item.classList.remove('edge-left', 'edge-right'));
-
-    const rows = [];
-    galleryItems.forEach(item => {
-      const top = Math.round(item.getBoundingClientRect().top);
-      let row = rows.find(group => Math.abs(group.top - top) < 4);
-
-      if (!row) {
-        row = { top, items: [] };
-        rows.push(row);
-      }
-      row.items.push(item);
-    });
-
-    rows.forEach(row => {
-      row.items.sort((a, b) =>
-        a.getBoundingClientRect().left - b.getBoundingClientRect().left
-      );
-
-      if (row.items.length > 1) {
-        row.items[0].classList.add('edge-left');
-        row.items[row.items.length - 1].classList.add('edge-right');
-      }
-    });
-  };
-
-  updateGalleryEdges();
-  window.addEventListener('resize', () => {
-    window.requestAnimationFrame(updateGalleryEdges);
-  }, { passive:true });
-
-  if ('IntersectionObserver' in window && isTouchDevice) {
+  if ('IntersectionObserver' in window && mobileScrollEffectEnabled()) {
     let activeItem = null;
     let ticking = false;
 
@@ -446,7 +405,25 @@
 
     galleryItems.forEach(item => observer.observe(item));
     window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate, { passive: true });
+    window.addEventListener('resize', () => {
+      if (!mobileScrollEffectEnabled()) {
+        galleryItems.forEach(item => item.classList.remove('mobile-active'));
+        activeItem = null;
+      } else {
+        requestUpdate();
+      }
+    }, { passive: true });
+
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (!mobileScrollEffectEnabled()) {
+          galleryItems.forEach(item => item.classList.remove('mobile-active'));
+          activeItem = null;
+        } else {
+          requestUpdate();
+        }
+      }, 150);
+    });
 
     requestUpdate();
   }
