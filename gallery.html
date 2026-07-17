@@ -88,20 +88,19 @@
 }
 
 @media (hover:none){
-  .gallery{
-    scroll-snap-type:y proximity;
-  }
   .gallery-item{
-    scroll-snap-align:center;
-    animation:mobileZoom linear;
-    animation-timeline:view();
-    animation-range:entry 30% cover 60%;
+    transition:transform .28s ease;
   }
-  @keyframes mobileZoom{
-    0%{transform:scale(1);z-index:1;}
-    45%{transform:scale(1.16);z-index:999;}
-    55%{transform:scale(1.16);z-index:999;}
-    100%{transform:scale(1);z-index:1;}
+
+  .gallery-item.mobile-active{
+    transform:scale(1.16);
+    z-index:999;
+  }
+
+  .gallery-item.mobile-active img{
+    object-fit:contain;
+    background:#111;
+    box-shadow:0 18px 40px rgba(0,0,0,.45);
   }
 }
 
@@ -269,6 +268,29 @@
     menuButton.textContent = "☰";
   }
 });
+
+  // MOBILE SCROLL ZOOM — compatible avec les anciens iPhone/Safari
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  if ('IntersectionObserver' in window && window.matchMedia('(hover: none)').matches) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.65) {
+          galleryItems.forEach(item => {
+            if (item !== entry.target) item.classList.remove('mobile-active');
+          });
+          entry.target.classList.add('mobile-active');
+        } else {
+          entry.target.classList.remove('mobile-active');
+        }
+      });
+    }, {
+      threshold: [0.35, 0.65, 0.85],
+      rootMargin: '-12% 0px -12% 0px'
+    });
+
+    galleryItems.forEach(item => observer.observe(item));
+  }
 
 </script>
 <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
