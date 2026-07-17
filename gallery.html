@@ -339,6 +339,7 @@
     };
 
     const requestUpdate = () => {
+      if (programmaticScroll) return;
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(chooseClosestItem);
@@ -353,6 +354,23 @@
     galleryItems.forEach(item => observer.observe(item));
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
+    
+  // Évite le conflit entre le bouton "Retour en haut" et l'animation mobile.
+  let programmaticScroll = false;
+
+  const backBtn = document.querySelector('.back-to-top');
+  if (backBtn) {
+    backBtn.addEventListener('click', function() {
+      programmaticScroll = true;
+      document.querySelectorAll('.gallery-item.mobile-active')
+        .forEach(el=>el.classList.remove('mobile-active'));
+
+      window.scrollTo({top:0,behavior:'smooth'});
+
+      setTimeout(()=>{ programmaticScroll = false; },700);
+    });
+  }
+
     requestUpdate();
   }
 
