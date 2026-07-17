@@ -68,12 +68,23 @@
     isolation:isolate;
 }
 
+.gallery-item{
+    background:#111;
+    border-radius:8px;
+}
+
 .gallery-item img{
     display:block;
     width:100%;
     height:100%;
     object-fit:cover;
     border-radius:8px;
+    opacity:0;
+    transition:opacity .28s ease;
+}
+
+.gallery-item img.is-loaded{
+    opacity:1;
 }
 
 /* Copie complète de la photo, affichée au-dessus sans modifier la vignette */
@@ -103,7 +114,7 @@
         z-index:999;
     }
 
-    .gallery-item:hover::after{
+    .gallery-item.image-ready:hover::after{
         opacity:1;
         transform:scale(1.35);
     }
@@ -114,7 +125,7 @@
         z-index:999;
     }
 
-    .gallery-item.mobile-active::after{
+    .gallery-item.mobile-active.image-ready::after{
         opacity:1;
         transform:scale(1.16);
     }
@@ -195,27 +206,27 @@
   Jenny & David in Pictures – London Live Events & Behind-the-Scenes
 </h1>
 <div class="gallery">
-  <div class="gallery-item"><img alt="Jenny & David performing live acoustic music at a London wedding" src="images/photo21.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David – intimate garden concert in London" src="images/photo20.jpg"/></div>
-  <div class="gallery-item"><img alt="Live duo Jenny & David playing at a private event in Soho, London" src="images/photo19.jpg"/></div>
-  <div class="gallery-item"><img alt="Acoustic music performance by Jenny & David in Chiswick" src="images/photo18.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David on stage – London acoustic duo for events" src="images/photo17.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David performing at a relaxed evening event in London" src="images/photo16.jpg"/></div>
-  <div class="gallery-item"><img alt="Live music duo Jenny & David playing a summer wedding in the UK" src="images/photo15.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David creating ambience at a London private party" src="images/photo14.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David live performance – acoustic music in Greater London" src="images/photo13.jpg"/></div>
-  <div class="gallery-item"><img alt="London-based music duo Jenny & David performing indoors" src="images/photo12.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David duo on stage during a live event in England" src="images/photo11.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David – live music for weddings and events in London" src="images/photo10.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David acoustic session at an outdoor venue" src="images/photo09.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David performing under lights at a private London event" src="images/photo08.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David bringing live acoustic vibes to an evening show" src="images/photo07.jpg"/></div>
-  <div class="gallery-item"><img alt="Acoustic duo Jenny & David entertaining guests at a wedding" src="images/photo06.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David duo playing relaxed acoustic music for events" src="images/photo05.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David – London acoustic musicians on stage" src="images/photo04.jpg"/></div>
-  <div class="gallery-item"><img alt="Live show with Jenny & David – acoustic duo based in London" src="images/photo03.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David performing in an intimate indoor venue in London" src="images/photo02.jpg"/></div>
-  <div class="gallery-item"><img alt="Jenny & David – professional live music duo for London events" src="images/photo01.jpg"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing live acoustic music at a London wedding" src="images/photo21.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – intimate garden concert in London" src="images/photo20.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Live duo Jenny & David playing at a private event in Soho, London" src="images/photo19.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Acoustic music performance by Jenny & David in Chiswick" src="images/photo18.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Jenny & David on stage – London acoustic duo for events" src="images/photo17.jpg" loading="eager" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing at a relaxed evening event in London" src="images/photo16.jpg" loading="eager" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Live music duo Jenny & David playing a summer wedding in the UK" src="images/photo15.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David creating ambience at a London private party" src="images/photo14.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David live performance – acoustic music in Greater London" src="images/photo13.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="London-based music duo Jenny & David performing indoors" src="images/photo12.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David duo on stage during a live event in England" src="images/photo11.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – live music for weddings and events in London" src="images/photo10.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David acoustic session at an outdoor venue" src="images/photo09.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing under lights at a private London event" src="images/photo08.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David bringing live acoustic vibes to an evening show" src="images/photo07.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Acoustic duo Jenny & David entertaining guests at a wedding" src="images/photo06.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David duo playing relaxed acoustic music for events" src="images/photo05.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – London acoustic musicians on stage" src="images/photo04.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Live show with Jenny & David – acoustic duo based in London" src="images/photo03.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing in an intimate indoor venue in London" src="images/photo02.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – professional live music duo for London events" src="images/photo01.jpg" loading="lazy" decoding="async"/></div>
 </div>
 
 
@@ -289,11 +300,36 @@
   const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
   const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  // Prépare la copie complète de chaque image sans changer object-fit pendant le scroll.
+  // Prépare chaque image seulement une fois réellement chargée.
   galleryItems.forEach(item => {
     const image = item.querySelector('img');
-    if (image) {
-      item.style.setProperty('--preview-image', `url("${image.src}")`);
+    if (!image) return;
+
+    const revealImage = () => {
+      image.classList.add('is-loaded');
+      item.classList.add('image-ready');
+      item.style.setProperty('--preview-image', `url("${image.currentSrc || image.src}")`);
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      if (image.decode) {
+        image.decode().then(revealImage).catch(revealImage);
+      } else {
+        revealImage();
+      }
+    } else {
+      image.addEventListener('load', () => {
+        if (image.decode) {
+          image.decode().then(revealImage).catch(revealImage);
+        } else {
+          revealImage();
+        }
+      }, { once:true });
+
+      image.addEventListener('error', () => {
+        item.classList.remove('image-ready');
+        image.style.display = 'none';
+      }, { once:true });
     }
   });
 
