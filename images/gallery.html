@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gallery | Jenny & David Performing Live Across London</title>
+<link href="style.css" rel="stylesheet"/>
+<meta name="description" content="Discover Jenny &amp; David's gallery information and performances.">
+  <meta name="keywords" content="Jenny and David, acoustic duo, gallery, live music, london live events">
+  <meta name="author" content="Jenny &amp; David Music">  
+<link rel="canonical" href="https://jennydavidmusic.com/gallery.html" />
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+
+
+<style>
+  body {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 2.5rem;
+  }
+
+  .back-button {
+    position: fixed;
+    top: 35px;
+    left: 20px;
+    background-color: black;
+    color: gold;
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid gold;
+    border-radius: 6px;
+    font-weight: bold;
+    z-index: 1000;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .back-button:hover {
+    background-color: gold;
+    color: black;
+  }
+
+  
+.gallery {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+    margin-top:100px;
+    overflow:visible;
+}
+
+.gallery-item{
+    aspect-ratio:1/1;
+    position:relative;
+    overflow:visible;
+    cursor:pointer;
+    z-index:1;
+    isolation:isolate;
+}
+
+.gallery-item{
+    background:#111;
+    border-radius:8px;
+}
+
+.gallery-item img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:8px;
+    opacity:0;
+    transition:opacity .28s ease;
+}
+
+.gallery-item img.is-loaded{
+    opacity:1;
+}
+
+/* Copie complète de la photo, affichée au-dessus sans modifier la vignette */
+.gallery-item::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:8px;
+    background-image:var(--preview-image);
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-color:#111;
+    box-shadow:0 18px 40px rgba(0,0,0,.45);
+    opacity:0;
+    transform:scale(.94);
+    transition:
+        opacity .22s ease,
+        transform .34s cubic-bezier(.2,.75,.25,1);
+    pointer-events:none;
+    will-change:transform,opacity;
+    z-index:2;
+}
+
+@media (hover:hover) and (pointer:fine){
+    .gallery-item:hover{
+        z-index:999;
+    }
+
+    .gallery-item.image-ready:hover::after{
+        opacity:1;
+        transform:scale(1.35);
+    }
+}
+
+@media (hover:none), (pointer:coarse){
+    .gallery-item.mobile-active{
+        z-index:999;
+    }
+
+    .gallery-item.mobile-active.image-ready::after{
+        opacity:1;
+        transform:scale(1.16);
+    }
+}
+
+#fullscreen-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #fullscreen-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+  }
+
+  #fullscreen-overlay.active {
+    display: flex;
+  }
+
+  #fullscreen-overlay:after {
+    content: '×';
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+</style>
+
+<meta name="description" content="Discover Jenny &amp; David's gallery information and performances." />
+<meta name="keywords" content="Jenny and David, acoustic duo, gallery, live music" />
+<meta name="author" content="Jenny &amp; David Music" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "Jenny & David",
+  "image": [
+    "https://jennydavidmusic.com/images/photo01.jpg",
+    "https://jennydavidmusic.com/images/photo02.jpg",
+    "https://jennydavidmusic.com/images/photo03.jpg"
+  ],
+  "url": "https://jennydavidmusic.com/gallery.html",
+  "description": "Photo gallery of Jenny & David performing live across London and private events.",
+  "genre": ["Acoustic", "Pop"],
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "London"
+  }
+}
+</script>
+</head>
+
+<body class="gallery-page">
+ <div id="top"></div>
+<nav class="hero-nav">
+<a href="https://jennydavidmusic.com" title="Return to Jenny & David's homepage – Acoustic Duo in London" aria-label="Home – Jenny and David Acoustic Duo">Home</a>
+<a href="about.html" title="Learn more about Jenny & David, a professional acoustic duo based in London" aria-label="About Jenny and David">About</a>
+<a href="music.html" title="Watch live videos and listen to acoustic performances by Jenny & David" aria-label="Music and Videos by Jenny and David">Music &amp; Videos</a>
+<a href="gigs.html" title="See upcoming live shows and pub gigs by Jenny & David in London and beyond" aria-label="Upcoming Gigs and Performances">Gigs</a>
+<a href="gallery.html" class="active" title="Browse photos from weddings, private events, and live performances" aria-label="Photo Gallery of Jenny and David">Gallery</a>
+<a href="reviews.html" title="Read client reviews about Jenny & David’s live acoustic music" aria-label="Client Reviews and Testimonials">Reviews</a>
+<a href="bookings.html" title="Hire Jenny & David for weddings, private parties, corporate events or pub gigs" aria-label="Book Jenny and David for your event">Bookings</a>
+<a href="contact.html" title="Contact Jenny & David to check availability or ask questions about live music bookings" aria-label="Contact Jenny and David">Contact</a>
+
+</nav>
+
+<h1 class="gallery-title">
+  Jenny & David in Pictures – London Live Events & Behind-the-Scenes
+</h1>
+<div class="gallery">
+  <div class="gallery-item"><img alt="Jenny & David performing live acoustic music at a London wedding" src="images/photo21.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – intimate garden concert in London" src="images/photo20.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Live duo Jenny & David playing at a private event in Soho, London" src="images/photo19.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Acoustic music performance by Jenny & David in Chiswick" src="images/photo18.jpg" loading="eager" decoding="async" fetchpriority="high"/></div>
+  <div class="gallery-item"><img alt="Jenny & David on stage – London acoustic duo for events" src="images/photo17.jpg" loading="eager" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing at a relaxed evening event in London" src="images/photo16.jpg" loading="eager" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Live music duo Jenny & David playing a summer wedding in the UK" src="images/photo15.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David creating ambience at a London private party" src="images/photo14.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David live performance – acoustic music in Greater London" src="images/photo13.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="London-based music duo Jenny & David performing indoors" src="images/photo12.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David duo on stage during a live event in England" src="images/photo11.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – live music for weddings and events in London" src="images/photo10.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David acoustic session at an outdoor venue" src="images/photo09.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing under lights at a private London event" src="images/photo08.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David bringing live acoustic vibes to an evening show" src="images/photo07.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Acoustic duo Jenny & David entertaining guests at a wedding" src="images/photo06.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David duo playing relaxed acoustic music for events" src="images/photo05.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – London acoustic musicians on stage" src="images/photo04.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Live show with Jenny & David – acoustic duo based in London" src="images/photo03.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David performing in an intimate indoor venue in London" src="images/photo02.jpg" loading="lazy" decoding="async"/></div>
+  <div class="gallery-item"><img alt="Jenny & David – professional live music duo for London events" src="images/photo01.jpg" loading="lazy" decoding="async"/></div>
+</div>
+
+
+<!-- Fullscreen Overlay -->
+<div id="fullscreen-overlay" onclick="closeFullscreen()">
+  <img id="fullscreen-image" src="" alt="Fullscreen Image" />
+</div>
+
+<!-- Menu Hamburger -->
+<div class="hamburger-menu">
+  <div class="hamburger-icon">☰</div>
+  <div class="hamburger-nav" id="hamburgerNav">
+<a href="https://jennydavidmusic.com" title="Return to Jenny & David's homepage – Acoustic Duo in London" aria-label="Home – Jenny and David Acoustic Duo">Home</a>
+<a href="about.html" title="Learn more about Jenny & David, a professional acoustic duo based in London" aria-label="About Jenny and David">About</a>
+<a href="music.html" title="Watch live videos and listen to acoustic performances by Jenny & David" aria-label="Music and Videos by Jenny and David">Music &amp; Videos</a>
+<a href="gigs.html" title="See upcoming live shows and pub gigs by Jenny & David in London and beyond" aria-label="Upcoming Gigs and Performances">Gigs</a>
+<a href="gallery.html" class="active" title="Browse photos from weddings, private events, and live performances" aria-label="Photo Gallery of Jenny and David">Gallery</a>
+<a href="reviews.html" title="Read client reviews about Jenny & David’s live acoustic music" aria-label="Client Reviews and Testimonials">Reviews</a>
+<a href="bookings.html" title="Hire Jenny & David for weddings, private parties, corporate events or pub gigs" aria-label="Book Jenny and David for your event">Bookings</a>
+<a href="contact.html" title="Contact Jenny & David to check availability or ask questions about live music bookings" aria-label="Contact Jenny and David">Contact</a>
+
+  </div>
+</div>
+
+<script>
+  // FULLSCREEN
+  const galleryImages = document.querySelectorAll('.gallery img');
+  const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+  const fullscreenImage = document.getElementById('fullscreen-image');
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      fullscreenImage.src = img.src;
+      fullscreenOverlay.classList.add('active');
+    });
+  });
+
+  function closeFullscreen() {
+    fullscreenOverlay.classList.remove('active');
+    fullscreenImage.src = '';
+  }
+
+  // HAMBURGER LOGIC
+  const menuButton = document.querySelector('.hamburger-icon');
+  const mobileMenu = document.getElementById('hamburgerNav');
+
+  menuButton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    mobileMenu.classList.toggle('show');
+    this.textContent = mobileMenu.classList.contains('show') ? '✖' : '☰';
+  });
+
+  mobileMenu.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  document.addEventListener('click', function () {
+    if (mobileMenu.classList.contains('show')) {
+      mobileMenu.classList.remove('show');
+      menuButton.textContent = '☰';
+    }
+  });
+  window.addEventListener("scroll", () => {
+  if (mobileMenu.classList.contains("show")) {
+    mobileMenu.classList.remove("show");
+    menuButton.textContent = "☰";
+  }
+});
+
+  // APERÇU MOBILE FLUIDE AU CENTRE DE L’ÉCRAN
+  const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  // Prépare chaque image seulement une fois réellement chargée.
+  galleryItems.forEach(item => {
+    const image = item.querySelector('img');
+    if (!image) return;
+
+    const revealImage = () => {
+      image.classList.add('is-loaded');
+      item.classList.add('image-ready');
+      item.style.setProperty('--preview-image', `url("${image.currentSrc || image.src}")`);
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      if (image.decode) {
+        image.decode().then(revealImage).catch(revealImage);
+      } else {
+        revealImage();
+      }
+    } else {
+      image.addEventListener('load', () => {
+        if (image.decode) {
+          image.decode().then(revealImage).catch(revealImage);
+        } else {
+          revealImage();
+        }
+      }, { once:true });
+
+      image.addEventListener('error', () => {
+        item.classList.remove('image-ready');
+        image.style.display = 'none';
+      }, { once:true });
+    }
+  });
+
+  if ('IntersectionObserver' in window && isTouchDevice) {
+    let activeItem = null;
+    let ticking = false;
+
+    const chooseClosestItem = () => {
+      ticking = false;
+
+      const viewportCenter = window.innerHeight / 2;
+      let closestItem = null;
+      let closestDistance = Infinity;
+
+      galleryItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+
+        if (!visible) return;
+
+        const itemCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(itemCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestItem = item;
+        }
+      });
+
+      // Activation seulement dans une zone centrale assez large pour éviter les bascules rapides.
+      const activationZone = window.innerHeight * 0.30;
+
+      if (closestItem && closestDistance < activationZone) {
+        if (activeItem !== closestItem) {
+          if (activeItem) activeItem.classList.remove('mobile-active');
+          closestItem.classList.add('mobile-active');
+          activeItem = closestItem;
+        }
+      } else if (activeItem) {
+        activeItem.classList.remove('mobile-active');
+        activeItem = null;
+      }
+    };
+
+    const requestUpdate = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(chooseClosestItem);
+      }
+    };
+
+    const observer = new IntersectionObserver(requestUpdate, {
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+      rootMargin: '18% 0px 18% 0px'
+    });
+
+    galleryItems.forEach(item => observer.observe(item));
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+
+    requestUpdate();
+  }
+
+</script>
+<a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script>
+  const backToTop = document.querySelector('.back-to-top');
+
+  backToTop.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    document.querySelectorAll('.gallery-item.mobile-active').forEach(item => {
+      item.classList.remove('mobile-active');
+    });
+
+    // Sur téléphone, le scroll instantané est plus fiable qu'une ancre ou un smooth scroll.
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
+
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  }, { passive: true });
+</script>
+<!-- Bouton WhatsApp -->
+<a href="https://wa.me/447563711966" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+  <script src="js/cookies.js" defer></script>
+</body>
+</html>
+
