@@ -339,7 +339,6 @@
     };
 
     const requestUpdate = () => {
-      if (programmaticScroll) return;
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(chooseClosestItem);
@@ -354,22 +353,6 @@
     galleryItems.forEach(item => observer.observe(item));
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
-    
-  // Évite le conflit entre le bouton "Retour en haut" et l'animation mobile.
-  let programmaticScroll = false;
-
-  const backBtn = document.querySelector('.back-to-top');
-  if (backBtn) {
-    backBtn.addEventListener('click', function() {
-      programmaticScroll = true;
-      document.querySelectorAll('.gallery-item.mobile-active')
-        .forEach(el=>el.classList.remove('mobile-active'));
-
-      window.scrollTo({top:0,behavior:'smooth'});
-
-      setTimeout(()=>{ programmaticScroll = false; },700);
-    });
-  }
 
     requestUpdate();
   }
@@ -379,13 +362,24 @@
 
 <script>
   const backToTop = document.querySelector('.back-to-top');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTop.style.display = 'block';
-    } else {
-      backToTop.style.display = 'none';
-    }
+
+  backToTop.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    document.querySelectorAll('.gallery-item.mobile-active').forEach(item => {
+      item.classList.remove('mobile-active');
+    });
+
+    // Sur téléphone, le scroll instantané est plus fiable qu'une ancre ou un smooth scroll.
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   });
+
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  }, { passive: true });
 </script>
 <!-- Bouton WhatsApp -->
 <a href="https://wa.me/447563711966" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
