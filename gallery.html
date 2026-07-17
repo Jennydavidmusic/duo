@@ -65,43 +65,59 @@
     overflow:visible;
     cursor:pointer;
     z-index:1;
-    transition:transform .25s ease;
+    isolation:isolate;
 }
 
 .gallery-item img{
+    display:block;
     width:100%;
     height:100%;
     object-fit:cover;
     border-radius:8px;
-    transition:transform .28s ease, box-shadow .28s ease;
 }
 
-.gallery-item:hover{
-    z-index:999;
-}
-
-.gallery-item:hover img{
-    transform:scale(1.35);
-    object-fit:contain;
-    background:#111;
+/* Copie complète de la photo, affichée au-dessus sans modifier la vignette */
+.gallery-item::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:8px;
+    background-image:var(--preview-image);
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-color:#111;
     box-shadow:0 18px 40px rgba(0,0,0,.45);
+    opacity:0;
+    transform:scale(.94);
+    transition:
+        opacity .22s ease,
+        transform .34s cubic-bezier(.2,.75,.25,1);
+    pointer-events:none;
+    will-change:transform,opacity;
+    z-index:2;
 }
 
-@media (hover:none){
-  .gallery-item{
-    transition:transform .28s ease;
-  }
+@media (hover:hover) and (pointer:fine){
+    .gallery-item:hover{
+        z-index:999;
+    }
 
-  .gallery-item.mobile-active{
-    transform:scale(1.16);
-    z-index:999;
-  }
+    .gallery-item:hover::after{
+        opacity:1;
+        transform:scale(1.35);
+    }
+}
 
-  .gallery-item.mobile-active img{
-    object-fit:contain;
-    background:#111;
-    box-shadow:0 18px 40px rgba(0,0,0,.45);
-  }
+@media (hover:none), (pointer:coarse){
+    .gallery-item.mobile-active{
+        z-index:999;
+    }
+
+    .gallery-item.mobile-active::after{
+        opacity:1;
+        transform:scale(1.16);
+    }
 }
 
 #fullscreen-overlay {
@@ -269,27 +285,75 @@
   }
 });
 
-  // MOBILE SCROLL ZOOM — compatible avec les anciens iPhone/Safari
-  const galleryItems = document.querySelectorAll('.gallery-item');
+  // APERÇU MOBILE FLUIDE AU CENTRE DE L’ÉCRAN
+  const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  if ('IntersectionObserver' in window && window.matchMedia('(hover: none)').matches) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.65) {
-          galleryItems.forEach(item => {
-            if (item !== entry.target) item.classList.remove('mobile-active');
-          });
-          entry.target.classList.add('mobile-active');
-        } else {
-          entry.target.classList.remove('mobile-active');
+  // Prépare la copie complète de chaque image sans changer object-fit pendant le scroll.
+  galleryItems.forEach(item => {
+    const image = item.querySelector('img');
+    if (image) {
+      item.style.setProperty('--preview-image', `url("${image.src}")`);
+    }
+  });
+
+  if ('IntersectionObserver' in window && isTouchDevice) {
+    let activeItem = null;
+    let ticking = false;
+
+    const chooseClosestItem = () => {
+      ticking = false;
+
+      const viewportCenter = window.innerHeight / 2;
+      let closestItem = null;
+      let closestDistance = Infinity;
+
+      galleryItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+
+        if (!visible) return;
+
+        const itemCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(itemCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestItem = item;
         }
       });
-    }, {
-      threshold: [0.35, 0.65, 0.85],
-      rootMargin: '-12% 0px -12% 0px'
+
+      // Activation seulement dans une zone centrale assez large pour éviter les bascules rapides.
+      const activationZone = window.innerHeight * 0.30;
+
+      if (closestItem && closestDistance < activationZone) {
+        if (activeItem !== closestItem) {
+          if (activeItem) activeItem.classList.remove('mobile-active');
+          closestItem.classList.add('mobile-active');
+          activeItem = closestItem;
+        }
+      } else if (activeItem) {
+        activeItem.classList.remove('mobile-active');
+        activeItem = null;
+      }
+    };
+
+    const requestUpdate = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(chooseClosestItem);
+      }
+    };
+
+    const observer = new IntersectionObserver(requestUpdate, {
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+      rootMargin: '18% 0px 18% 0px'
     });
 
     galleryItems.forEach(item => observer.observe(item));
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    requestUpdate();
   }
 
 </script>
