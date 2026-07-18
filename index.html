@@ -317,113 +317,98 @@
 
 
 <style>
-/* Logo mobile corrigé : placé sous le concert, compact et lisible */
+/* Logo texte doré sous le prochain concert — mobile uniquement */
+.hero-brand-mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .hero-brand-logo {
+  .hero-brand-mobile {
+    display: block;
     position: absolute;
-    top: 67.5%;
+    top: 67%;
     left: 50%;
     transform: translateX(-50%);
-    display: block;
-    width: min(88vw, 390px);
-    box-sizing: border-box;
-    padding: 10px 10px 12px;
+    width: min(92vw, 560px);
     text-align: center;
-    z-index: 25;
+    z-index: 120;
     pointer-events: none;
-    font-family: Georgia, "Times New Roman", serif;
-    color: #f0cf73;
-    background: radial-gradient(ellipse at center,
-      rgba(0,0,0,.58) 0%,
-      rgba(0,0,0,.32) 58%,
-      rgba(0,0,0,0) 78%);
-    filter: none;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #f6cf62;
+    filter: drop-shadow(0 3px 2px rgba(0,0,0,.95));
   }
 
-  .hero-brand-initials,
-  .hero-brand-name,
-  .hero-brand-duo,
-  .hero-brand-tagline {
-    background: linear-gradient(180deg,
-      #fff3b0 0%,
-      #e8c86d 34%,
-      #b67b25 62%,
-      #f2d57d 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: #e8c86d;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: .45px rgba(67,39,0,.95);
-    text-shadow:
-      0 2px 2px rgba(0,0,0,1),
-      0 0 5px rgba(0,0,0,.95),
-      0 0 12px rgba(0,0,0,.85);
-  }
-
-  .hero-brand-initials {
+  .hero-brand-mobile .brand-jd {
     margin: 0;
-    padding: 0;
-    font-size: clamp(4.4rem, 20vw, 6rem);
-    font-weight: 600;
+    font-size: clamp(4.7rem, 18vw, 7rem);
     line-height: .82;
-    letter-spacing: -.07em;
-    white-space: nowrap;
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    color: #ffd96a;
+    -webkit-text-stroke: 1px rgba(91,55,0,.8);
+    text-shadow:
+      0 1px 0 #fff0a8,
+      0 3px 0 #a76f14,
+      0 6px 12px rgba(0,0,0,.95);
   }
 
-  .hero-brand-name {
-    margin-top: .42rem;
-    font-size: clamp(1.45rem, 6.7vw, 2rem);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: .015em;
+  .hero-brand-mobile .brand-name {
+    margin-top: .28rem;
+    font-size: clamp(1.55rem, 6.5vw, 2.35rem);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: .055em;
     white-space: nowrap;
+    color: #f7cc59;
+    -webkit-text-stroke: .6px rgba(75,45,0,.75);
+    text-shadow: 0 2px 2px #000, 0 4px 9px rgba(0,0,0,.95);
   }
 
-  .hero-brand-duo {
+  .hero-brand-mobile .brand-duo-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .55rem;
-    margin-top: .48rem;
-    font-size: clamp(1.25rem, 5.8vw, 1.7rem);
-    line-height: 1;
+    gap: .7rem;
+    margin-top: .42rem;
+    color: #f7cc59;
   }
 
-  .hero-brand-duo strong { font-weight: 500; }
-
-  .hero-brand-duo span {
-    display: block;
-    width: clamp(3.2rem, 16vw, 5rem);
+  .hero-brand-mobile .brand-duo-row::before,
+  .hero-brand-mobile .brand-duo-row::after {
+    content: '';
+    width: clamp(3.8rem, 19vw, 7.5rem);
     height: 2px;
-    background: linear-gradient(90deg, #8d5b16, #f6d980, #8d5b16);
-    box-shadow: 0 1px 3px #000, 0 0 5px rgba(0,0,0,.9);
+    background: #f7cc59;
+    box-shadow: 0 2px 3px #000;
   }
 
-  .hero-brand-tagline {
-    margin-top: .58rem;
-    font-size: clamp(.92rem, 4.4vw, 1.28rem);
+  .hero-brand-mobile .brand-duo {
+    font-size: clamp(1.5rem, 6vw, 2.15rem);
+    line-height: 1;
     font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: .015em;
+    letter-spacing: .08em;
+    text-shadow: 0 2px 2px #000, 0 4px 8px rgba(0,0,0,.9);
+  }
+
+  .hero-brand-mobile .brand-tagline {
+    margin-top: .55rem;
+    font-size: clamp(1.03rem, 4.4vw, 1.55rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: .025em;
     white-space: nowrap;
+    color: #ffd96a;
+    -webkit-text-stroke: .35px rgba(75,45,0,.7);
+    text-shadow: 0 2px 2px #000, 0 4px 8px rgba(0,0,0,.95);
   }
 }
 
-@media (max-width: 390px) {
-  .hero-brand-logo {
-    top: 68.5%;
-    width: 94vw;
-    transform: translateX(-50%) scale(.94);
-    transform-origin: top center;
-  }
-}
-
-@media (max-height: 720px) and (max-width: 768px) {
-  .hero-brand-logo {
-    top: 66.5%;
-    transform: translateX(-50%) scale(.82);
-    transform-origin: top center;
-  }
+@media (max-width: 390px), (max-height: 760px) and (max-width: 768px) {
+  .hero-brand-mobile { top: 69%; }
+  .hero-brand-mobile .brand-jd { font-size: 4.35rem; }
+  .hero-brand-mobile .brand-name { font-size: 1.35rem; }
+  .hero-brand-mobile .brand-duo { font-size: 1.3rem; }
+  .hero-brand-mobile .brand-tagline { font-size: .92rem; }
 }
 </style>
 
@@ -477,11 +462,11 @@
 
     </div>
 
-    <div class="hero-brand-logo" aria-label="Jenny and David duo, sounds like a full band">
-      <div class="hero-brand-initials">J&amp;D</div>
-      <div class="hero-brand-name">JENNY &amp; DAVID</div>
-      <div class="hero-brand-duo"><span></span><strong>DUO</strong><span></span></div>
-      <div class="hero-brand-tagline">SOUNDS LIKE A FULL BAND</div>
+    <div class="hero-brand-mobile" aria-label="Jenny and David duo, sounds like a full band">
+      <div class="brand-jd">J&amp;D</div>
+      <div class="brand-name">JENNY &amp; DAVID</div>
+      <div class="brand-duo-row"><span class="brand-duo">DUO</span></div>
+      <div class="brand-tagline">SOUNDS LIKE A FULL BAND</div>
     </div>
 
     <div class="hero-bottom-title">
