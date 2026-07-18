@@ -823,58 +823,65 @@ document.addEventListener("DOMContentLoaded", function () {
     const wrapper = video.closest(".video-play-wrapper");
     const playButton = wrapper.querySelector(".central-play-button");
 
-    playButton.addEventListener("click", function () {
+    function playVideo() {
       video.play().catch(function () {
         wrapper.classList.remove("is-playing");
       });
+    }
+
+    function toggleVideo() {
+      if (video.paused) {
+        playVideo();
+      } else {
+        video.pause();
+      }
+    }
+
+    /* Bouton central : lecture ou pause */
+    playButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleVideo();
     });
 
-    function showOverlay(icon){
-      playButton.textContent=icon;
-      wrapper.classList.remove("is-playing");
-      clearTimeout(playButton._hideTimer);
-      playButton._hideTimer=setTimeout(function(){
-        if(!video.paused){
-          wrapper.classList.add("is-playing");
-        }
-      },1200);
-    }
+    /*
+      Toucher directement l’image de la vidéo :
+      - si elle joue, elle se met immédiatement en pause ;
+      - si elle est en pause, elle repart.
+    */
+    video.addEventListener("click", function (event) {
+      event.preventDefault();
+      toggleVideo();
+    });
 
     video.addEventListener("play", function () {
       videos.forEach(function (other) {
-        if (other !== video && !other.paused) other.pause();
+        if (other !== video && !other.paused) {
+          other.pause();
+        }
       });
+
+      playButton.textContent = "⏸";
+      playButton.setAttribute("aria-label", "Pause video");
       wrapper.classList.add("is-playing");
     });
 
     video.addEventListener("pause", function () {
-      playButton.textContent="▶";
+      playButton.textContent = "▶";
+      playButton.setAttribute("aria-label", "Play video");
       wrapper.classList.remove("is-playing");
-    });
-
-    video.addEventListener("click",function(e){
-      e.preventDefault();
-      if(video.paused){
-        video.play();
-      }else{
-        showOverlay("⏸");
-      }
-    });
-
-    playButton.addEventListener("click",function(e){
-      if(!video.paused && playButton.textContent==="⏸"){
-        e.preventDefault();
-        video.pause();
-      }
     });
 
     video.addEventListener("ended", function () {
       wrapper.classList.remove("is-playing");
+      playButton.textContent = "▶";
+      playButton.setAttribute("aria-label", "Play video");
       video.currentTime = 0;
       video.load();
     });
   });
 
+  /* Mise en pause automatique lorsque la vidéo sort de l’écran */
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting && !entry.target.paused) {
@@ -887,6 +894,7 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(video);
   });
 
+  /* Mise en pause si l’onglet ou l’application passe en arrière-plan */
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       videos.forEach(function (video) {
