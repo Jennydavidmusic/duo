@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap");
+
 /* GENERAL */
 body {
   margin: 0;
@@ -1172,4 +1174,103 @@ body.index-page .index-preview {
 @media (max-width:600px){
   .cookie-banner__buttons{ width:100%; justify-content:center; }
   .cookie-btn{ width:100%; max-width:240px; }
+}
+
+
+/* Logo de marque superposé à la photo d'accueil */
+.hero-brand-logo {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-brand-logo {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: min(92vw, 430px);
+    text-align: center;
+    z-index: 25;
+    pointer-events: none;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    color: #d8b45f;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.95));
+  }
+
+  .hero-brand-initials,
+  .hero-brand-name,
+  .hero-brand-duo,
+  .hero-brand-tagline {
+    background: linear-gradient(
+      180deg,
+      #fff2ad 0%,
+      #e6c76d 24%,
+      #b8862f 53%,
+      #f0d37d 78%,
+      #a97825 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-brand-initials {
+    font-size: clamp(5.6rem, 25vw, 8.2rem);
+    font-weight: 600;
+    line-height: 0.72;
+    letter-spacing: -0.075em;
+    padding-right: 0.07em;
+    white-space: nowrap;
+    text-shadow: 0 1px 0 rgba(255, 241, 178, 0.25);
+  }
+
+  .hero-brand-name {
+    margin-top: 0.22rem;
+    font-size: clamp(2rem, 8.2vw, 2.8rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: 0.015em;
+    white-space: nowrap;
+  }
+
+  .hero-brand-duo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+    font-size: clamp(1.75rem, 7vw, 2.35rem);
+    line-height: 1;
+  }
+
+  .hero-brand-duo strong {
+    font-weight: 500;
+  }
+
+  .hero-brand-duo span {
+    display: block;
+    width: clamp(3.8rem, 18vw, 6rem);
+    height: 2px;
+    background: linear-gradient(90deg, #9a6a1d, #f0d37d, #9a6a1d);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+
+  .hero-brand-tagline {
+    margin-top: 0.45rem;
+    font-size: clamp(1.2rem, 5.7vw, 1.85rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px), (max-height: 700px) and (max-width: 768px) {
+  .hero-brand-logo {
+    top: 69%;
+    transform: translateX(-50%) scale(0.88);
+    transform-origin: top center;
+  }
 }
