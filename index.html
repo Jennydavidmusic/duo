@@ -412,6 +412,28 @@
 }
 </style>
 
+
+<style>
+.short-video-grid{
+  width:min(92%,620px);
+  margin:0 auto 1.5rem;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.short-video{
+  display:block;
+  width:100%;
+  aspect-ratio:9/16;
+  object-fit:cover;
+  background:#000;
+  border-radius:10px;
+}
+@media(max-width:430px){
+  .short-video-grid{width:94%;gap:8px;}
+}
+</style>
+
 </head>
 <body class="index-page">
   <div id="top"></div>
@@ -621,7 +643,16 @@ window.addEventListener("scroll", () => {
 </section>
 <section class="index-preview">
   <h2>Jenny & David Acoustic Duo Live Performances and Loop Covers in London</h2>
-  <div class="preview-image embed-box" data-yt-id="rgNG6-iYWKo" data-embed-class="preview-image" data-embed-width="300" data-embed-height="170"><button type="button" class="embed-accept">Play video</button></div>
+  <div class="short-video-grid" aria-label="Jenny and David live short videos">
+    <video class="short-video" controls playsinline preload="metadata">
+      <source src="videos/coldplay.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <video class="short-video" controls playsinline preload="metadata">
+      <source src="videos/the cranberries.MP4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
   <div class="preview-text">
     
 
@@ -699,5 +730,38 @@ window.addEventListener("scroll", () => {
 </a>
 
   <script src="js/cookies.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const videos = Array.from(document.querySelectorAll(".short-video"));
+
+  videos.forEach(function (video) {
+    video.addEventListener("play", function () {
+      videos.forEach(function (other) {
+        if (other !== video && !other.paused) other.pause();
+      });
+    });
+  });
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting && !entry.target.paused) {
+        entry.target.pause();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  videos.forEach(function (video) {
+    observer.observe(video);
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      videos.forEach(function (video) { video.pause(); });
+    }
+  });
+});
+</script>
+
 </body>
 </html>
