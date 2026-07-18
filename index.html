@@ -829,17 +829,43 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
+    function showOverlay(icon){
+      playButton.textContent=icon;
+      wrapper.classList.remove("is-playing");
+      clearTimeout(playButton._hideTimer);
+      playButton._hideTimer=setTimeout(function(){
+        if(!video.paused){
+          wrapper.classList.add("is-playing");
+        }
+      },1200);
+    }
+
     video.addEventListener("play", function () {
       videos.forEach(function (other) {
-        if (other !== video && !other.paused) {
-          other.pause();
-        }
+        if (other !== video && !other.paused) other.pause();
       });
       wrapper.classList.add("is-playing");
     });
 
     video.addEventListener("pause", function () {
+      playButton.textContent="▶";
       wrapper.classList.remove("is-playing");
+    });
+
+    video.addEventListener("click",function(e){
+      e.preventDefault();
+      if(video.paused){
+        video.play();
+      }else{
+        showOverlay("⏸");
+      }
+    });
+
+    playButton.addEventListener("click",function(e){
+      if(!video.paused && playButton.textContent==="⏸"){
+        e.preventDefault();
+        video.pause();
+      }
     });
 
     video.addEventListener("ended", function () {
