@@ -519,6 +519,21 @@
 }
 </style>
 
+
+<style>
+/* Bouton personnalisé de live1 : visible uniquement sur ordinateur avec souris/trackpad.
+   iPhone, Android et tablettes conservent uniquement le lecteur natif. */
+.desktop-live1-play {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .desktop-live1-play {
+    display: block;
+  }
+}
+</style>
+
 </head>
 <body class="index-page">
   <div id="top"></div>
@@ -760,6 +775,7 @@ window.addEventListener("scroll", () => {
     <source src="videos/live1.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+  <button class="central-play-button desktop-live1-play" type="button" aria-label="Play upcoming gigs video">▶</button>
 </div>
 
   <div class="preview-text">
