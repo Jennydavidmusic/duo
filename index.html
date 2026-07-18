@@ -505,6 +505,20 @@
 }
 </style>
 
+
+<style>
+/* Pendant la lecture, le bouton reste caché sauf après un toucher sur la vidéo */
+.video-play-wrapper.is-playing.show-pause .central-play-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Le bouton Pause n'a pas besoin du décalage réservé au triangle Play */
+.video-play-wrapper.is-playing .central-play-button {
+  padding-left: 0;
+}
+</style>
+
 </head>
 <body class="index-page">
   <div id="top"></div>
@@ -822,36 +836,56 @@ document.addEventListener("DOMContentLoaded", function () {
   videos.forEach(function (video) {
     const wrapper = video.closest(".video-play-wrapper");
     const playButton = wrapper.querySelector(".central-play-button");
+    let hidePauseTimer = null;
 
-    function playVideo() {
-      video.play().catch(function () {
-        wrapper.classList.remove("is-playing");
-      });
-    }
-
-    function toggleVideo() {
-      if (video.paused) {
-        playVideo();
-      } else {
-        video.pause();
+    function clearPauseTimer() {
+      if (hidePauseTimer) {
+        window.clearTimeout(hidePauseTimer);
+        hidePauseTimer = null;
       }
     }
 
-    /* Bouton central : lecture ou pause */
+    function hidePauseButton() {
+      clearPauseTimer();
+      wrapper.classList.remove("show-pause");
+    }
+
+    function brieflyShowPauseButton() {
+      if (video.paused) return;
+
+      clearPauseTimer();
+      playButton.textContent = "⏸";
+      playButton.setAttribute("aria-label", "Pause video");
+      wrapper.classList.add("show-pause");
+
+      hidePauseTimer = window.setTimeout(function () {
+        wrapper.classList.remove("show-pause");
+        hidePauseTimer = null;
+      }, 1600);
+    }
+
+    /* Le bouton central lance la vidéo lorsqu'elle est arrêtée,
+       ou la met en pause lorsqu'il affiche le symbole Pause. */
     playButton.addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();
-      toggleVideo();
+
+      if (video.paused) {
+        video.play().catch(function () {
+          wrapper.classList.remove("is-playing");
+        });
+      } else {
+        video.pause();
+      }
     });
 
     /*
-      Toucher directement l’image de la vidéo :
-      - si elle joue, elle se met immédiatement en pause ;
-      - si elle est en pause, elle repart.
+      Un toucher sur l'image pendant la lecture affiche le bouton Pause.
+      Aucun preventDefault : les commandes natives, notamment le plein écran,
+      restent entièrement utilisables.
     */
-    video.addEventListener("click", function (event) {
-      event.preventDefault();
-      toggleVideo();
+    video.addEventListener("click", function () {
+      brieflyShowPauseButton();
     });
 
     video.addEventListener("play", function () {
@@ -864,16 +898,19 @@ document.addEventListener("DOMContentLoaded", function () {
       playButton.textContent = "⏸";
       playButton.setAttribute("aria-label", "Pause video");
       wrapper.classList.add("is-playing");
+      wrapper.classList.remove("show-pause");
     });
 
     video.addEventListener("pause", function () {
+      clearPauseTimer();
       playButton.textContent = "▶";
       playButton.setAttribute("aria-label", "Play video");
-      wrapper.classList.remove("is-playing");
+      wrapper.classList.remove("is-playing", "show-pause");
     });
 
     video.addEventListener("ended", function () {
-      wrapper.classList.remove("is-playing");
+      clearPauseTimer();
+      wrapper.classList.remove("is-playing", "show-pause");
       playButton.textContent = "▶";
       playButton.setAttribute("aria-label", "Play video");
       video.currentTime = 0;
@@ -881,7 +918,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* Mise en pause automatique lorsque la vidéo sort de l’écran */
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting && !entry.target.paused) {
@@ -894,7 +930,6 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(video);
   });
 
-  /* Mise en pause si l’onglet ou l’application passe en arrière-plan */
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       videos.forEach(function (video) {
