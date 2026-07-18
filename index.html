@@ -434,6 +434,77 @@
 }
 </style>
 
+
+<style>
+.video-play-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+
+.short-wrapper {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+}
+
+.short-wrapper .short-video {
+  height: 100%;
+}
+
+.preview-video-wrapper {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 1.5rem;
+}
+
+.preview-video-wrapper .preview-video {
+  margin: 0;
+  width: 100%;
+}
+
+.central-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  padding: 0 0 0 5px;
+  border: 2px solid rgba(255,255,255,.9);
+  border-radius: 50%;
+  background: rgba(0,0,0,.62);
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 4px 16px rgba(0,0,0,.55);
+  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+}
+
+.central-play-button:hover,
+.central-play-button:focus-visible {
+  background: rgba(212,175,55,.9);
+  color: #000;
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.video-play-wrapper.is-playing .central-play-button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 430px) {
+  .central-play-button {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+  }
+}
+</style>
+
 </head>
 <body class="index-page">
   <div id="top"></div>
@@ -644,14 +715,21 @@ window.addEventListener("scroll", () => {
 <section class="index-preview">
   <h2>Jenny & David Acoustic Duo Live Performances and Loop Covers in London</h2>
   <div class="short-video-grid" aria-label="Jenny and David live short videos">
-    <video class="short-video" controls playsinline preload="metadata">
-      <source src="videos/coldplay.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <video class="short-video" controls playsinline preload="metadata">
-      <source src="videos/the cranberries.MP4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="video-play-wrapper short-wrapper">
+      <video class="short-video managed-video" controls playsinline preload="metadata" poster="images/coldplay-poster.jpg">
+        <source src="videos/coldplay.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="central-play-button" type="button" aria-label="Play Coldplay video">▶</button>
+    </div>
+
+    <div class="video-play-wrapper short-wrapper">
+      <video class="short-video managed-video" controls playsinline preload="metadata" poster="images/cranberries-poster.jpg">
+        <source src="videos/the cranberries.MP4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="central-play-button" type="button" aria-label="Play Cranberries video">▶</button>
+    </div>
   </div>
   <div class="preview-text">
     
@@ -663,10 +741,13 @@ window.addEventListener("scroll", () => {
 
 <section class="index-preview">
   <h2>Upcoming Gigs of Jenny & David Live Acoustic Duo Performing in London Pubs, Private Events & Venues</h2>
-<video class="preview-video" controls preload="metadata" poster="images/video-thumbnail-4s.jpg">
-  <source src="videos/live1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<div class="video-play-wrapper preview-video-wrapper">
+  <video class="preview-video managed-video" controls playsinline preload="metadata" poster="images/video-thumbnail-4s.jpg">
+    <source src="videos/live1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <button class="central-play-button" type="button" aria-label="Play upcoming gigs video">▶</button>
+</div>
 
   <div class="preview-text">
     
@@ -731,15 +812,40 @@ window.addEventListener("scroll", () => {
 
   <script src="js/cookies.js" defer></script>
 
+
+
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const videos = Array.from(document.querySelectorAll(".short-video"));
+  const videos = Array.from(document.querySelectorAll(".managed-video"));
 
   videos.forEach(function (video) {
+    const wrapper = video.closest(".video-play-wrapper");
+    const playButton = wrapper.querySelector(".central-play-button");
+
+    playButton.addEventListener("click", function () {
+      video.play().catch(function () {
+        wrapper.classList.remove("is-playing");
+      });
+    });
+
     video.addEventListener("play", function () {
       videos.forEach(function (other) {
-        if (other !== video && !other.paused) other.pause();
+        if (other !== video && !other.paused) {
+          other.pause();
+        }
       });
+      wrapper.classList.add("is-playing");
+    });
+
+    video.addEventListener("pause", function () {
+      wrapper.classList.remove("is-playing");
+    });
+
+    video.addEventListener("ended", function () {
+      wrapper.classList.remove("is-playing");
+      video.currentTime = 0;
+      video.load();
     });
   });
 
@@ -757,7 +863,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
-      videos.forEach(function (video) { video.pause(); });
+      videos.forEach(function (video) {
+        video.pause();
+      });
     }
   });
 });
