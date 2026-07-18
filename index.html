@@ -760,7 +760,6 @@ window.addEventListener("scroll", () => {
     <source src="videos/live1.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-  <button class="central-play-button" type="button" aria-label="Play upcoming gigs video">▶</button>
 </div>
 
   <div class="preview-text">
@@ -835,7 +834,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   videos.forEach(function (video) {
     const wrapper = video.closest(".video-play-wrapper");
-    const playButton = wrapper.querySelector(".central-play-button");
+    const playButton = wrapper ? wrapper.querySelector(".central-play-button") : null;
     let hidePauseTimer = null;
 
     function clearPauseTimer() {
@@ -845,13 +844,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    function hidePauseButton() {
-      clearPauseTimer();
-      wrapper.classList.remove("show-pause");
-    }
-
     function brieflyShowPauseButton() {
-      if (video.paused) return;
+      if (!playButton || video.paused) return;
 
       clearPauseTimer();
       playButton.textContent = "⏸";
@@ -864,29 +858,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 1600);
     }
 
-    /* Le bouton central lance la vidéo lorsqu'elle est arrêtée,
-       ou la met en pause lorsqu'il affiche le symbole Pause. */
-    playButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
+    if (playButton) {
+      playButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-      if (video.paused) {
-        video.play().catch(function () {
-          wrapper.classList.remove("is-playing");
-        });
-      } else {
-        video.pause();
-      }
-    });
+        if (video.paused) {
+          video.play().catch(function () {
+            if (wrapper) wrapper.classList.remove("is-playing");
+          });
+        } else {
+          video.pause();
+        }
+      });
 
-    /*
-      Un toucher sur l'image pendant la lecture affiche le bouton Pause.
-      Aucun preventDefault : les commandes natives, notamment le plein écran,
-      restent entièrement utilisables.
-    */
-    video.addEventListener("click", function () {
-      brieflyShowPauseButton();
-    });
+      video.addEventListener("click", function () {
+        brieflyShowPauseButton();
+      });
+    }
 
     video.addEventListener("play", function () {
       videos.forEach(function (other) {
@@ -895,24 +884,42 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      playButton.textContent = "⏸";
-      playButton.setAttribute("aria-label", "Pause video");
-      wrapper.classList.add("is-playing");
-      wrapper.classList.remove("show-pause");
+      if (wrapper) {
+        wrapper.classList.add("is-playing");
+        wrapper.classList.remove("show-pause");
+      }
+
+      if (playButton) {
+        playButton.textContent = "⏸";
+        playButton.setAttribute("aria-label", "Pause video");
+      }
     });
 
     video.addEventListener("pause", function () {
       clearPauseTimer();
-      playButton.textContent = "▶";
-      playButton.setAttribute("aria-label", "Play video");
-      wrapper.classList.remove("is-playing", "show-pause");
+
+      if (wrapper) {
+        wrapper.classList.remove("is-playing", "show-pause");
+      }
+
+      if (playButton) {
+        playButton.textContent = "▶";
+        playButton.setAttribute("aria-label", "Play video");
+      }
     });
 
     video.addEventListener("ended", function () {
       clearPauseTimer();
-      wrapper.classList.remove("is-playing", "show-pause");
-      playButton.textContent = "▶";
-      playButton.setAttribute("aria-label", "Play video");
+
+      if (wrapper) {
+        wrapper.classList.remove("is-playing", "show-pause");
+      }
+
+      if (playButton) {
+        playButton.textContent = "▶";
+        playButton.setAttribute("aria-label", "Play video");
+      }
+
       video.currentTime = 0;
       video.load();
     });
